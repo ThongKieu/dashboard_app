@@ -21,20 +21,23 @@
     } 
  
 ?>
+
+
+</style>
 <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Main content -->
     <section class="content" style="background-color: white">
       <!-- Small boxes (Stat box) -->
-      <div class="row">
+      <div class="row" >
         <div class="col-lg-2 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
               <h3><?php $rowt = new Count($db);
                         $numLC = $rowt ->countLC($time_search);
-                        echo $numLC;  ?></h3>
-
+                        echo $numLC;  ?>
+              </h3>
               <p>Lịch Chưa Phân</p>
             </div>
             <div class="icon">

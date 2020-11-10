@@ -1052,7 +1052,6 @@ elseif($a=='allnoti')
 }
 elseif($a=='newnoti')
 {
-  
   echo "<div class='row'>
     <section >
     <!-- /.content -->
@@ -1242,5 +1241,5 @@ elseif ($a=='chat') {
 }
 ?>
         <!-- right col -->
-      </div>
+</div>
       <!-- /.row (main row) -->

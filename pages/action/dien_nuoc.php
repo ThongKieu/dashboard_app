@@ -65,7 +65,7 @@ echo "
                                                     <h4 class='modal-title'>Chọn Thợ Bạn Muốn phân</h4>
                                                 </div>
                                                 <div class='modal-body'>
-                                                    <form action='includes/logic/XL_phan_lich.php' method='POST' class ='hop'>
+                                                    <form action='includes/logic/XL_phan_lich.php' method='POST' class='modal-body'>
                                                         <label>Chọn Thợ cần Phân :</label>
                                                         <input type ='hidden' name='ac' value ='phantho' />
                                                         <input type ='hidden' name='ki' value ='1' />
@@ -83,11 +83,11 @@ echo "
                                                         echo "</select><br>
                                                         <label>Chọn Thợ phụ nếu cần  :</label>
                                                         <textarea style='width: 100%; hight:120px;' name='phu'></textarea>
+                                                        <div class='modal-footer'>
+                                                            <input type='submit' value='Xác Nhận' class='btn btn-success' />
+                                                            <button type='button' class='btn btn-danger' data-dismiss='modal'>Close</button>
+                                                        </div>
                                                     </form>
-                                                    <div class='modal-footer'>
-                                                        <button type='submit'  class='btn btn-success'>  Xác Nhận </button>
-                                                        <button type='button' class='btn btn-danger' data-dismiss='modal'>Close</button>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

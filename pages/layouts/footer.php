@@ -9,7 +9,7 @@
       }
       </script>   
   <?php require 'includes/logic/auto.php'?>
-<footer class="main-footer">
+  <footer class="main-footer">
     <div class="pull-right hidden-xs">
       <b>Version</b> 1.3
     </div>
