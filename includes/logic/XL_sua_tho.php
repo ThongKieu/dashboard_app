@@ -27,7 +27,7 @@
             
             if($q)
             {
-                header("location:".BASE_URL."index.php?action=wk&do=0");
+                header("location:".BASE_URL."index.php?do=0");
             }
            }
            catch(PDOException $e)

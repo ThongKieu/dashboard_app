@@ -21,28 +21,67 @@
     } 
  
 ?>
+<style>
+.my-custom-scrollbar {
+  position: relative;
+  width: 100%;
+  height: 84vh;
+  overflow: auto;
 
-
+}
+.smooth_scroll{
+  position: fixed;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  margin: 0;
+  padding: 0;
+  z-index: 1;
+  
+}
+.smooth_scroll li{
+  list-style: none;
+  margin: 5px;
+  padding: 5px;
+  
+}
+.smooth_scroll li a{
+  text-decoration: none;
+  background-color: #3c8dbc;
+  text-align: center;
+  color: white;
+  padding:  5px;
+  margin: 10px;
+  border-radius: 50%;
+}
 </style>
+<script>
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+    }
+  )
+</script>
 <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Main content -->
-    <section class="content" style="background-color: white">
+    <section class="content my-custom-scrollbar" style="background-color: white">
       <!-- Small boxes (Stat box) -->
-      <div class="row" >
-        <div class="col-lg-2 col-xs-6">
+      <div class="row " >
+        <ul class="smooth_scroll">
+          <li><a data-toggle="tooltip" data-placement="top" title="Lịch Điện Nước" href="#lichDienNuoc"><i class="fa fa-gg" style="width:15px; height:15px; color: white"></i></a></li>
+          <li><a data-toggle="tooltip" data-placement="top" title="Lịch Điện Lạnh" href="#lichDienLanh"><i class="fa fa-gg" style="width:15px; height:15px; color: white"></i></a></li>
+          <li><a data-toggle="tooltip" data-placement="top" title="Lịch Đồ Gỗ" href="#lichDoGo"><i class="fa fa-gg" style="width:15px; height:15px; color: white"></i></a></li>
+        </ul>
+        
+        <div id ="lichDienNuoc" class="col-lg-2 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-aqua">
-            <div class="inner">
-              <h3><?php $rowt = new Count($db);
+            <div class="inner" style="font-size: 22px; text-align:center;">
+            <span  > <b> <?php $rowt = new Count($db);
                         $numLC = $rowt ->countLC($time_search);
-                        echo $numLC;  ?>
-              </h3>
-              <p>Lịch Chưa Phân</p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-fw fa-clock-o"></i>
-            </div>
+                        echo $numLC; ?> </b> </span> <span>Lịch : Điện Nước</span>
+              </div>
+           
           <a href="index.php" class="small-box-footer">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
@@ -50,50 +89,39 @@
         <div class="col-lg-2 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-green">
-            <div class="inner">
-              <h3><?php $rowt = new Count($db);
-                        $numLC = $rowt ->countDN($time_search);
-                        echo $numLC;  ?></h3>
-
-              <p>Điện Nước</p>
+            <div class="inner"  style="font-size: 22px; text-align:center;">
+            <span > <b> <?php $rowt = new Count($db);
+                        $numDN = $rowt ->countDN($time_search);
+                        echo $numDN;  ?> </b> </span> <span>Lịch : Điện Nước</span>
             </div>
-            <div class="icon">
-              <i class="ion ion-person"></i>
-            </div>
-            <a href="index.php?action=1" class="small-box-footer">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></a>
+            
+            <a href="index.php#lichDienNuoc" class="small-box-footer">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <div class="col-lg-2 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-yellow">
-            <div class="inner">
-              <h3><?php 
+            <div class="inner"  style="font-size: 22px; text-align:center;">
+            <span> <b> <?php $rowt = new Count($db);
                         $numDL = $rowt ->countDL($time_search);
-                        echo $numDL;  ?></h3>
-
-              <p>Điện Lạnh</p>
+                        echo $numDL;  ?> </b> </span> <span>Lịch : Điện Lạnh</span>
+             
             </div>
-            <div class="icon">
-              <i class="ion ion-person"></i>
-            </div>
-            <a href="index.php?action=2" class="small-box-footer">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></a>
+            
+            <a href="index.php#lichDienLanh" class="small-box-footer">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
         <div class="col-lg-2 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-green">
-            <div class="inner">
-              <h3><?php $rowt = new Count($db);
+            <div class="inner"  style="font-size: 22px; text-align:center;">
+              <span > <b> <?php $rowt = new Count($db);
                         $numLC = $rowt ->countDG($time_search);
-                        echo $numLC;  ?></h3>
-
-              <p>Thợ Mộc</p>
+                        echo $numLC;  ?> </b> </span> <span>Lịch : Đồ Gỗ</span>
             </div>
-            <div class="icon">
-              <i class="ion ion-person"></i>
-            </div>
-            <a href="index.php?action=3" class="small-box-footer">Xem chi tiết<i class="fa fa-arrow-circle-right"></i></a>
+            
+            <a href="index.php#lichDoGo" class="small-box-footer">Xem chi tiết<i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -101,16 +129,13 @@
          <div class="col-lg-2 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-yellow">
-            <div class="inner">
-              <h3><?php $rowt = new Count($db);
+            <div class="inner"  style="font-size: 22px; text-align:center;">
+            <span > <b> <?php $rowt = new Count($db);
                         $numLC = $rowt ->countKS($time_search);
-                        echo $numLC;  ?></h3>
-
-              <p>Khảo Sát Báo Giá</p>
+                        echo $numLC; ?> </b> </span> <span>Lịch : Khảo Sát</span>
+              
             </div>
-            <div class="icon">
-              <i class="fa fa-fw fa-hourglass-2"></i>
-            </div>
+            
             <a href="index.php?action=4" class="small-box-footer">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
@@ -118,16 +143,13 @@
         <div class="col-lg-2 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-red">
-            <div class="inner">
-              <h3><?php $rowt = new Count($db);
+            <div class="inner"  style="font-size: 22px; text-align:center;">
+            <span > <b> <?php $rowt = new Count($db);
                         $numLC = $rowt ->countHuy($time_search);
-                        echo $numLC;  ?> </h3>
-
-              <p>Lịch Hủy</p>
+                        echo $numLC;  ?> </b> </span> <span>Lịch : Hủy</span>
+              
             </div>
-            <div class="icon">
-              <i class="ion ion-alert"></i>
-            </div>
+            
            <a href="index.php?action=5" class="small-box-footer">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>

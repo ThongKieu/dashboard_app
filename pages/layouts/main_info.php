@@ -468,7 +468,6 @@
               <!-- /.box-header dien nuoc cho-->
               <div class='box-body table-responsive'>";
             require 'pages/action/do_go.php';
-
             echo"  </div>
               <!-- /.box-body -->
          

@@ -27,7 +27,7 @@ if($ac == 'phantho'){
           $q_pl = $conn->query($sql_pl);
 
       if($q_ud){
-        header("location: " . BASE_URL . "index.php?action=".$ki);
+        header("location: " . BASE_URL . "index.php");
         }
       
       

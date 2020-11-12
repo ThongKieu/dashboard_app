@@ -1,23 +1,14 @@
-
-<?php include '../../config.php';
-      
-      ?>
-      
-      
-      <html>
-        <head>
-          
-          <link rel="stylesheet" type="text/css" href="<?php echo BASE_URL;?>css/min.css">
-          <title> Phân Lịch Cho Thợ</title>
-      <head>
-        <body>
+<?php include '../../config.php';?>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="<?php echo BASE_URL;?>css/min.css">
+      <title> Phân Lịch Cho Thợ</title>
+  <head>
+  <body>
 <?php
-
-$id = $_GET["id_cus"];
-$action=$_GET['action'];
-
-$nv = $_GET['nv'];
-
+  $id = $_GET["id_cus"];
+  $action=$_GET['action'];
+  $nv = $_GET['nv'];
 try {
         $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password,$options);
 

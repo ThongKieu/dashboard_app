@@ -46,10 +46,25 @@ catch (PDOException $e)
   <link rel="stylesheet" href="https://cdn.rawgit.com/mervick/emojionearea/master/dist/emojionearea.min.css">
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <style>
+    html{
+      height: 100%;  
+      
+    }
+    *{font-family: 'Times New Roman', Times, serif;}
+    body{
+      min-height: 100vh; 
+      position: relative;
+    }
+    .main-footer1{
+      width: 97.5%;
+      position: absolute; 
+      bottom: 0;
+    }
+  </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini sidebar-collapse" >
 <div class="wrapper">
-
   <header class="main-header">
     <!-- Logo -->
     <a href="index.php" class="logo text-decoration-nones">
@@ -111,7 +126,6 @@ catch (PDOException $e)
                 </p>
               </li>
               <!-- Menu Body -->
-              
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
@@ -123,9 +137,7 @@ catch (PDOException $e)
               </li>
             </ul>
           </li>
-          <!-- Control Sidebar Toggle Button -->
-          
         </ul>
       </div>
     </nav>
-  </header>
+</header>

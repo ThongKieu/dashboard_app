@@ -29,7 +29,7 @@ echo "
 <div class='container-fluid>
     <div class='row'>
         <div class = 'col-xs-6' style='padding-right:7px;'>
-            <h3 style='color: #00c0ef; padding:5px 10px 5px 10px;text-align: center;border: 1px solid #d2d6de; border-radius:5px; margin-top:5px; box-shadow: 5px 5px #d2d6de;'>Lịch Chờ</h3>
+            <h3 style='color: #00c0ef; padding:5px 10px 5px 10px;text-align: center;border: 1px solid #d2d6de; border-radius:5px; margin-top:5px; box-shadow: 5px 5px #d2d6de;'>Lịch Chưa Xử Lý</h3>
             <table class='table table-bordered table-hover'>
                 <thead>
                     <tr>
@@ -52,8 +52,8 @@ echo "
                             <td >".htmlspecialchars($rowc['des_cus'])."</td>
                             <td >".htmlspecialchars($rowc['phone_cus'])."</td>
                             <td>".htmlspecialchars($rowc['note_book'])."</td>
-                            <td>
-                                <button type='button' class='btn btn-info btn-sm' data-toggle='modal' data-target='#phantho".$rowc['id_cus']."'>Phân</button>
+                            <td style='text-align:center'>
+                                <button type='button' class='btn btn-info btn-sm' data-toggle='modal' data-target='#phantho".$rowc['id_cus']."' style='margin-top:5px; padding:5px 14px;'>Phân</button>
                                 <!-- Modal -->
                                 <div id='phantho".$rowc['id_cus']."' class='modal fade' role='dialog'>
                                     <div class='row'>
@@ -81,7 +81,7 @@ echo "
                                                                 echo '</option>';
                                                             }
                                                         echo "</select><br>
-                                                        <label>Chọn Thợ phụ nếu cần  :</label>
+                                                        <label>Chọn Thợ phụ nếu cần:</label>
                                                         <textarea style='width: 100%; hight:120px;' name='phu'></textarea>
                                                         <div class='modal-footer'>
                                                             <input type='submit' value='Xác Nhận' class='btn btn-success' />
@@ -92,12 +92,14 @@ echo "
                                             </div>
                                         </div>
                                     </div>
-                                </div>  
-                                &nbsp";
-                                echo "<a href ='".BASE_URL."includes/logic/suaKH.php?id_cus=".$rowc['id_cus']."&action=sua&nv=".$ruser['real_name']." 'class='btn btn-sm btn-success'> Sửa</a>";echo "&nbsp";
-                                echo "<a href ='".BASE_URL."includes/logic/suaKH.php?id_cus=".$rowc['id_cus']."&action=coppy&nv=".$ruser['real_name']." 'class='btn btn-sm btn-info'>x2</a>";echo "&nbsp";
+                                </div>";
+                                echo "
+                                
+                                ";
+                                echo "<a href ='".BASE_URL."includes/logic/suaKH.php?id_cus=".$rowc['id_cus']."&action=coppy&nv=".$ruser['real_name']." 'class='btn btn-sm btn-info' style='margin-top:5px; padding:5px 23px;'><i class='fa fa-superscript'></i></a>";
+                                echo "<a href ='".BASE_URL."includes/logic/suaKH.php?id_cus=".$rowc['id_cus']."&action=sua&nv=".$ruser['real_name']." 'class='btn btn-sm btn-success' style='margin-top:5px; padding:5px 23px;'><i class='fa fa-pencil' aria-hidden='true'></i></a>";
                                 echo"
-                                <button type='button' class='btn btn-sm btn-danger' data-toggle='modal' data-target='#my".$rowc['id_cus']."'>Hủy</button>
+                                <button type='button' class='btn btn-sm btn-danger' data-toggle='modal' data-target='#my".$rowc['id_cus']."'style='margin-top:5px; padding: 5px 23px;'><i class='fa fa-trash' aria-hidden='true'></i></button>
                                 <!-- Modal -->
                                 <div id='my".$rowc['id_cus']."' class='modal fade' role='dialog'>
                                     <div class='modal-dialog'>
@@ -127,7 +129,7 @@ echo "
             </table>
         </div>";?>
         <div class = 'col-xs-6' style='padding-left:7px;'>
-            <h3 style='color: #00c0ef; padding:5px 10px 5px 10px;text-align: center;border: 1px solid #d2d6de; border-radius:5px; margin-top:5px; box-shadow: 5px 5px #d2d6de;'>Lịch Đã Phân</h3>
+            <h3 style='color: #00c0ef; padding:5px 10px 5px 10px;text-align: center;border: 1px solid #d2d6de; border-radius:5px; margin-top:5px; box-shadow: 5px 5px #d2d6de;'>Lịch Đã Xử Lý</h3>
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr >
@@ -158,35 +160,34 @@ echo "
                                 <?php 
                                     echo "<a href ='".BASE_URL."includes/logic/thu_chi.php?id_work=".$row['id_work']."&idq=1&ki=1'class='btn btn-sm btn-success'>Nhập</a>";
                                     echo " </td> <td>";
-                                    echo "<a href ='".BASE_URL."includes/logic/XL_sua_lich_da_phan.php?id_work=".$row['id_work']."'class='btn btn-sm btn-warning'>Sửa</a>";
-                                    echo "&nbsp";
-                                    echo"<a href ='".BASE_URL."includes/logic/deleteKH.php?hd=ks&id_cus=".$row['id_cus']."'class='btn btn-sm btn-primary' >KSát</a>";
-                                    echo "&nbsp";
-                                    echo"<button type='button' class='btn btn-sm btn-warning' data-toggle='modal' data-target='#my".$row['id_cus']."'>Hủy</button>";echo "&nbsp
-                                    <!-- Modal -->
-                                    <div id='my".$row['id_cus']."' class='modal fade' role='dialog'>
-                                        <div class='modal-dialog'>
-                                            <!-- Modal content-->
-                                            <div class='modal-content'>
-                                                <form action='includes/logic/deleteKH.php' method='GET'>
-                                                    <div class='modal-header'>
-                                                        <button type='button' class='close' data-dismiss='modal'>&times;</button>
-                                                        <h4 class='modal-title'>Nguyên Nhân Hủy</h4>
-                                                    </div>
-                                                    <div class='modal-body'>
-                                                        <input type='hidden' name='hd' value='huy'>
-                                                        <input type ='hidden' name='ki' value ='1' />
-                                                        <input type='hidden' name='id_cus' value='".$row['id_cus']."'>
-                                                        <textarea style = 'width:100%' name='nnHuy'></textarea>
-                                                    </div>
-                                                    <div class='modal-footer'>
-                                                        <input type='submit' class='btn btn-default' value='Xác Nhận'/>
-                                                    </div>
-                                                </form>
+                                    echo "<a href ='".BASE_URL."includes/logic/XL_sua_lich_da_phan.php?id_work=".$row['id_work']."'class='btn btn-sm btn-warning' style='padding: 5px 15px; margin-right: 5px;'><i class='fa fa-pencil' aria-hidden='true'></i></a>";
+                                    echo"<a href ='".BASE_URL."includes/logic/deleteKH.php?hd=ks&id_cus=".$row['id_cus']."'class='btn btn-sm btn-primary' style='padding: 5px 15px;'>KSát</a>";
+                                    echo"<button type='button' class='btn btn-sm btn-danger' data-toggle='modal' data-target='#my".$row['id_cus']."'style='margin-top: 5px; padding: 5px 16px; margin-right: 1px;'><i class='fa fa-trash' aria-hidden='true'></i></button>";
+                                    echo "
+                                        <!-- Modal -->
+                                        <div id='my".$row['id_cus']."' class='modal fade' role='dialog'>
+                                            <div class='modal-dialog'>
+                                                <!-- Modal content-->
+                                                <div class='modal-content'>
+                                                    <form action='includes/logic/deleteKH.php' method='GET'>
+                                                        <div class='modal-header'>
+                                                            <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                                                            <h4 class='modal-title'>Nguyên Nhân Hủy</h4>
+                                                        </div>
+                                                        <div class='modal-body'>
+                                                            <input type='hidden' name='hd' value='huy'>
+                                                            <input type ='hidden' name='ki' value ='1' />
+                                                            <input type='hidden' name='id_cus' value='".$row['id_cus']."'>
+                                                            <textarea style = 'width:100%' name='nnHuy'></textarea>
+                                                        </div>
+                                                        <div class='modal-footer'>
+                                                            <input type='submit' class='btn btn-default' value='Xác Nhận'/>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>";
-                                    echo "<a href ='".BASE_URL."includes/logic/thuhoi.php?id_cus=".$row['id_cus']."&ki=1'class='btn btn-sm btn-danger'>Trả</a>";
+                                        </div>";
+                                    echo "<a href ='".BASE_URL."includes/logic/thuhoi.php?id_cus=".$row['id_cus']."&ki=1'class='btn btn-sm btn-warning' style='padding: 5px 19px; margin-top: 5px;'><i class='fa fa-ban'></i></a>";
                                 ?>
                             </td>
                         </tr>

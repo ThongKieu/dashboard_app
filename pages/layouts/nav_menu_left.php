@@ -2,7 +2,7 @@
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
       <!-- Sidebar user panel -->
-      <ul class="sidebar-menu" data-widget="tree">
+      <ul class="sidebar-menu"  data-widget="tree">
         <li class="header">MENU CHÍNH</li>
         <li>
           <a href="<?php echo BASE_URL.'index.php';?>"><i class="fa fa-dashboard"></i> <span>Home</span>
