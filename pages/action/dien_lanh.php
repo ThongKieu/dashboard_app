@@ -35,8 +35,8 @@
 echo "
 <div class='container-fluid'>
     <div class='row'>
-        <div class='col-xs-6'  style='padding-right:7px;'>
-        <h3 style='color: #00c0ef; padding:5px 10px 5px 10px;text-align: center;border: 1px solid #d2d6de; border-radius:5px; margin-top:5px; box-shadow: 5px 5px #d2d6de;'>Lịch Chưa Xử Lý</h3>
+        <div class='col-xl-6 col-lg-6 col-md-6 col-sm-12'  style='padding-right:7px;'>
+        <h3 id='lichDienLanh' style='color: #00c0ef; padding:5px 10px 5px 10px;font-weight: 600;text-align: center;border: 1px solid #d2d6de; border-radius:5px; margin-top:5px; box-shadow: 5px 5px #d2d6de;'>Lịch Điện Lạnh Chưa Xử Lý</h3>
 <table class='table table-bordered table-hover '>
     <thead>
         <tr>
@@ -57,7 +57,7 @@ echo "
             <td>".htmlspecialchars($row2['des_cus'])."</td>
             <td>".htmlspecialchars($row2['phone_cus'])."</td>
             <td>".htmlspecialchars($row2['note_book'])."</td>
-            <td style='text-align:center'>
+            <td>
                 <button type='button' class='btn btn-info btn-sm' data-toggle='modal' data-target='#phantho".$row2['id_cus']."' style='margin-top:5px; padding:5px 14px;'>Phân</button>
                 <!-- Modal -->
                 <div id='phantho".$row2['id_cus']."' class='modal fade' role='dialog'>
@@ -98,8 +98,126 @@ echo "
                         </div>
                     </div>
                 </div>"; 
-                echo "<button href='".BASE_URL."includes/logic/suaKH.php?id_cus=".$row2['id_cus']."&action=coppy&nv=".$ruser['real_name']." 'class='btn btn-sm btn-info' style='margin-top:5px; padding:5px 23px;'><i class='fa fa-superscript'></i></button>";
-                echo "<button href='".BASE_URL."includes/logic/suaKH.php?id_cus=".$row2['id_cus']."&action=sua&nv=".$ruser['real_name']." 'class='btn btn-sm btn-success' style='margin-top:5px; padding:5px 23px;'><i class='fa fa-pencil' aria-hidden='true' ></i></button>"; 
+                // Gap doi lich da dat 
+                echo"
+                <button type='button' data-toggle='modal' data-target='#my2".$row2['id_cus']."'class='btn btn-sm btn-info' style='margin-top:5px; padding:5px 23px;'><i class='fa fa-copy'></i></button>
+                <!-- Modal -->
+                <div id='my2".$row2['id_cus']."' class='modal fade' role='dialog'>
+                    <!-- Modal content-->
+                    <div class='modal-content' style='position: fixed;top: 20px;left: 35%;text-align: left;width: 30%;'>
+                            <div class='modal-header'>
+                                <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                                <h4 class='modal-title text-center'>Nhân Đôi Lịch Khách Hàng</h4>
+                            </div>
+                            <div class='modal-body'>
+                            <form action='includes/logic/up_tt_KH.php' id='frm_sua_KH' method='POST' class ='form-container'>
+                                <input type='hidden' class='form-control' name ='id_cus' value='".$row2['id_cus']."'>
+                                <input type='hidden'class='form-control' name ='nv' value='".$ruser['real_name']."'>
+                                <input type='hidden'class='form-control' name ='action' value='1'>
+                                <label for='nameKH'><b>Tên Khách Hàng</b></label>
+                                <input type='text' class='form-control' name ='nameKH' value='".$row2['name_cus']."' >
+                                <label for='addKH'><b>Địa Chỉ Khách Hàng</b></label>
+                                <input type='text' class='form-control' name='addKH' value='".$row2['add_cus']."' >
+                                <label for='desKH'><b>Quận</b></label>
+                                <input type='text' class='form-control' name= 'desKH' value='".$row2['des_cus']."' >
+                                <label for='telKH'><b>Số Điện Thoại Khách Hàng</b></label>
+                                <input type='text' class='form-control' name ='telKH' value='".$row2['phone_cus']."' >
+                                <label for='ycKH'><b>Yêu Cầu Công Việc</b></label>
+                                <input type='text' class='form-control' name = 'ycKH' value='".$row2['yc_book']."'>  
+                                <label for='note_book'><b>Ghi Chú Công Việc </b></label>
+                                <textarea class='form-control' type='text' name='note_book' value='".$row2['note_book']."' ></textarea>
+                                <label for='date_book'><b>Thời gian  : </b></label>
+                                <input type='date' class='form-control' name='date_book' value=" ;echo $row2['date_book']."><br>
+                                <label for='date_book'><b>Loại CV: </b></label>
+                                <div class='row'>
+                                    <div class='col-sm-4 text-center'> 
+                                        <label class='check-container1'>Điện Lạnh
+                                            <input type='radio'"; if($row2['kind_book']=='Điện Lạnh'){echo "checked='checked'";} echo "name='kind_book' value='Điện Lạnh'>
+                                        </label>
+                                    </div>
+                                    <div class='col-sm-4 text-center'>
+                                        <label class='check-container1'>Điện Nước
+                                            <input type='radio'"; if($row2['kind_book']=='Điện Nước'){echo "checked='checked'";} echo" name='kind_book' value='Điện Nước'>
+                                        </label>
+                                    </div>
+                                    <div class='col-sm-4 text-center'>
+                                        <label class='check-container1'>Đồ Gỗ
+                                            <input type='radio'";if($row2['kind_book']=='Đồ Gỗ'){echo "checked='checked'";} echo" name='kind_book' value='Đồ Gỗ'>
+                                        </label>   
+                                    </div> 
+                                </div>
+                            </div>
+                            <div class='modal-footer'>
+                                <div class='row'>
+                                    <div class='col-md-6 text-center'><button type='submit' value='submit' class='btn btn-sm btn-success' style='width:150px; font-size: 14px'>Thay Đổi Thông tin</button></div>
+                                    <div class='col-md-6 text-center'><button type='button' class='btn btn-danger' style='width:150px;' data-dismiss='modal'>Hủy</button></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                "; 
+                // ket thuc gap doi lich da dat
+                // sua thong tin lich KH 
+                echo"
+                <button type='button' data-toggle='modal' data-target='#my1".$row2['id_cus']."'class='btn btn-sm btn-success' style='margin-top:5px; padding:5px 23px;'><i class='fa fa-pencil' aria-hidden='true'></i></button>
+                <!-- Modal -->
+                <div id='my1".$row2['id_cus']."' class='modal fade' role='dialog'>
+                    <!-- Modal content-->
+                    <div class='modal-content' style='position: fixed;top: 20px;left: 35%;text-align: left;width: 30%;'>
+                            <div class='modal-header'>
+                                <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                                <h4 class='modal-title text-center'>Sửa Thông Tin Lịch Khách Hàng</h4>
+                            </div>
+                            <div class='modal-body'>
+                            <form action='includes/logic/up_tt_KH.php' id='frm_sua_KH' method='POST' class ='form-container'>
+                                <input type='hidden' class='form-control' name ='id_cus' value='".$row2['id_cus']."'>
+                                <input type='hidden'class='form-control' name ='nv' value='".$ruser['real_name']."'>
+                                <input type='hidden'class='form-control' name ='action' value='0'>
+                                <label for='nameKH'><b>Tên Khách Hàng</b></label>
+                                <input type='text' class='form-control' name ='nameKH' value='".$row2['name_cus']."' >
+                                <label for='addKH'><b>Địa Chỉ Khách Hàng</b></label>
+                                <input type='text' class='form-control' name='addKH' value='".$row2['add_cus']."' >
+                                <label for='desKH'><b>Quận</b></label>
+                                <input type='text' class='form-control' name= 'desKH' value='".$row2['des_cus']."' >
+                                <label for='telKH'><b>Số Điện Thoại Khách Hàng</b></label>
+                                <input type='text' class='form-control' name ='telKH' value='".$row2['phone_cus']."' >
+                                <label for='ycKH'><b>Yêu Cầu Công Việc</b></label>
+                                <input type='text' class='form-control' name = 'ycKH' value='".$row2['yc_book']."'>  
+                                <label for='note_book'><b>Ghi Chú Công Việc </b></label>
+                                <textarea class='form-control' type='text' name='note_book' value='".$row2['note_book']."' ></textarea>
+                                <label for='date_book'><b>Thời gian  : </b></label>
+                                <input type='date' class='form-control' name='date_book' value=" ;echo $row2['date_book']."><br>
+                                <label for='date_book'><b>Loại CV: </b></label>
+                                <div class='row'>
+                                    <div class='col-sm-4 text-center'> 
+                                        <label class='check-container1'>Điện Lạnh
+                                            <input type='radio'"; if($row2['kind_book']=='Điện Lạnh'){echo "checked='checked'";} echo "name='kind_book' value='Điện Lạnh'>
+                                        </label>
+                                    </div>
+                                    <div class='col-sm-4 text-center'>
+                                        <label class='check-container1'>Điện Nước
+                                            <input type='radio'"; if($row2['kind_book']=='Điện Nước'){echo "checked='checked'";} echo" name='kind_book' value='Điện Nước'>
+                                        </label>
+                                    </div>
+                                    <div class='col-sm-4 text-center'>
+                                        <label class='check-container1'>Đồ Gỗ
+                                            <input type='radio'";if($row2['kind_book']=='Đồ Gỗ'){echo "checked='checked'";} echo" name='kind_book' value='Đồ Gỗ'>
+                                        </label>   
+                                    </div> 
+                                </div>
+                            </div>
+                            <div class='modal-footer'>
+                                <div class='row'>
+                                    <div class='col-md-6 text-center'><button type='submit' value='submit' class='btn btn-sm btn-success' style='width:150px; font-size: 14px'>Thay Đổi Thông tin</button></div>
+                                    <div class='col-md-6 text-center'><button type='button' class='btn btn-danger' style='width:150px;' data-dismiss='modal'>Hủy</button></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                "; 
+                // ket thuc sua thong tin lich  
                 echo"
                 <button type='button' class='btn btn-sm btn-danger' data-toggle='modal' data-target='#my".$row2['id_cus']."'style='margin-top:5px; padding: 5px 23px;'><i class='fa fa-trash' aria-hidden='true'></i></button>
                 <!-- Modal -->
@@ -130,8 +248,8 @@ echo "
     </table>
 </div>";?>
  <!--ket thuc cot-->
-<div class='col-xs-6'  style='padding-left:7px;'>
-<h3 style='color: #00c0ef; padding:5px 10px 5px 10px;text-align: center;border: 1px solid #d2d6de; border-radius:5px; margin-top:5px; box-shadow: 5px 5px #d2d6de;'>Lịch Đã Xử Lý</h3>
+<div class='col-xl-6 col-lg-6 col-md-6 col-sm-12' style='padding-left:7px;'>
+<h3 style='color: #00c0ef; font-weight: 600; padding:5px 10px 5px 10px;text-align: center;border: 1px solid #d2d6de; border-radius:5px; margin-top:5px; box-shadow: 5px 5px #d2d6de;'>Lịch Điện Lạnh  Đã Xử Lý</h3>
     <table class="table table-bordered table-hover ">
         <thead>
             <tr>
@@ -179,12 +297,70 @@ echo "
 
                 <td>
                     <?php 
-                        echo "<button href ='".BASE_URL."includes/logic/thu_chi.php?id_work=".$row['id_work']."&idq=1&ki=2'class='btn btn-sm btn-success'>Nhập</button>";
+                        echo "<a href ='".BASE_URL."includes/logic/thu_chi.php?id_work=".$row['id_work']."&idq=1&ki=2'class='btn btn-sm btn-success'>Nhập</a>";
                         echo " </td> <td>";
-                        echo "<button href ='".BASE_URL."includes/logic/XL_sua_lich_da_phan.php?id_work=".$row['id_work']."'class='btn btn-sm btn-warning'style='padding: 5px 15px; margin-right: 5px;'><i class='fa fa-pencil' aria-hidden='true'></i></a>";
-                        echo"<button href ='".BASE_URL."includes/logic/deleteKH.php?hd=ks&id_cus=".$row['id_cus']."'class='btn btn-sm btn-primary' style='padding: 5px 15px;' >KSat</button>";
+                        // sua thong tin lich da phan 
                         echo"
-                            <button type='button' class='btn btn-sm btn-danger' data-toggle='modal' data-target='#my".$row['id_cus']."'style='margin-top: 5px; padding: 5px 16px; margin-right: 1px;'><i class='fa fa-trash' aria-hidden='true'></i></button>";
+                        <button type='button' data-toggle='modal' data-target='#my1".$row['id_cus']."'class='btn btn-sm btn-warning' style=' padding:5px 25px;'><i class='fa fa-pencil' aria-hidden='true'></i></button>
+                        <!-- Modal -->
+                        <div id='my1".$row['id_cus']."' class='modal fade' role='dialog'>
+                            <!-- Modal content-->
+                            <div class='modal-content' style='position: fixed;top: 20px;left: 35%;text-align: left;width: 30%;'>
+                                    <div class='modal-header'>
+                                        <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                                        <h4 class='modal-title text-center'>Sửa Thông Tin Lịch Điện Lạnh Đã Phân</h4>
+                                    </div>
+                                    <div class='modal-body'>
+                                    <form action='includes/logic/up_kh_da_phan.php' id='frm_sua_KH' method='POST' class ='form-container'>
+                                        <input type='hidden' class='form-control' name ='id_cus' value='".$row['id_cus']."'>
+                                        <input type='hidden'class='form-control' name ='nv' value='".$ruser['real_name']."'>
+                                        <input type='hidden'class='form-control' name ='action' value='0'>
+                                        <label for='nameKH'><b>Tên Khách Hàng</b></label>
+                                        <input type='text' class='form-control' name ='nameKH' value='".$row['name_cus']."' >
+                                        <label for='addKH'><b>Địa Chỉ Khách Hàng</b></label>
+                                        <input type='text' class='form-control' name='addKH' value='".$row['add_cus']."' >
+                                        <label for='desKH'><b>Quận</b></label>
+                                        <input type='text' class='form-control' name= 'desKH' value='".$row['des_cus']."' >
+                                        <label for='telKH'><b>Số Điện Thoại Khách Hàng</b></label>
+                                        <input type='text' class='form-control' name ='telKH' value='".$row['phone_cus']."' >
+                                        <label for='ycKH'><b>Yêu Cầu Công Việc</b></label>
+                                        <input type='text' class='form-control' name = 'ycKH' value='".$row['yc_book']."'>  
+                                        <label for='note_book'><b>Ghi Chú Công Việc </b></label>
+                                        <textarea class='form-control' type='text' name='note_book' value='".$row['note_book']."' ></textarea>
+                                        <label for='date_book'><b>Thời gian  : </b></label>
+                                        <input type='date' class='form-control' name='date_book' value=" ;echo $row['date_book']."><br>
+                                        <label for='date_book'><b>Loại CV: </b></label>
+                                        <div class='row'>
+                                            <div class='col-sm-4 text-center'> 
+                                                <label class='check-container1'>Điện Lạnh
+                                                    <input type='radio'"; if($rowc['kind_book']=='Điện Lạnh'){echo "checked='checked'";} echo "name='kind_book' value='Điện Lạnh'>
+                                                </label>
+                                            </div>
+                                            <div class='col-sm-4 text-center'>
+                                                <label class='check-container1'>Điện Nước
+                                                    <input type='radio'"; if($rowc['kind_book']=='Điện Nước'){echo "checked='checked'";} echo" name='kind_book' value='Điện Nước'>
+                                                </label>
+                                            </div>
+                                            <div class='col-sm-4 text-center'>
+                                                <label class='check-container1'>Đồ Gỗ
+                                                    <input type='radio'";if($rowc['kind_book']=='Đồ Gỗ'){echo "checked='checked'";} echo" name='kind_book' value='Đồ Gỗ'>
+                                                </label>   
+                                            </div> 
+                                        </div>
+                                    </div>
+                                    <div class='modal-footer'>
+                                        <div class='row'>
+                                            <div class='col-md-6 text-center'><button type='submit' value='submit' class='btn btn-sm btn-success' style='width:150px; font-size: 14px'>Thay Đổi Thông tin</button></div>
+                                            <div class='col-md-6 text-center'><button type='button' class='btn btn-danger' style='width:150px;' data-dismiss='modal'>Hủy</button></div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        "; // ket thuc sua thong tin lich da phan
+                        echo"<a href ='".BASE_URL."includes/logic/deleteKH.php?hd=ks&id_cus=".$row['id_cus']."'class='btn btn-sm btn-primary' style='padding: 5px 15px;' >KSat</a>";
+                        echo"
+                            <button type='button' class='btn btn-sm btn-danger' data-toggle='modal' data-target='#my".$row['id_cus']."'style='margin-top: 5px; padding: 5px 22px; margin-right: 1px;'><i class='fa fa-trash' aria-hidden='true'></i></button>";
                         echo "
                         <!-- Modal -->
                         <div id='my".$row['id_cus']."' class='modal fade' role='dialog'>
@@ -209,7 +385,7 @@ echo "
                             </div>
                         </div>
                     </div>";
-                echo "<button href ='".BASE_URL."includes/logic/thuhoi.php?id_cus=".$row['id_cus']."&ki=2 'class='btn btn-sm btn-warning'style='padding: 5px 19px; margin-top: 5px;'><i class='fa fa-ban'></i></button>";?>
+                echo "<a href ='".BASE_URL."includes/logic/thuhoi.php?id_cus=".$row['id_cus']."&ki=2 'class='btn btn-sm btn-warning'style='padding: 5px 25px; margin-top: 5px;'><i class='fa fa-ban'></i></a>";?>
                 </td>
             </tr>
             <?php endwhile; ?>

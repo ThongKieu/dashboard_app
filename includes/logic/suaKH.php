@@ -129,6 +129,5 @@ try {
       </form>";
       }
 ?>
-
-  </body>
-  </html>
+</body>
+</html>

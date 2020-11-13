@@ -1,45 +1,29 @@
 
-  <?php include('../../config.php');?>    
-      
-      <html>
-        <head>
-          
-          <link rel="stylesheet" type="text/css" href="<?php echo BASE_URL;?>css/min.css">
-          <title> Phân Lịch Cho Thợ</title>
-      <head>
-        <body>
+<?php include('../../config.php');?>
+  <html>
+    <head>
+      <link rel="stylesheet" type="text/css" href="<?php echo BASE_URL;?>css/min.css">
+      <title> Phân Lịch Cho Thợ</title>
+    <head>
+  <body>
 <?php
 
 $id = $_GET["id_work"];
 
-
-
-
 try {
-       
-
-        $sql1 = "select * FROM work_do WHERE id_work = '$id'";
-
-        $q1 = $conn->query($sql1);
-        $q1->setFetchMode(PDO::FETCH_ASSOC);
-        $rq = $q1->fetch();
-
-        $id_cus = $rq['id_cus'];
-        $id_worker = $rq['id_worker'];
-       
-        $sql = "select * FROM info_cus WHERE id_cus = '$id_cus'";
-        $q = $conn->query($sql);
-        $q ->setFetchMode(PDO::FETCH_ASSOC);
-         
-        
-        if($q){
+  $sql1 = "select * FROM work_do WHERE id_work = '$id'";
+  $q1 = $conn->query($sql1);
+  $q1->setFetchMode(PDO::FETCH_ASSOC);
+  $rq = $q1->fetch();
+  $id_cus = $rq['id_cus'];
+  $id_worker = $rq['id_worker'];
+  $sql = "select * FROM info_cus WHERE id_cus = '$id_cus'";
+  $q = $conn->query($sql);
+  $q ->setFetchMode(PDO::FETCH_ASSOC);
+  if($q){
         //header("location: " . BASE_URL . "index.php");
-            
-        }
-     
-    } catch (PDOException $e) {
-        die("Could not connect to the database $dbname :" . $e->getMessage());
-    }
+      }
+} catch (PDOException $e) {die("Could not connect to the database $dbname :" . $e->getMessage());}
    
      
         echo "<form action='up_kh_da_phan.php' id='frm_sua_KH' method='POST' class='hop'>

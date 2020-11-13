@@ -17,7 +17,7 @@ try {
     $sql_delwork= "DELETE FROM `work_do` WHERE id_cus ='$id_thu'";
     $q2 =$pdo->query($sql_delwork);
     if($q){
-         header("location: " . BASE_URL . "index.php?action=".$ki);
+         header("location: " . BASE_URL . "index.php");
     }
     } catch (PDOException $e) {
         die("Could not connect to the database $dbname :" . $e->getMessage());

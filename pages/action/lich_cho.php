@@ -37,33 +37,22 @@
     
     else
         {   
-            echo "
-                <div class='container-fluid'>";
-                echo "
-                    <h3 id='lichDienNuoc' style='color: #00c0ef; padding:5px 10px 5px 10px;text-align: center;border: 1px solid #d2d6de; border-radius:5px; margin-top:5px; box-shadow: 5px 5px #d2d6de;'>Lịch Điện Nước</h3>";
-                    echo"<div class='row'>";
-                            include 'dien_nuoc.php';
-                    echo" </div> <!--ket thuc dong-->";
-                    echo "</div>";
+            echo "<div class='container-fluid'>";
+                echo"<div class='row'>";
+                        include 'dien_nuoc.php';
+                echo" </div> <!--ket thuc dong-->";
+            echo "</div>";
                     
-            echo "
-            <div class='container-fluid'>";
-                echo"
-                    <h3 id='lichDienLanh' style='color: #00c0ef; padding:5px 10px 5px 10px;text-align: center;border: 1px solid #d2d6de; border-radius:5px; margin-top:5px; box-shadow: 5px 5px #d2d6de;'>Lịch Điện Lạnh</h3>";
-                    echo"<div class='row'>";
+            echo "<div class='container-fluid'>";
+                echo"<div class='row'>";
                             include 'dien_lanh.php';
-                    echo" </div> <!--ket thuc dong-->";
+                echo" </div> <!--ket thuc dong-->";
                     echo "</div>";
-                    
-            echo "
-            <div class='container-fluid'>"; 
-                echo "
-                    <h3 id='lichDoGo' style='color: #00c0ef; padding:5px 10px 5px 10px;text-align: center;border: 1px solid #d2d6de; border-radius:5px; margin-top:5px; box-shadow: 5px 5px #d2d6de;'>Lịch Đồ Gỗ</h3>";
-                    echo "<div class='row'>";
-                            include 'do_go.php';
-                    echo" </div> <!--ket thuc dong-->";
-                    echo "</div>";
-            
+            echo "<div class='container-fluid'>"; 
+                echo "<div class='row'>";
+                        include 'do_go.php';
+                echo" </div> <!--ket thuc dong-->";
+            echo "</div>";
                 // ket thuc container-fluid
         }
 ?>

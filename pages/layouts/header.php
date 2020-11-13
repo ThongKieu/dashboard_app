@@ -61,6 +61,42 @@ catch (PDOException $e)
       position: absolute; 
       bottom: 0;
     }
+    .tooltipButton{
+      position: relative;
+    }
+    .tooltipButton::after, .tooltipButton::before{
+      --scale: 0;
+    position: absolute;
+    top: -120%;
+    left: 7%;
+    transform: translateX(0%) translateY(0%) scale(var(--scale));
+    transition: 150ms transform;
+    transform-origin: bottom center;
+    }
+    .tooltipButton::after{
+      content: attr(data-tooltip);
+    color: white;
+    width: 10%;
+    padding: 5px 15px;
+    width: max-content;
+    max-width: 100%;
+    border-radius: 3px;
+    background: black;
+    }
+    .tooltipButton:hover::before,
+    .tooltipButton:hover::after {
+      --scale: 1;
+      --tooltip-color: red;
+      --arrow-size: 10px;
+      
+    }
+    .tooltipButton::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      border: var(--arrow-size) solid transparent;
+      border-top-color: var(--tooltip-color) ;
+    }
   </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini sidebar-collapse" >
