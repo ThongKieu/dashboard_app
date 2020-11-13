@@ -2,7 +2,7 @@
     <!-- /.content -->
   </div>
   <?php require 'includes/logic/auto.php'?>
-  <footer class="main-footer main-footer1">
+  <footer class="main-footer main-footer1" style="position: fixed; bottom:0; left:0;">
     <div class="pull-right hidden-xs">
       <b>Version</b> 1.3
     </div>
