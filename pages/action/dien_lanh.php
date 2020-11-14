@@ -258,7 +258,7 @@ echo "
     <table class="table table-bordered table-hover ">
         <thead>
             <tr>
-                <th class="col-md-2">Yêu Cầu</th>
+                <th class="col-md-1">Yêu Cầu</th>
                 <th class="col-md-1">Tên KH</th>
                 <th class="col-md-2">Địa Chỉ</th>
                 <th class="col-md-1">Quận</th>
