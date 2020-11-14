@@ -1,7 +1,12 @@
+<style>
+    .cls_btn{
+        margin-top:5px; padding:5px 10px;
+    }
+</style>
 <?php 
 try {
     $sqlc = "SELECT id_cus,name_cus, phone_cus, add_cus, des_cus, yc_book, note_book, kind_book, date_book , nv_add
-    FROM info_cus where kind_book like '%nuoc%' and  flag_book = '0' and date_book like '%$time_search%' and flag_status is NULL order by des_cus DESC";
+    FROM info_cus where kind_book like '%nuoc%' and  flag_book = '0' and date_book like '%$time_search%' and flag_status is NULL order by id_cus DESC";
     $qc = $conn->query($sqlc);
     $qc->setFetchMode(PDO::FETCH_ASSOC);
     $tho= $conn->prepare("select * FROM info_worker where status_worker = 0 and today_off = 0  order by name_worker ASC ");
@@ -37,8 +42,8 @@ echo "
                         <th class='col-md-1'>Tên KH</th>
                         <th class='col-md-2'>Địa Chỉ</th>
                         <th class='col-md-1'>Quận</th>
-                        <th class='col-md-1'>Số Điện Thoại</th>
-                        <th class='col-md-1' >Ghi chú</th>
+                        <th class='col-md-1'>SĐT</th>
+                        <th class= 'col-md-1' >Ghi chú</th>
                         <th class='col-md-2'>Thao Tác</th>
                     </tr>
                 </thead>
@@ -51,9 +56,16 @@ echo "
                             <td >".htmlspecialchars($rowc['add_cus'])."</td>
                             <td >".htmlspecialchars($rowc['des_cus'])."</td>
                             <td >".htmlspecialchars($rowc['phone_cus'])."</td>
-                            <td>".htmlspecialchars($rowc['note_book'])."</td>
+                            <td>"; if($rowc['note_book']==null){
+                                // code 
+                            }else{
+                                echo "<p class='tooltipButton text-center' data-width='ghi_Chu' data-tooltip='".$rowc['note_book']."'>Xem</p>";
+                            }
+                        echo  "</td>
+
+                            
                             <td >
-                                <button type='button' class='btn btn-info btn-sm' data-toggle='modal' data-target='#phantho".$rowc['id_cus']."' style='margin-top:5px; padding:5px 14px;'>Phân</button>
+                                <button type='button' class='btn btn-info btn-sm tooltipButton cls_btn' data-tooltip='Phân Lịch' data-toggle='modal' data-target='#phantho".$rowc['id_cus']."'><i class='fa fa-plus'></i></button>
                                 <!-- Modal -->
                                 <div id='phantho".$rowc['id_cus']."' class='modal fade' role='dialog'>
                                     <div class='row'>
@@ -95,7 +107,7 @@ echo "
                                 </div>";
                                 // Gap doi lich da dat 
                                 echo"
-                                <button type='button' data-toggle='modal' data-target='#my2".$rowc['id_cus']."'class='btn btn-sm btn-info' style='margin-top:5px; padding:5px 23px;'><i class='fa fa-copy'></i></button>
+                                <button type='button' data-toggle='modal' data-target='#my2".$rowc['id_cus']."'class='btn btn-sm btn-info tooltipButton cls_btn' data-tooltip='Nhân đôi lịch'><i class='fa fa-copy'></i></button>
                                 <!-- Modal -->
                                 <div id='my2".$rowc['id_cus']."' class='modal fade' role='dialog'>
                                     <!-- Modal content-->
@@ -155,7 +167,7 @@ echo "
                                 // ket thuc gap doi lich da dat
                                 // sua thong tin lich KH 
                                 echo"
-                                <button type='button' data-toggle='modal' data-target='#my1".$rowc['id_cus']."'class='btn btn-sm btn-success tooltipButton' data-tooltip='Sửa' style='margin-top:5px; padding:5px 23px;'><i class='fa fa-pencil' aria-hidden='true'></i></button>
+                                <button type='button' data-toggle='modal' data-target='#my1".$rowc['id_cus']."'class='btn btn-sm btn-success tooltipButton cls_btn' data-tooltip='Sửa'><i class='fa fa-pencil' aria-hidden='true'></i></button>
                                 <!-- Modal -->
                                 <div id='my1".$rowc['id_cus']."' class='modal fade' role='dialog'>
                                     <!-- Modal content-->
@@ -180,7 +192,7 @@ echo "
                                                 <label for='ycKH'><b>Yêu Cầu Công Việc</b></label>
                                                 <input type='text' class='form-control' name = 'ycKH' value='".$rowc['yc_book']."'>  
                                                 <label for='note_book'><b>Ghi Chú Công Việc </b></label>
-                                                <textarea class='form-control' type='text' name='note_book' value='".$rowc['note_book']."' ></textarea>
+                                                <input class='form-control' type='text' name='note_book' value='".$rowc['note_book']."' ></input>
                                                 <label for='date_book'><b>Thời gian  : </b></label>
                                                 <input type='date' class='form-control' name='date_book' value=" ;echo $rowc['date_book']."><br>
                                                 <label for='date_book'><b>Loại CV: </b></label>
@@ -214,7 +226,7 @@ echo "
                                 "; 
                                 // ket thuc sua thong tin lich 
                                 echo"
-                                <button type='button' class='btn btn-sm btn-danger' data-toggle='modal' data-target='#my".$rowc['id_cus']."'style='margin-top:5px; padding: 5px 23px;'><i class='fa fa-trash' aria-hidden='true'></i></button>
+                                <button type='button' class='btn btn-sm btn-danger tooltipButton cls_btn' data-tooltip='Hủy Lịch' data-toggle='modal' data-target='#my".$rowc['id_cus']."'><i class='fa fa-trash' aria-hidden='true'></i></button>
                                 <!-- Modal -->
                                 <div id='my".$rowc['id_cus']."' class='modal fade' role='dialog'>
                                     <div class='modal-dialog'>
@@ -248,16 +260,17 @@ echo "
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr >
-                        <th class="col-md-1">Yêu Cầu CV</th>
+                        <th class="col-md-1">Yêu Cầu</th>
                         <th class="col-md-1">Tên KH</th>
                         <th class="col-md-2">Địa Chỉ</th>
                         <th class="col-md-1">Quận</th>
-                        <th class="col-md-1">Số Điện Thoại</th>
+                        <th class="col-md-1">SĐT</th>
                         <th class="col-md-1">Ghi chú</th>
                         <th class="col-md-1">Tên Thợ</th>
                         <th class="col-md-1">Phụ</th>
                         <th class="col-md-1">Thu Chi</th>
                         <th class="col-md-2">Thay đổi</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -268,16 +281,20 @@ echo "
                             <td><?php echo htmlspecialchars($row['add_cus']); ?></td>
                             <td><?php echo htmlspecialchars($row['des_cus']); ?></td>
                             <td><?php echo htmlspecialchars($row['phone_cus']); ?></td>
-                            <td><?php echo htmlspecialchars($row['note_book']); ?></td>
+                            <td><?php if($row['note_book']==null){
+                                // code 
+                            }else{
+                                echo "<p class='tooltipButton text-center' data-width='ghi_Chu' data-tooltip='".$row['note_book']."'>Xem</p>";
+                            }?></td>
                             <td><?php echo htmlspecialchars($row['name_worker']); ?></td>
                             <td><?php echo htmlspecialchars($row['phu']); ?></td>
-                            <td>
+                            <td class="text-center" style="padding-top:3px;">
                                 <?php 
-                                    echo "<a href ='".BASE_URL."includes/logic/thu_chi.php?id_work=".$row['id_work']."&idq=1&ki=1'class='btn btn-sm btn-success'>Nhập</a>";
-                                    echo " </td> <td>";
+                                    echo "<a href ='".BASE_URL."includes/logic/thu_chi.php?id_work=".$row['id_work']."&idq=1&ki=1'class='btn btn-sm btn-success cls_btn'><i class='glyphicon glyphicon-open'></i></a>";
+                                    echo " </td> <td style='padding-top:3px;padding-left: 1px; padding-right:1px; text-align:center;'>";
                                     // sua thong tin lich da phan 
                                     echo"
-                                <button type='button' data-toggle='modal' data-target='#my1".$row['id_cus']."'class='btn btn-sm btn-warning' style=' padding:5px 25px;'><i class='fa fa-pencil' aria-hidden='true'></i></button>
+                                <button type='button' data-toggle='modal' data-target='#my1".$row['id_cus']."'class='btn btn-sm btn-warning tooltipButton cls_btn' data-tooltip='Sửa'><i class='fa fa-pencil' aria-hidden='true'></i></button>
                                 <!-- Modal -->
                                 <div id='my1".$row['id_cus']."' class='modal fade' role='dialog'>
                                     <!-- Modal content-->
@@ -334,8 +351,8 @@ echo "
                                     </div>
                                 </div>
                                 "; // ket thuc sua thong tin lich da phan
-                                    echo"<a href ='".BASE_URL."includes/logic/deleteKH.php?hd=ks&id_cus=".$row['id_cus']."'class='btn btn-sm btn-primary' style='padding: 5px 15px;'>KSát</a>";
-                                    echo"<button type='button' class='btn btn-sm btn-danger' data-toggle='modal' data-target='#my".$row['id_cus']."'style='margin-top: 5px; padding: 5px 22px; margin-right: 1px;'><i class='fa fa-trash' aria-hidden='true'></i></button>";
+                                echo"<a href ='".BASE_URL."includes/logic/deleteKH.php?hd=ks&id_cus=".$row['id_cus']."'class='btn btn-sm btn-primary cls_btn tooltipButton' data-tooltip='Khảo Sát' style=' margin-right: 4px;'><i class='fa fa-list-alt'></i></a>";
+                                    echo"<button type='button' class='btn btn-sm btn-danger tooltipButton cls_btn' data-tooltip='Hủy Lịch' data-toggle='modal' data-target='#my".$row['id_cus']."'style='margin-right: 1px;'><i class='fa fa-trash' aria-hidden='true'></i></button>";
                                     echo "
                                         <!-- Modal -->
                                         <div id='my".$row['id_cus']."' class='modal fade' role='dialog'>
@@ -360,7 +377,7 @@ echo "
                                                 </div>
                                             </div>
                                         </div>";
-                                    echo "<a href ='".BASE_URL."includes/logic/thuhoi.php?id_cus=".$row['id_cus']."&ki=1'class='btn btn-sm btn-warning' style='padding: 5px 25px; margin-top: 5px;'><i class='fa fa-ban'></i></a>";
+                                    echo "<a href ='".BASE_URL."includes/logic/thuhoi.php?id_cus=".$row['id_cus']."&ki=1'class='btn btn-sm btn-warning tooltipButton cls_btn' data-tooltip='Trả Lịch'><i class='fa fa-rotate-left'></i></a>";
                                 ?>
                             </td>
                         </tr>

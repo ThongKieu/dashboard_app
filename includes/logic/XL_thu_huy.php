@@ -2,7 +2,7 @@
 
     include '../../config.php';
     $id = $_GET['id_cus'];
-	$do = $_get['do'];
+	$do = $_GET['do'];
     $dateup= date('Y-m-d');
    try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password,$options);

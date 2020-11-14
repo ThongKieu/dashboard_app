@@ -56,7 +56,7 @@
 }
 .btnThemKH{
         position: fixed;
-        top: 90%;
+        top: 80%;
         right: 25px;
         transform: translateY(-50%);
         border-radius: 50%;
@@ -75,6 +75,23 @@
     $('[data-toggle="tooltip"]').tooltip()
     }
   )
+  function validate(evt) {
+  var theEvent = evt || window.event;
+
+  // Handle paste
+  if (theEvent.type === 'paste') {
+      key = event.clipboardData.getData('text/plain');
+  } else {
+  // Handle key press
+      var key = theEvent.keyCode || theEvent.which;
+      key = String.fromCharCode(key);
+  }
+  var regex = /[0-9]|\./;
+  if( !regex.test(key) ) {
+    theEvent.returnValue = false;
+    if(theEvent.preventDefault) theEvent.preventDefault();
+  }
+}
 </script>
 <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -180,7 +197,7 @@
         <!-- ./col -->
       </div>
       <!-- bat dau  -->
-      <button type='button' class='btn btn-info btnThemKH' data-toggle='modal' data-target='#hihi'><i class='fa fa-plus'></i></button>
+      <button type='button' class='btn btn-info btnThemKH tooltipButton' data-tooltip='Đặt Lịch' data-toggle='modal' data-target='#hihi'><i class='fa fa-plus'></i></button>
       <!-- Modal -->
       <div class='modal fade' id='hihi' role='dialog'>
           <div class='modal-dialog'>
@@ -226,12 +243,12 @@
                               </select>
                               <?php echo "<input type='hidden' value='".$ruser['real_name']."' name='nv_add'>"?>
                               <label for='telKH'><b>Số Điện Thoại Khách Hàng</b></label>
-                              <input type='tel' placeholder='Số Điện Thoại Khách Hàng' name='telKH' required>
+                              <input type='text' placeholder='Số Điện Thoại Khách Hàng' name='telKH' maxlength="12"  onkeypress='validate(event)' required/>
                               <label for='nameKH'><b>Tên Khách Hàng</b></label>
                               <input type='text' placeholder='Tên Khách Hàng' name='nameKH' required>
                               <label for='ycKH'><b>Ghi Chú Công Việc</b></label>
                               <textarea type='text' class="form-control"  placeholder='Ghi chú' name='note_book' rows="3"></textarea>
-                              <label for='date_book'><b>Thời gian  : </b></label>
+                              <label for='date_book'><b>Thời gian: </b></label>
                               <div class='row'>
                                   <div class='col-sm-6'>
                                       <?php echo "<input type='date' class='form-control' name='date_book' value="; echo date('Y-m-d').">"?>
@@ -261,7 +278,7 @@
                                           <button type='submit' class='btn btn-success' style='width:100%'>Thêm</button>
                                       </div>
                                       <div class='col-md-6'>
-                                          <button class='btn btn-info' data-dismiss='modal' aria-label='Close' style='width:100%'>Đóng</button>
+                                          <button class='btn cancel' data-dismiss='modal' aria-label='Close' style='width:100%'>Đóng</button>
                                       </div>
                                   </div>
                               </div>

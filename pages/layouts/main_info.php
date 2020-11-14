@@ -105,23 +105,23 @@
   elseif($a=='search')//tìm kiếm 
   {echo "
     <section >
-      <div class='box-body table-responsive'>";
+      <div class='box-body table-responsive' style='padding-bottom:50px'>";
         require 'pages/action/search.php';
       echo"  </div>
     </section>";
   }elseif($a=='cho_lanh')
   {
   echo "
-  <section >
-  <!-- /.content -->
-  <section class='col-xs-12'>
-        <div class='box'>
-          <div class='box-header'>
-          <h3 class='box-title'>Lịch Chờ Điện Lạnh</h3> 
-          </div>
-          <!-- /.box-header -->
-          <div class='box-body table-responsive'>";
-          require 'function/lich_cho_lanh.php';
+    <section >
+    <!-- /.content -->
+    <section class='col-xs-12'>
+          <div class='box'>
+            <div class='box-header'>
+            <h3 class='box-title'>Lịch Chờ Điện Lạnh</h3> 
+            </div>
+            <!-- /.box-header -->
+            <div class='box-body table-responsive'>";
+            require 'function/lich_cho_lanh.php';
   echo"    <!-- /.box-body -->
      </div>
         <!-- /.box -->
@@ -131,17 +131,17 @@
 elseif($a=='imp')
 {
   echo "
-  <section >
-  <!-- /.content -->
-  <div class='col-xs-12'>
-        <div class='box'>
-          <div class='box-header'>
-          <h3 class='box-title'>Nhập Dữ liệu từ file Exel </h3> 
-            
-          </div>
-          <!-- /.box-header -->
-          <div class='box-body table-responsive'>";
-  require 'includes/importfile.php';
+    <section >
+    <!-- /.content -->
+    <div class='col-xs-12'>
+          <div class='box'>
+            <div class='box-header'>
+            <h3 class='box-title'>Nhập Dữ liệu từ file Exel </h3> 
+              
+            </div>
+            <!-- /.box-header -->
+            <div class='box-body table-responsive'>";
+    require 'includes/importfile.php';
   echo"    <!-- /.box-body -->
      </div>
         <!-- /.box -->

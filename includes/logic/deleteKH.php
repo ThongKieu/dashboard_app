@@ -32,7 +32,7 @@ elseif($hd=='huy')
   catch (PDOException $e) {
     die("Could not connect to the database $dbname :" . $e->getMessage());
   }
-}
+} 
 
 elseif($hd=='cho')
 {

@@ -44,8 +44,11 @@ catch (PDOException $e)
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.rawgit.com/mervick/emojionearea/master/dist/emojionearea.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <!-- link css tooltip  -->
+  <link rel="stylesheet" href="css/tooltip_btn.css">
   <style>
     html{
       height: 100%;  
@@ -61,42 +64,7 @@ catch (PDOException $e)
       position: absolute; 
       bottom: 0;
     }
-    .tooltipButton{
-      position: relative;
-    }
-    .tooltipButton::after, .tooltipButton::before{
-      --scale: 0;
-    position: absolute;
-    top: -120%;
-    left: 7%;
-    transform: translateX(0%) translateY(0%) scale(var(--scale));
-    transition: 150ms transform;
-    transform-origin: bottom center;
-    }
-    .tooltipButton::after{
-      content: attr(data-tooltip);
-    color: white;
-    width: 10%;
-    padding: 5px 15px;
-    width: max-content;
-    max-width: 100%;
-    border-radius: 3px;
-    background: black;
-    }
-    .tooltipButton:hover::before,
-    .tooltipButton:hover::after {
-      --scale: 1;
-      --tooltip-color: red;
-      --arrow-size: 10px;
-      
-    }
-    .tooltipButton::after {
-      content: '';
-      width: 10px;
-      height: 10px;
-      border: var(--arrow-size) solid transparent;
-      border-top-color: var(--tooltip-color) ;
-    }
+    
   </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini sidebar-collapse" >
