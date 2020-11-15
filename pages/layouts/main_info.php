@@ -1,23 +1,9 @@
 <?php include 'main_head.php';?>
+
 <!-- /.row -->
 <!-- Main row -->
   <div class="row">
     <!-- Left col -->
-    <style>
-      .btnThemKH{
-        position: fixed;
-        top: 90%;
-        right: 25px;
-        transform: translateY(-50%);
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        margin: 0;
-        padding: 0;
-        z-index: 1;
-      }
-      
-    </style>
     <?php if(!isset($_GET['action'])){
       echo "
       <section>

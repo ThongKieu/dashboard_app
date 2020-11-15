@@ -2,6 +2,7 @@
     .cls_btn{
         margin-top:5px; padding:5px 10px;
     }
+    
 </style>
 <?php 
 try {
@@ -112,11 +113,11 @@ echo "
                                 <div id='my2".$rowc['id_cus']."' class='modal fade' role='dialog'>
                                     <!-- Modal content-->
                                     <div class='modal-content' style='position: fixed;top: 20px;left: 35%;text-align: left;width: 30%;'>
-                                            <div class='modal-header'>
-                                                <button type='button' class='close' data-dismiss='modal'>&times;</button>
-                                                <h4 class='modal-title text-center'>Nhân Đôi Lịch Khách Hàng</h4>
+                                        <div class='modal-header'>
+                                            <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                                            <h4 class='modal-title text-center'>Nhân Đôi Lịch Khách Hàng</h4>
                                             </div>
-                                            <div class='modal-body'>
+                                         <div class='modal-body'>
                                             <form action='includes/logic/up_tt_KH.php' id='frm_sua_KH' method='POST' class ='form-container'>
                                                 <input type='hidden' class='form-control' name ='id_cus' value='".$rowc['id_cus']."'>
                                                 <input type='hidden'class='form-control' name ='nv' value='".$ruser['real_name']."'>

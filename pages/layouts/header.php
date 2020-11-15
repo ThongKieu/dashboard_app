@@ -54,6 +54,7 @@ catch (PDOException $e)
       height: 100%;  
       
     }
+    
     *{font-family: 'Times New Roman', Times, serif;}
     body{
       min-height: 100vh; 
@@ -63,6 +64,11 @@ catch (PDOException $e)
       width: 97.5%;
       position: absolute; 
       bottom: 0;
+    }
+    .main-header{
+      width:100%;
+      position:absolute;
+      top:0;
     }
     
   </style>

@@ -29,6 +29,16 @@
   overflow: auto;
 
 }
+@media screen and (max-height: 768px){
+        .modal-content{
+            width: 100%;
+            height: 90vh;
+            overflow: auto;
+        }
+    }
+@media screen and (max-height:768px) {
+  .my-custom-scrollbar {height:85vh;}
+}
 .smooth_scroll{
   position: fixed;
   top: 50%;
@@ -60,15 +70,26 @@
         right: 25px;
         transform: translateY(-50%);
         border-radius: 50%;
-        width: 60px;
-        height: 60px;
+        width: 45px;
+        height: 45px;
         margin: 0;
         padding: 0;
         z-index: 1;
       }
-      .modal-title{
+.modal-title{
         text-align: center;
-      }
+}
+@media screen and (max-height:768px) {
+  .content{
+    margin-top: 50px;
+    
+  }
+  .content-wrapper{
+    min-height: 0px !important;
+    margin-bottom:0;
+  }
+}
+
 </style>
 <script>
   $(function () {
