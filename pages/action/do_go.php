@@ -1,34 +1,35 @@
 <?php 
     
     
-   try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password,$options);
+    try {
+
+        // Đổ dữ liệu lịch
+        $sqlc = "SELECT id_cus,name_cus, phone_cus, add_cus, des_cus, yc_book, note_book, kind_book, date_book , nv_add
+        FROM info_cus where kind_book like '%gỗ%' and  flag_book = '0' and date_book like '%$time_search%' and flag_status is NULL order by id_cus DESC";  
+        $qc = $conn->query($sqlc);
+        $qc->setFetchMode(PDO::FETCH_ASSOC);
     
-    $sql = "SELECT info_cus.id_cus,info_cus.name_cus, info_cus.phone_cus,info_cus.add_cus, info_cus.des_cus,info_cus.yc_book, info_cus.note_book,
-             info_worker.name_worker,info_cus.date_book, work_do.id_work, nv_phan FROM work_do,info_worker,info_cus 
-             WHERE  info_cus.date_book like '%$timelive%'and work_do.id_worker = info_worker.id_worker and work_do.id_cus = info_cus.id_cus and info_cus.kind_book like '%Gỗ%'
-             and info_cus.flag_book = '1' and  work_do.sum_thu = '0' ORDER BY info_worker.name_worker ASC ";
-             
-    $q = $pdo->query($sql);
-    $q->setFetchMode(PDO::FETCH_ASSOC);
-    if(empty($q))
-    {
-        $sql = "SELECT info_cus.id_cus,info_cus.name_cus, info_cus.phone_cus,info_cus.add_cus, info_cus.des_cus,info_cus.yc_book, info_cus.note_book,
-             info_worker.name_worker,info_cus.date_book, work_do.id_work,nv_phan FROM work_do,info_worker,info_cus 
-             WHERE  work_do.sum_thu = 0 and work_do.id_worker = info_worker.id_worker and work_do.id_cus = info_cus.id_cus and info_cus.kind_book like '%Gỗ%'
-             and info_cus.flag_book = '1' order by info_worker.name_worker ASC";
-             
-    $q = $pdo->query($sql);
-    $q->setFetchMode(PDO::FETCH_ASSOC);
-    }
-    $sql3 = "SELECT id_cus,name_cus, phone_cus, add_cus, des_cus, yc_book, note_book, kind_book, date_book , nv_add
-     FROM info_cus where kind_book like '%go%' and  flag_book = '0' and date_book like '%$time_search%' and flag_status is NULL order by des_cus DESC ";
-    $q3 = $conn->query($sql3);
-    $q3->setFetchMode(PDO::FETCH_ASSOC);
-    $tho= $conn->prepare("select * FROM info_worker where status_worker = 0 and today_off = 0  order by name_worker ASC ");
+        // Dữ liệu thợ
+        $tho= $conn->prepare("select * FROM info_worker where status_worker = 0 and today_off = 0  order by name_worker ASC ");
         $tho->setFetchMode(PDO::FETCH_ASSOC); // set kiểu mảng cho giá trị trả về
         $tho->execute();
         $rs = $tho->fetchAll();
+        
+        // đổ toàn bộ dự liệu thu về vào mảng
+        $sql = "SELECT info_cus.id_cus,info_cus.name_cus, info_cus.phone_cus,info_cus.add_cus, info_cus.des_cus,info_cus.yc_book, info_cus.note_book,info_worker.name_worker,info_cus.date_book, work_do.id_work, nv_phan, phu, sum_thu, sum_chi, thongtinthem, note_work, thanh_toan FROM work_do,info_worker,info_cus WHERE  info_cus.date_book like '%$timelive%'and work_do.id_worker = info_worker.id_worker and work_do.id_cus = info_cus.id_cus and info_cus.kind_book like '%gỗ%'
+        and info_cus.flag_book = '1' and  work_do.sum_thu = '0'and info_cus.flag_status is NULL ORDER BY info_worker.name_worker ASC ";
+        $q = $conn->query($sql);
+        $q->setFetchMode(PDO::FETCH_ASSOC);
+        if(empty($q))
+        {
+            $sql = "SELECT info_cus.id_cus,info_cus.name_cus, info_cus.phone_cus,info_cus.add_cus, info_cus.des_cus,info_cus.yc_book, info_cus.note_book,
+                info_worker.name_worker,info_cus.date_book, work_do.id_work, nv_phan,phu FROM work_do,info_worker,info_cus 
+                WHERE  work_do.sum_thu = 0 and work_do.id_worker = info_worker.id_worker and work_do.id_cus = info_cus.id_cus and info_cus.kind_book like '%gỗ%'
+                and info_cus.flag_book = '1' order by info_worker.name_worker ASC";
+                
+            $q = $conn->query($sql);
+            $q->setFetchMode(PDO::FETCH_ASSOC);
+        }
 } catch (PDOException $e) {
     die("Could not connect to the database $dbname :" . $e->getMessage());
 }
@@ -291,7 +292,66 @@ echo "
                             }?></td>
                     <td><?php echo htmlspecialchars($row['name_worker']); ?></td>
                     <td class="text-center" style="padding-top:3px;"><?php 
-                            echo "<a href ='".BASE_URL."includes/logic/thu_chi.php?id_work=".$row['id_work']."&idq=1&ki=3'class='btn btn-sm btn-success cls_btn'><i class='glyphicon glyphicon-open'></i></a>";
+                            // thu chi
+                            echo "<button type='button' data-toggle='modal' data-target='#my3".$row['id_cus']."'class='btn btn-sm btn-success tooltipButton cls_btn' data-tooltip='Nhập'><i class='glyphicon glyphicon-open'></i></button>
+                            <!-- Modal -->
+                            <div id='my3".$row['id_cus']."' class='modal fade' role='dialog'>
+                                <!-- Modal content-->
+                                <div class='modal-content' style='position: fixed;top: 20px;left: 35%;text-align: left;width: 30%;'>
+                                        <div class='modal-header'>
+                                            <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                                            <h3 class='modal-title text-center'>Nhập Thông Tin Thu Chi</h3>
+                                        </div>
+                                        <div class='modal-body'>
+                                        <form action='includes/logic/XL_thu_chi.php' id='frm_sua_KH' method='POST' class ='form-container'>
+                                        <input type='hidden' name ='id_work' value=".$row['id_work']." >
+                                            <input type='hidden' name ='note_work' value=''>
+                                            <input type='hidden'class='form-control' name ='nv' value='".$ruser['real_name']."'>
+                                            <input type='hidden' name ='tentho' value='".$row['name_worker']."'>
+                                            <label for='telKH'><b>Địa Chỉ</b></label>
+                                            <input type='text' name ='telKH' value='".$row['add_cus']."  ".$row['des_cus']."' readonly>
+                                            <label for='telKH'><b>Số Điện Thoại Khách Hàng</b></label>
+                                            <input type='text' name ='telKH' value=".$row['phone_cus']." readonly>
+                                            <label for='date_book'><b>Thời gian  : </b></label>
+                                            <input type='text'  name='date_book' value=".$timelive." readonly><br>
+                                            <label for='sumthu'><b>Tổng Thu  : </b></label>
+                                            <input type='text' min='0.00' max='1000000000.00' step='0.01'  name='sumthu' value=".$row['sum_thu']." id='sumthu'/>
+                                            <label for='text'><b>Tổng Chi  : </b></label>
+                                            <input type='text' min='0.00' max='1000000000.00' step='0.01'  name='sumchi' value=".$row['sum_chi']." id='sumchi'>
+                                            <label for='note_work'><b>Thông tin Thêm : </b></label>
+                                            <input type='text'  name='thongtinthem' value='".$row['thongtinthem']."'><br>
+                                            <label for='note_work'><b>Phản Hồi Của Khách Hàng : </b></label>
+                                            <input type='text'  name='note_work' value='".$row['note_work']."'>
+                                            <label for='date_book'><b>Tình trạng thanh toán  : </b></label><br>
+                                             
+                                            <div class='row'>
+                                                <div class='col-md-6 text-center'>
+                                                    <label class='check-container1'>Chưa thanh toán<input type='radio'";
+                                                    if($row['thanh_toan']=='1')
+                                                    {
+                                                        echo "checked='checked'";
+                                                    } echo "name='thanh_toan' value='1'>
+                                                 </div>
+                                                <div class='col-md-6 text-center'>
+                                                    <label class='check-container1'>Đã thanh toán
+                                                    <input type='radio'"; 
+                                                    if($row['thanh_toan']=='0'){
+                                                        echo "checked='checked'";
+                                                    } 
+                                                    echo" name='thanh_toan' value='0'>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class='modal-footer'>
+                                            <div class='row'>
+                                                <div class='col-md-6 text-center'><button type='submit' value='submit' class='btn btn-sm btn-success' style='width:150px; font-size: 14px'>Thay Đổi Thông tin</button></div>
+                                                <div class='col-md-6 text-center'><button type='button' class='btn btn-danger' style='width:150px;' data-dismiss='modal'>Hủy</button></div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>";
+                            // ket thuc nhap thu chi";
                             echo " </td> <td style='padding-top:3px;padding-left: 1px; padding-right:1px; text-align:center;'>";
 							// sua thong tin lich da phan 
                             echo"

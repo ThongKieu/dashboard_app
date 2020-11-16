@@ -23,15 +23,12 @@ try {
 	if(isset($_GET['tentho'])){$tentho = $_GET['tentho'];}
 	   else{$tentho= " ";}
 	if(isset($_GET['time_search'])){$time_search = $_GET['time_search'];}
-	  
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password,$options);
-    
     $sql = "SELECT id_cus,id_work,sum_chi, sum_thu, note_work,thanh_toan, thongtinthem FROM work_do  WHERE id_work ='$id'";
-    
-        $q = $pdo->query($sql);
+    $q = $pdo->query($sql);
     $q->setFetchMode(PDO::FETCH_ASSOC);
     $rs = $q->fetch();
-    if(isset($q))
+  if(isset($q))
     {
        
         $idc = $rs['id_cus'];
@@ -75,56 +72,36 @@ try {
         echo " <h2>Sửa Thu Chi</h2>";}
     elseif($idq==3){
         echo " <h2>Phản hồi</h2>";}
-
-      
       echo "
         <input type='hidden' name ='id_work' value=".$rs['id_work']." >
         <input type='hidden' name ='note_work' value=''>
-		<input type='hidden' name ='ki' value='".$ki."'>
-		<input type='hidden' name ='tentho' value='".$tentho."'>
-		<input type='hidden' name = 'time_search' value= '".$time_search."'>
+        <input type='hidden' name ='ki' value='".$ki."'>
+        <input type='hidden' name ='tentho' value='".$tentho."'>
+        <input type='hidden' name = 'time_search' value= '".$time_search."'>
         <label for='telKH'><b>Địa Chỉ</b></label>
         <input type='text' name ='telKH' value='".$row['add_cus']."  ".$row['des_cus']."' readonly>
         <label for='telKH'><b>Số Điện Thoại Khách Hàng</b></label>
         <input type='text' name ='telKH' value=".$row['phone_cus']." readonly>
         <label for='date_book'><b>Thời gian  : </b></label>
         <input type='text'  name='date_book' value=".$timelive." readonly><br>
-        
         <label for='sumthu'><b>Tổng Thu  : </b></label>
         <input type='currency1' min='0.00' max='1000000000.00' step='0.01'  name='sumthu' value=".$rs['sum_thu']." id='sumthu'>
         <label for='text'><b>Tổng Chi  : </b></label>
-        <input type='text' min='0.00' max='1000000000.00' step='0.01'  name='sumchi' value=".$rs['sum_chi']." id= 'sumchi'>
-		<label for='note_work'><b>Thông tin Thêm : </b></label>
-        
+        <input type='text' min='0.00' max='1000000000.00' step='0.01'  name='sumchi' value=".$rs['sum_chi']." id='sumchi'>
+		    <label for='note_work'><b>Thông tin Thêm : </b></label>
         <input type='text'  name='thongtinthem' value='".$rs['thongtinthem']."'><br>
         <label for='note_work'><b>Phản Hồi Của Khách Hàng : </b></label>
-        
-        <input type='text'  name='note_work' value='".$rs['note_work']."'><br>
-        <label for='date_book'><b>Tình trạng thanh toán  : </b></label>
-          <br>
-                    <label class='check-container1'>Chưa thanh toán 
-                    <input type='radio'"; if($rs['thanh_toan']=='1'){echo "checked='checked'";} echo "name='thanh_toan' value='1'>
-                    
-            
-         
-                      <label class='check-container1'>Đã thanh toán
-                        <input type='radio'"; if($rs['thanh_toan']=='0'){echo "checked='checked'";} echo" name='thanh_toan' value='0'>
-                        
-             
-          ";
-     
-
-
-        echo "<button type='submit' class='btn btn-sm btn-success'>Thay Đổi Thông tin</button>
-        
-        <button type='button' class='btn cancel' onclick='history.back()'>Hủy</button>
+        <input type='text'  name='note_work' value='".$rs['note_work']."'>
+        <label for='date_book'><b>Tình trạng thanh toán  : </b></label><br>
+        <label class='check-container1'>Chưa thanh toán 
+        <input type='radio'"; if($rs['thanh_toan']=='1'){echo "checked='checked'";} echo "name='thanh_toan' value='1'>
+        <label class='check-container1'>Đã thanh toán
+        <input type='radio'"; if($rs['thanh_toan']=='0'){echo "checked='checked'";} echo" name='thanh_toan' value='0'>";
+      echo "<button type='submit' class='btn btn-sm btn-success'>Thay Đổi Thông tin</button>
+          <button type='button' class='btn cancel' onclick='history.back()'>Hủy</button>
         <script src='https://code.jquery.com/jquery-latest.js'></script>
         </form>";
-        
-   
-      
-    
-    ?>
+      ?>
 
 <script>
 $('input').on('input', function(e){        

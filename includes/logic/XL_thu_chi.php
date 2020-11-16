@@ -26,7 +26,7 @@ try {
 		   if($time_seach != NULL){
        		header("location: " . BASE_URL . "index.php?action=".$ki."&tentho=".$tentho);}
 		   else
-			   header("location: " . BASE_URL . "index.php?action=".$ki."&time_search=".$time_search);
+			   header("location: " . BASE_URL . "index.php");
            
      }
 } catch (PDOException $e) {

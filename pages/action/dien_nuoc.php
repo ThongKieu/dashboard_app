@@ -2,20 +2,25 @@
     .cls_btn{
         margin-top:5px; padding:5px 10px;
     }
-    
 </style>
 <?php 
 try {
+
+    // Đổ dữ liệu lịch
     $sqlc = "SELECT id_cus,name_cus, phone_cus, add_cus, des_cus, yc_book, note_book, kind_book, date_book , nv_add
-    FROM info_cus where kind_book like '%nuoc%' and  flag_book = '0' and date_book like '%$time_search%' and flag_status is NULL order by id_cus DESC";
+    FROM info_cus where kind_book like '%nuoc%' and  flag_book = '0' and date_book like '%$time_search%' and flag_status is NULL order by id_cus DESC";  
     $qc = $conn->query($sqlc);
     $qc->setFetchMode(PDO::FETCH_ASSOC);
+
+    // Dữ liệu thợ
     $tho= $conn->prepare("select * FROM info_worker where status_worker = 0 and today_off = 0  order by name_worker ASC ");
     $tho->setFetchMode(PDO::FETCH_ASSOC); // set kiểu mảng cho giá trị trả về
     $tho->execute();
-    $rs = $tho->fetchAll();// đổ toàn bộ dự liệu thu về vào mảng
-    $sql = "SELECT info_cus.id_cus,info_cus.name_cus, info_cus.phone_cus,info_cus.add_cus, info_cus.des_cus,info_cus.yc_book, info_cus.note_book,info_worker.name_worker,info_cus.date_book, work_do.id_work, nv_phan, phu FROM work_do,info_worker,info_cus WHERE  info_cus.date_book like '%$timelive%'and work_do.id_worker = info_worker.id_worker and work_do.id_cus = info_cus.id_cus and info_cus.kind_book like '%nuoc%'
-    and info_cus.flag_book = '1' and  work_do.sum_thu = '0'and info_cus.flag_status is NULL ORDER BY info_worker.name_worker ASC ";
+    $rs = $tho->fetchAll();
+    
+    // đổ toàn bộ dự liệu thu về vào mảng
+    $sql = "SELECT info_cus.id_cus,info_cus.name_cus, info_cus.phone_cus,info_cus.add_cus, info_cus.des_cus,info_cus.yc_book, info_cus.note_book,info_worker.name_worker,info_cus.date_book, work_do.id_work, nv_phan, phu, sum_thu, sum_chi, thongtinthem, note_work, thanh_toan FROM work_do,info_worker,info_cus WHERE  info_cus.date_book like '%$timelive%'and work_do.id_worker = info_worker.id_worker and work_do.id_cus = info_cus.id_cus and info_cus.kind_book like '%nuoc%'
+    and info_cus.flag_book = '1' and  work_do.sum_thu = '0'and info_cus.flag_status is NULL and date_book like '%$time_search%' ORDER BY info_worker.name_worker ASC ";
     $q = $conn->query($sql);
     $q->setFetchMode(PDO::FETCH_ASSOC);
     if(empty($q))
@@ -23,7 +28,7 @@ try {
         $sql = "SELECT info_cus.id_cus,info_cus.name_cus, info_cus.phone_cus,info_cus.add_cus, info_cus.des_cus,info_cus.yc_book, info_cus.note_book,
             info_worker.name_worker,info_cus.date_book, work_do.id_work, nv_phan,phu FROM work_do,info_worker,info_cus 
             WHERE  work_do.sum_thu = 0 and work_do.id_worker = info_worker.id_worker and work_do.id_cus = info_cus.id_cus and info_cus.kind_book like '%nuoc%'
-            and info_cus.flag_book = '1' order by info_worker.name_worker ASC";
+            and info_cus.flag_book = '1' and date_book like '%$time_search%' order by info_worker.name_worker ASC";
             
         $q = $conn->query($sql);
         $q->setFetchMode(PDO::FETCH_ASSOC);
@@ -31,9 +36,13 @@ try {
 } catch (PDOException $e) {
  die("Could not connect to the database $dbname :" . $e->getMessage());
 }
+
+echo $time_search;
 echo " 
+
 <div class='container-fluid>
     <div class='row'>
+
         <div class = 'col-xl-6 col-lg-6 col-md-6 col-sm-12' style='padding-right:7px;'>
             <h3 style='color: #00c0ef; padding:5px 10px 5px 10px;text-align: center;font-weight: 600;border: 1px solid #d2d6de; border-radius:5px; margin-top:5px; box-shadow: 5px 5px #d2d6de;'>Lịch Điện Nước Chưa Xử Lý</h3>
             <table class='table table-bordered table-hover'>
@@ -66,7 +75,7 @@ echo "
 
                             
                             <td >
-                                <button type='button' class='btn btn-info btn-sm tooltipButton cls_btn' data-tooltip='Phân Lịch' data-toggle='modal' data-target='#phantho".$rowc['id_cus']."'><i class='fa fa-plus'></i></button>
+                                <button disabled type='button' class='btn btn-info btn-sm tooltipButton cls_btn' data-tooltip='Phân Lịch' data-toggle='modal' data-target='#phantho".$rowc['id_cus']."'><i class='fa fa-plus'></i></button>
                                 <!-- Modal -->
                                 <div id='phantho".$rowc['id_cus']."' class='modal fade' role='dialog'>
                                     <div class='row'>
@@ -145,7 +154,7 @@ echo "
                                                     </div>
                                                     <div class='col-sm-4 text-center'>
                                                         <label class='check-container1'>Điện Nước
-                                                            <input type='radio'"; if($rowc['kind_book']=='Điện Nước'){echo "checked='checked'";} echo" name='kind_book' value='Điện Nước'>
+                                                        <input type='radio'"; if($rowc['kind_book']=='Điện Nước'){echo "checked='checked'";} echo" name='kind_book' value='Điện Nước'>
                                                         </label>
                                                     </div>
                                                     <div class='col-sm-4 text-center'>
@@ -178,7 +187,7 @@ echo "
                                                 <h4 class='modal-title text-center'>Sửa Thông Tin Lịch Khách Hàng</h4>
                                             </div>
                                             <div class='modal-body'>
-                                            <form action='includes/logic/up_tt_KH.php' id='frm_sua_KH' method='POST' class ='form-container'>
+                                                <form action='includes/logic/up_tt_KH.php' id='frm_sua_KH' method='POST' class ='form-container'>
                                                 <input type='hidden' class='form-control' name ='id_cus' value='".$rowc['id_cus']."'>
                                                 <input type='hidden'class='form-control' name ='nv' value='".$ruser['real_name']."'>
                                                 <input type='hidden'class='form-control' name ='action' value='0'>
@@ -204,7 +213,7 @@ echo "
                                                         </label>
                                                     </div>
                                                     <div class='col-sm-4 text-center'>
-                                                        <label class='check-container1'>Điện Nước
+                                                            <label class='check-container1'>Điện Nước
                                                             <input type='radio'"; if($rowc['kind_book']=='Điện Nước'){echo "checked='checked'";} echo" name='kind_book' value='Điện Nước'>
                                                         </label>
                                                     </div>
@@ -290,8 +299,66 @@ echo "
                             <td><?php echo htmlspecialchars($row['name_worker']); ?></td>
                             <td><?php echo htmlspecialchars($row['phu']); ?></td>
                             <td class="text-center" style="padding-top:3px;">
-                                <?php 
-                                    echo "<a href ='".BASE_URL."includes/logic/thu_chi.php?id_work=".$row['id_work']."&idq=1&ki=1'class='btn btn-sm btn-success cls_btn'><i class='glyphicon glyphicon-open'></i></a>";
+                                <?php // thu chi
+                                    echo "<button type='button' data-toggle='modal' data-target='#my3".$row['id_cus']."'class='btn btn-sm btn-success tooltipButton cls_btn' data-tooltip='Nhập'><i class='glyphicon glyphicon-open'></i></button>
+                                    <!-- Modal -->
+                                    <div id='my3".$row['id_cus']."' class='modal fade' role='dialog'>
+                                        <!-- Modal content-->
+                                        <div class='modal-content' style='position: fixed;top: 20px;left: 35%;text-align: left;width: 30%;'>
+                                                <div class='modal-header'>
+                                                    <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                                                    <h3 class='modal-title text-center'>Nhập Thông Tin Thu Chi</h3>
+                                                </div>
+                                                <div class='modal-body'>
+                                                <form action='includes/logic/XL_thu_chi.php' id='frm_sua_KH' method='POST' class ='form-container'>
+                                                <input type='hidden' name ='id_work' value=".$row['id_work']." >
+                                                    <input type='hidden' name ='note_work' value=''>
+                                                    <input type='hidden'class='form-control' name ='nv' value='".$ruser['real_name']."'>
+                                                    <input type='hidden' name ='tentho' value='".$row['name_worker']."'>
+                                                    <label for='telKH'><b>Địa Chỉ</b></label>
+                                                    <input type='text' name ='telKH' value='".$row['add_cus']."  ".$row['des_cus']."' readonly>
+                                                    <label for='telKH'><b>Số Điện Thoại Khách Hàng</b></label>
+                                                    <input type='text' name ='telKH' value=".$row['phone_cus']." readonly>
+                                                    <label for='date_book'><b>Thời gian  : </b></label>
+                                                    <input type='text'  name='date_book' value=".$timelive." readonly><br>
+                                                    <label for='sumthu'><b>Tổng Thu  : </b></label>
+                                                    <input type='text' min='0.00' max='1000000000.00' step='0.01'  name='sumthu' value=".$row['sum_thu']." id='sumthu'/>
+                                                    <label for='text'><b>Tổng Chi  : </b></label>
+                                                    <input type='text' min='0.00' max='1000000000.00' step='0.01'  name='sumchi' value=".$row['sum_chi']." id='sumchi'>
+                                                    <label for='note_work'><b>Thông tin Thêm : </b></label>
+                                                    <input type='text'  name='thongtinthem' value='".$row['thongtinthem']."'><br>
+                                                    <label for='note_work'><b>Phản Hồi Của Khách Hàng : </b></label>
+                                                    <input type='text'  name='note_work' value='".$row['note_work']."'>
+                                                    <label for='date_book'><b>Tình trạng thanh toán  : </b></label><br>
+                                                     
+                                                    <div class='row'>
+                                                        <div class='col-md-6 text-center'>
+                                                            <label class='check-container1'>Chưa thanh toán<input type='radio'";
+                                                            if($row['thanh_toan']=='1')
+                                                            {
+                                                                echo "checked='checked'";
+                                                            } echo "name='thanh_toan' value='1'>
+                                                         </div>
+                                                        <div class='col-md-6 text-center'>
+                                                            <label class='check-container1'>Đã thanh toán
+                                                            <input type='radio'"; 
+                                                            if($row['thanh_toan']=='0'){
+                                                                echo "checked='checked'";
+                                                            } 
+                                                            echo" name='thanh_toan' value='0'>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class='modal-footer'>
+                                                    <div class='row'>
+                                                        <div class='col-md-6 text-center'><button type='submit' value='submit' class='btn btn-sm btn-success' style='width:150px; font-size: 14px'>Thay Đổi Thông tin</button></div>
+                                                        <div class='col-md-6 text-center'><button type='button' class='btn btn-danger' style='width:150px;' data-dismiss='modal'>Hủy</button></div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>";
+                                    // ket thuc nhap thu chi";
                                     echo " </td> <td style='padding-top:3px;padding-left: 1px; padding-right:1px; text-align:center;'>";
                                     // sua thong tin lich da phan 
                                     echo"
@@ -353,32 +420,32 @@ echo "
                                 </div>
                                 "; // ket thuc sua thong tin lich da phan
                                 echo"<a href ='".BASE_URL."includes/logic/deleteKH.php?hd=ks&id_cus=".$row['id_cus']."'class='btn btn-sm btn-primary cls_btn tooltipButton' data-tooltip='Khảo Sát' style=' margin-right: 4px;'><i class='fa fa-list-alt'></i></a>";
-                                    echo"<button type='button' class='btn btn-sm btn-danger tooltipButton cls_btn' data-tooltip='Hủy Lịch' data-toggle='modal' data-target='#my".$row['id_cus']."'style='margin-right: 1px;'><i class='fa fa-trash' aria-hidden='true'></i></button>";
-                                    echo "
-                                        <!-- Modal -->
-                                        <div id='my".$row['id_cus']."' class='modal fade' role='dialog'>
-                                            <div class='modal-dialog'>
-                                                <!-- Modal content-->
-                                                <div class='modal-content'>
-                                                    <form action='includes/logic/deleteKH.php' method='GET'>
-                                                        <div class='modal-header'>
-                                                            <button type='button' class='close' data-dismiss='modal'>&times;</button>
-                                                            <h4 class='modal-title'>Nguyên Nhân Hủy</h4>
-                                                        </div>
-                                                        <div class='modal-body'>
-                                                            <input type='hidden' name='hd' value='huy'>
-                                                            <input type ='hidden' name='ki' value ='1' />
-                                                            <input type='hidden' name='id_cus' value='".$row['id_cus']."'>
-                                                            <textarea style = 'width:100%' name='nnHuy'></textarea>
-                                                        </div>
-                                                        <div class='modal-footer'>
-                                                            <input type='submit' class='btn btn-default' value='Xác Nhận'/>
-                                                        </div>
-                                                    </form>
-                                                </div>
+                                echo"<button type='button' class='btn btn-sm btn-danger tooltipButton cls_btn' data-tooltip='Hủy Lịch' data-toggle='modal' data-target='#my".$row['id_cus']."'style='margin-right: 1px;'><i class='fa fa-trash' aria-hidden='true'></i></button>";
+                                 echo "
+                                    <!-- Modal -->
+                                    <div id='my".$row['id_cus']."' class='modal fade' role='dialog'>
+                                        <div class='modal-dialog'>
+                                            <!-- Modal content-->
+                                            <div class='modal-content'>
+                                                <form action='includes/logic/deleteKH.php' method='GET'>
+                                                    <div class='modal-header'>
+                                                        <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                                                        <h4 class='modal-title'>Nguyên Nhân Hủy</h4>
+                                                    </div>
+                                                    <div class='modal-body'>
+                                                        <input type='hidden' name='hd' value='huy'>
+                                                        <input type ='hidden' name='ki' value ='1' />
+                                                        <input type='hidden' name='id_cus' value='".$row['id_cus']."'>
+                                                        <textarea style = 'width:100%' name='nnHuy'></textarea>
+                                                    </div>
+                                                    <div class='modal-footer'>
+                                                        <input type='submit' class='btn btn-default' value='Xác Nhận'/>
+                                                    </div>
+                                                </form>
                                             </div>
-                                        </div>";
-                                    echo "<a href ='".BASE_URL."includes/logic/thuhoi.php?id_cus=".$row['id_cus']."&ki=1'class='btn btn-sm btn-warning tooltipButton cls_btn' data-tooltip='Trả Lịch'><i class='fa fa-rotate-left'></i></a>";
+                                        </div>
+                                    </div>";
+                                echo "<a href ='".BASE_URL."includes/logic/thuhoi.php?id_cus=".$row['id_cus']."&ki=1'class='btn btn-sm btn-warning tooltipButton cls_btn' data-tooltip='Trả Lịch'><i class='fa fa-rotate-left'></i></a>";
                                 ?>
                             </td>
                         </tr>
@@ -388,4 +455,18 @@ echo "
         </div><!--ket thuc cot-->
     </div><!-- ket thuc row-->
 </div> <!-- ket thuc container-fluid-->
-	
+<script>
+$('input').on('input', function(e){        
+    $(this).val(formatCurrency(this.value.replace(/[,VNĐ]/g,'')));
+}).on('keypress',function(e){
+    if(!$.isNumeric(String.fromCharCode(e.which))) e.preventDefault();
+}).on('paste', function(e){    
+    var cb = e.originalEvent.clipboardData || window.clipboardData;      
+    if(!$.isNumeric(cb.getData('text'))) e.preventDefault();
+});
+function formatCurrency(number){
+    var n = number.split('').reverse().join("");
+    var n2 = n.replace(/\d\d\d(?!$)/g, "$&,");    
+    return  n2.split('').reverse().join('') ;
+}
+</script>

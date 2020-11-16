@@ -1,4 +1,8 @@
-
+<style>
+    .cls_btn{
+        margin-top:5px; padding:5px 10px;
+    }
+</style>
 <?php 
     if(!isset($_GET['time_search'])){
     
@@ -13,18 +17,18 @@
      $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password,$options);
      
      $sql = "SELECT work_do.id_cus, work_do.id_work,info_cus.add_cus,info_cus.des_cus,info_cus.date_book, info_cus.phone_cus,info_worker.name_worker,info_cus.note_book,
-             work_do.sum_chi, work_do.sum_thu,work_do.note_work, info_cus.flag_status,nv_phan FROM work_do , info_cus, info_worker 
+             work_do.sum_chi, work_do.sum_thu,work_do.note_work, info_cus.flag_status,nv_phan,thongtinthem, thanh_toan, info_cus.yc_book, operator_time,info_cus.kind_book FROM work_do , info_cus, info_worker 
              WHERE  info_cus.flag_book = 1 and work_do.id_cus = info_cus.id_cus and work_do.id_worker = info_worker.id_worker and info_cus.date_book like '%$time_search%'  and info_cus.kind_book like '%nuoc%' ORDER BY name_worker ASC";
      $q = $pdo->query($sql);
      $q->setFetchMode(PDO::FETCH_ASSOC);
      
      $sql2 = "SELECT work_do.id_cus, work_do.id_work,info_cus.add_cus,info_cus.des_cus,info_cus.date_book, info_cus.phone_cus,info_worker.name_worker,info_cus.note_book,
-             work_do.sum_chi, work_do.sum_thu,work_do.note_work, info_cus.flag_status,nv_phan FROM work_do , info_cus, info_worker 
+             work_do.sum_chi, work_do.sum_thu,work_do.note_work, info_cus.flag_status,nv_phan,thongtinthem, thanh_toan, info_cus.yc_book, operator_time FROM work_do , info_cus, info_worker 
              WHERE  info_cus.flag_book = 1 and work_do.id_cus = info_cus.id_cus and work_do.id_worker = info_worker.id_worker and info_cus.date_book like '%$time_search%'  and info_cus.kind_book like '%lanh%' ORDER BY name_worker ASC ";
      $q2 = $pdo->query($sql2);
      $q2->setFetchMode(PDO::FETCH_ASSOC);
      $sql3 = "SELECT work_do.id_cus, work_do.id_work,info_cus.add_cus,info_cus.des_cus,info_cus.date_book, info_cus.phone_cus,info_worker.name_worker,info_cus.note_book,
-             work_do.sum_chi, work_do.sum_thu,work_do.note_work, info_cus.flag_status,nv_phan FROM work_do , info_cus, info_worker 
+             work_do.sum_chi, work_do.sum_thu,work_do.note_work, info_cus.flag_status,nv_phan,thongtinthem, thanh_toan, info_cus.yc_book, operator_time FROM work_do , info_cus, info_worker 
              WHERE  info_cus.flag_book = 1 and work_do.id_cus = info_cus.id_cus and work_do.id_worker = info_worker.id_worker and info_cus.date_book like '%$time_search%'  and info_cus.kind_book like '%go%' ORDER BY name_worker ASC ";
      $q3 = $pdo->query($sql3);
      $q3->setFetchMode(PDO::FETCH_ASSOC);
@@ -44,52 +48,209 @@
  echo "  <h3> Lịch Điện Nước</h3>
  <table class='table table-bordered table-hover'>
       <thead>
-          <tr>
-              <th class='col-xs-2'>Địa Chỉ </th>
-			  <th class='col-xs-0.5'>Quận</th>
-              <th class='col-xs-1'>Số Điện Thoại</th>
-              <th class='col-xs-0.5'>Thợ Làm</th>
-              <th class='col-xs-1'>Thời Gian</th>
-              <th class='col-xs-1'>Ghi Chú</th>
-              <th class='col-xs-1'>Trạng Thái</th>
-              <th class='col-xs-1'>Nhân Viên Phân</th>
-              <th class='col-xs-1'>Tổng Thu</th>
-              <th class='col-xs-1'>Tổng Chi</th>
-              <th class='col-xs-2'>Thao Tác</th>
-              <th class='col-xs-1'>Phản Hồi</th>
-             </tr>
+        <tr>
+            <th class='col-sm-1'>Nội Dung CV </th>
+            <th class='col-sm-1'>Thời Gian</th>
+            <th class='col-sm-1'>Địa Chỉ </th>
+            <th class='col-sm-1'>Số Điện Thoại</th>
+            <th class='col-sm-1'>Ghi Chú</th>
+            <th class='col-sm-1'>Thợ Làm</th>
+            <th class='col-sm-1'>Trạng Thái</th>
+            <th class='col-sm-1'>Tổng Thu</th>
+            <th class='col-sm-1'>Tổng Chi</th>
+            <th class='col-sm-1'>Phản Hồi</th>
+            <th class='col-sm-2'>Thao Tác</th>
+        </tr>
               
       </thead>
       <tbody>";
           while ($row = $q->fetch()):
                    echo "<tr>
-                   <td>".htmlspecialchars($row['add_cus'])."</td> 
-				   <td>".htmlspecialchars($row['des_cus'])."</td> 
+                   <td>".htmlspecialchars($row['yc_book'])."</td>
+                   <td>".htmlspecialchars($row['date_book'])." => ".$row['operator_time']."</td>
+                   <td>".htmlspecialchars($row['add_cus']." , ".$row['des_cus'])."</td>
                    <td>".htmlspecialchars($row['phone_cus'])."</td> 
+                   <td>".htmlspecialchars($row['note_book'])."</td>
                    <td>".htmlspecialchars($row['name_worker'])."</td>
-                   <td>".htmlspecialchars($row['date_book'])."</td> 
-                   <td>".htmlspecialchars($row['note_book'])."</td> 
-                   <td>".htmlspecialchars($row['flag_status'])."</td> 
-                   <td>".htmlspecialchars($row['nv_phan'])."</td>  
+                   <td>".htmlspecialchars($row['thongtinthem'])."</td> 
                    <td>".htmlspecialchars($row['sum_thu'])."</td>
                    <td>".htmlspecialchars($row['sum_chi'])."</td>
-                   <td>";
-                   echo "<a href ='".BASE_URL."includes/logic/thu_chi.php?id_work=".$row['id_work']."&idq=1 'class='btn btn-sm btn-success'"; if($row['flag_status'] == 'Hủy'|| $row['flag_status']=='Khảo Sát'|| $row['sum_thu']  > 0 ){
-                       echo "disabled";
-                   } echo" >Nhập</a>";
-                   echo "&nbsp";
-                   echo "<a href ='".BASE_URL."includes/logic/thu_chi.php?id_work=".$row['id_work']."&idq=2'class='btn btn-sm btn-info'"; if($row['flag_status']=='Khảo sát'||$row['flag_status']=='Hủy' ){echo 'disabled';} echo ">Sửa</a>";
-                   echo "&nbsp";
-                   echo "<a href ='".BASE_URL."includes/logic/suaKH.php?id_cus=".$row['id_cus']."&action=coppy&nv=".$ruser['real_name']." 'class='btn btn-sm btn-info'>x2</a>";
-                     echo "&nbsp";
-                     echo"<a href ='".BASE_URL."includes/logic/deleteKH.php?hd=ks&id_cus=".$row['id_cus']."'class='btn btn-sm btn-primary' "; if($row['flag_status']=='Hủy'|| $row['flag_status']=='Khảo Sát'|| $row['sum_thu']  > 0 ){echo 'disabled';} echo ">KS</a>";
-                     echo "&nbsp";
-                     echo"<button type='button' class='btn btn-sm btn-warning' data-toggle='modal' data-target='#my".$row['id_cus']."'"; if($row['flag_status']=='Hủy'||$row['flag_status']=='Khảo Sát'|| $row['sum_thu']  > 0 ){echo 'disabled';} echo ">Hủy</button>
-  
+                   <td>"; 
+                    if($row['note_work']==NULL) 
+                        {
+                            echo "<a href ='".BASE_URL."includes/logic/thu_chi.php?id_work=".$row['id_work']."&idq=3'class='btn btn-sm btn-danger'>Chăm Sóc</a>";
+                        }
+                    else{
+                            echo $row['note_work'];
+                        }
+                    echo "</td><td style='text-align:center'>";
+                    echo "<button type='button' data-toggle='modal' data-target='#my3".$row['id_cus']."' class='btn btn-success tooltipButton cls_btn' data-tooltip='Nhập'"; if($row['flag_status'] == 'Hủy'|| $row['flag_status']=='Khảo Sát'|| $row['sum_thu']  > 0 )
+                    {
+                        echo "disabled";
+                    } 
+                    echo" ><i class='glyphicon glyphicon-import'></i></button>";
+                    echo"
+                   <!-- Modal -->
+                    <div id='my3".$row['id_cus']."' class='modal fade' role='dialog'>
+                        <!-- Modal content-->
+                        <div class='modal-content' style='position: fixed;top: 20px;left: 35%;text-align: left;width: 30%;'>
+                            <div class='modal-header'>
+                                <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                                <h3 class='modal-title text-center'>Nhập Thông Tin Thu Chi</h3>
+                            </div>
+                            <div class='modal-body'>
+                                <form action='includes/logic/XL_thu_chi.php' id='frm_sua_KH' method='POST' class ='form-container'>
+                                    <input type='hidden' name ='id_work' value=".$row['id_work']." >
+                                    <input type='hidden' name ='note_work' value=''>
+                                    <input type='hidden'class='form-control' name ='nv' value='".$ruser['real_name']."'>
+                                    <input type='hidden' name ='tentho' value='".$row['name_worker']."'>
+                                    <label for='telKH'><b>Địa Chỉ</b></label>
+                                    <input type='text' name ='telKH' value='".$row['add_cus']."  ".$row['des_cus']."' readonly>
+                                    <label for='telKH'><b>Số Điện Thoại Khách Hàng</b></label>
+                                    <input type='text' name ='telKH' value=".$row['phone_cus']." readonly>
+                                    <label for='sumthu'><b>Tổng Thu  : </b></label>
+                                    <input type='text' min='0.00' max='1000000000.00' step='0.01'  name='sumthu' value=".$row['sum_thu']." id='sumthu'/>
+                                    <label for='text'><b>Tổng Chi  : </b></label>
+                                    <input type='text' min='0.00' max='1000000000.00' step='0.01'  name='sumchi' value=".$row['sum_chi']." id='sumchi'>
+                                    <label for='date_book'><b>Tình trạng thanh toán  : </b></label><br>
+                                    <div class='row'>
+                                        <div class='col-md-6 text-center'>
+                                            <label class='check-container1'>Chưa thanh toán<input type='radio'";if($row['thanh_toan']=='1')
+                                                            {
+                                                                echo "checked='checked'";
+                                                            } echo "name='thanh_toan' value='1'>
+                                        </div>
+                                        <div class='col-md-6 text-center'>
+                                            <label class='check-container1'>Đã thanh toán
+                                            <input type='radio'";if($row['thanh_toan']=='0'){
+                                                                echo "checked='checked'";
+                                                            } 
+                                                            echo" name='thanh_toan' value='0'>
+                                        </div>
+                                    </div>
+                                </div>
+                            <div class='modal-footer'>
+                                <div class='row'>
+                                    <div class='col-md-6 text-center'><button type='submit' value='submit' class='btn btn-sm btn-success' style='width:150px; font-size: 14px'>Thay Đổi Thông tin</button></div>
+                                    <div class='col-md-6 text-center'><button type='button' class='btn btn-danger' style='width:150px;' data-dismiss='modal'>Hủy</button></div>
+                                </div>
+                            </div>
+                                </form>
+                        </div>
+                    </div>";
+                    // btn sua
+                    echo "<button type='button' data-toggle='modal' data-target='#my1".$row['id_cus']."'class='btn btn-sm btn-warning tooltipButton cls_btn' data-tooltip='Sửa'"; if($row['flag_status']=='Khảo sát'||$row['flag_status']=='Hủy' ){echo 'disabled';} echo "><i class='fa fa-pencil' aria-hidden='true'></i></button>";
+                    echo "<!-- Modal -->
+                    <div id='my1".$row['id_cus']."' class='modal fade' role='dialog'>
+                        <!-- Modal content-->
+                        <div class='modal-content' style='position: fixed;top: 20px;left: 35%;text-align: left;width: 30%;'>
+                                <div class='modal-header'>
+                                    <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                                    <h4 class='modal-title text-center'>Sửa Thông Tin Lịch Điện Nước Đã Phân</h4>
+                                </div>
+                                <div class='modal-body'>
+                                <form action='includes/logic/up_kh_da_phan.php' id='frm_sua_KH' method='POST' class ='form-container'>
+                                <input type='hidden' name ='id_work' value=".$row['id_work']." >
+                                <input type='hidden' name ='note_work' value=''>
+                                <input type='hidden'class='form-control' name ='nv' value='".$ruser['real_name']."'>
+                                <input type='hidden' name ='tentho' value='".$row['name_worker']."'>
+                                <label for='telKH'><b>Địa Chỉ</b></label>
+                                <input type='text' name ='telKH' value='".$row['add_cus']."  ".$row['des_cus']."' readonly>
+                                <label for='telKH'><b>Số Điện Thoại Khách Hàng</b></label>
+                                <input type='text' name ='telKH' value=".$row['phone_cus']." readonly>
+                                    <label for='ycKH'><b>Yêu Cầu Công Việc</b></label>
+                                    <input type='text' class='form-control' name = 'ycKH' value='".$row['yc_book']."'>  
+                                    <label for='note_book'><b>Ghi Chú Công Việc </b></label>
+                                    <textarea class='form-control' type='text' name='note_book' value='".$row['note_book']."' ></textarea>
+                                    <label for='date_book'><b>Thời gian  : </b></label>
+                                    <input type='date' class='form-control' name='date_book' value=" ;echo $row['date_book']."><br>
+                                    <label for='date_book'><b>Loại CV: </b></label>
+                                    <div class='row'>
+                                        <div class='col-sm-4 text-center'> 
+                                            <label class='check-container1'>Điện Lạnh
+                                                <input type='radio'"; if($row['kind_book']=='Điện Lạnh'){echo "checked='checked'";} echo "name='kind_book' value='Điện Lạnh'>
+                                            </label>
+                                        </div>
+                                        <div class='col-sm-4 text-center'>
+                                            <label class='check-container1'>Điện Nước
+                                                <input type='radio'"; if($row['kind_book']=='Điện Nước'){echo "checked='checked'";} echo" name='kind_book' value='Điện Nước'>
+                                            </label>
+                                        </div>
+                                        <div class='col-sm-4 text-center'>
+                                            <label class='check-container1'>Đồ Gỗ
+                                                <input type='radio'";if($row['kind_book']=='Đồ Gỗ'){echo "checked='checked'";} echo" name='kind_book' value='Đồ Gỗ'>
+                                            </label>   
+                                        </div> 
+                                    </div>
+                                </div>
+                                <div class='modal-footer'>
+                                    <div class='row'>
+                                        <div class='col-md-6 text-center'><button type='submit' value='submit' class='btn btn-sm btn-success' style='width:150px; font-size: 14px'>Thay Đổi Thông tin</button></div>
+                                        <div class='col-md-6 text-center'><button type='button' class='btn btn-danger' style='width:150px;' data-dismiss='modal'>Hủy</button></div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>";
+                    // nhan doi lich 
+                    echo "<button type='button' data-toggle='modal' data-target='#my2".$row['id_cus']."'class='btn btn-sm btn-info tooltipButton cls_btn' data-tooltip='Nhân đôi lịch'><i class='fa fa-copy'></i></button>
+                    <!-- Modal -->
+                    <div id='my2".$row['id_cus']."' class='modal fade' role='dialog'>
+                        <!-- Modal content-->
+                        <div class='modal-content' style='position: fixed;top: 20px;left: 35%;text-align: left;width: 30%;'>
+                            <div class='modal-header'>
+                                <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                                <h4 class='modal-title text-center'>Nhân Đôi Lịch Khách Hàng</h4>
+                                </div>
+                             <div class='modal-body'>
+                                <form action='includes/logic/up_tt_KH.php' id='frm_sua_KH' method='POST' class ='form-container'>
+                                <input type='hidden' name ='id_work' value=".$row['id_work']." >
+                                <input type='hidden' name ='note_work' value=''>
+                                <input type='hidden'class='form-control' name ='nv' value='".$ruser['real_name']."'>
+                                <input type='hidden' name ='tentho' value='".$row['name_worker']."'>
+                                <label for='telKH'><b>Địa Chỉ</b></label>
+                                <input type='text' name ='telKH' value='".$row['add_cus']."  ".$row['des_cus']."' readonly>
+                                <label for='telKH'><b>Số Điện Thoại Khách Hàng</b></label>
+                                <input type='text' name ='telKH' value=".$row['phone_cus']." readonly>
+                                    <label for='ycKH'><b>Yêu Cầu Công Việc</b></label>
+                                    <input type='text' class='form-control' name = 'ycKH' value='".$row['yc_book']."'>  
+                                    <label for='note_book'><b>Ghi Chú Công Việc </b></label>
+                                    <textarea class='form-control' type='text' name='note_book' value='".$row['note_book']."' ></textarea>
+                                    <label for='date_book'><b>Thời gian  : </b></label>
+                                    <input type='date' class='form-control' name='date_book' value=" ;echo $row['date_book']."><br>
+                                    <label for='date_book'><b>Loại CV: </b></label>
+                                    <div class='row'>
+                                        <div class='col-sm-4 text-center'> 
+                                            <label class='check-container1'>Điện Lạnh
+                                                <input type='radio'"; if($row['kind_book']=='Điện Lạnh'){echo "checked='checked'";} echo "name='kind_book' value='Điện Lạnh'>
+                                            </label>
+                                        </div>
+                                        <div class='col-sm-4 text-center'>
+                                            <label class='check-container1'>Điện Nước
+                                            <input type='radio'"; if($row['kind_book']=='Điện Nước'){echo "checked='checked'";} echo" name='kind_book' value='Điện Nước'>
+                                            </label>
+                                        </div>
+                                        <div class='col-sm-4 text-center'>
+                                            <label class='check-container1'>Đồ Gỗ
+                                                <input type='radio'";if($row['kind_book']=='Đồ Gỗ'){echo "checked='checked'";} echo" name='kind_book' value='Đồ Gỗ'>
+                                            </label>   
+                                        </div> 
+                                    </div>
+                                </div>
+                                <div class='modal-footer'>
+                                    <div class='row'>
+                                        <div class='col-md-6 text-center'><button type='submit' value='submit' class='btn btn-sm btn-success' style='width:150px; font-size: 14px'>Thay Đổi Thông tin</button></div>
+                                        <div class='col-md-6 text-center'><button type='button' class='btn btn-danger' style='width:150px;' data-dismiss='modal'>Hủy</button></div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>";
+                    echo"<button class='btn btn-sm btn-primary cls_btn' "; if($row['flag_status']=='Hủy'|| $row['flag_status']=='Khảo Sát'|| $row['sum_thu']  > 0 ){echo 'disabled';} echo "><i class='fa fa-list-alt'></i></button>";
+                     echo"<button type='button' class='btn btn-sm btn-warning cls_btn' data-toggle='modal' data-target='#my".$row['id_cus']."'"; if($row['flag_status']=='Hủy'||$row['flag_status']=='Khảo Sát'|| $row['sum_thu']  > 0 ){echo 'disabled';} echo "><i class='fa fa-trash' aria-hidden='true'></i></button>
                      <!-- Modal -->
                      <div id='my".$row['id_cus']."' class='modal fade' role='dialog'>
                      <div class='modal-dialog'>
-
                          <!-- Modal content-->
                          <div class='modal-content'>
                              <form action='includes/logic/deleteKH.php' method='GET'>
@@ -97,124 +258,147 @@
                                  <button type='button' class='close' data-dismiss='modal'>&times;</button>
                                  <h4 class='modal-title'>Nguyên Nhân Hủy</h4>
                              </div>
-
                              <div class='modal-body'>
                                  <input type='hidden' name='hd' value='huy'>
                                  <input type='hidden' name='id_cus' value='".$row['id_cus']."'>
                                 <textarea style = 'width:100%' name='nnHuy'></textarea>
                              </div>
-
                              <div class='modal-footer'>
                                  <input type='submit' class='btn btn-default' value='Xác Nhận'/>
                              </div>
                          </form>
                          </div>
-
                      </div>
                      </div>                 
-                   </td>
-                          <td>"; if($row['note_work']==NULL) 
-                                 {
-                                     echo "<a href ='".BASE_URL."includes/logic/thu_chi.php?id_work=".$row['id_work']."&idq=3'class='btn btn-sm btn-danger'>Chăm Sóc</a>";
-                                 
-                                 }
-                                 else{
-                                     echo $row['note_work'];
-                                 }
-                          echo "</td>   
-                      </tr>";
-                  endwhile;
-          
-      echo "</tbody>
-      
-  </table>	
-
-                             ";
-                             echo "
+                   </td>      
+                </tr>";
+                endwhile;
+                echo "</tbody>
+            </table>";
+           echo "
                              <h3> Lịch Điện Lạnh</h3>
                              <table class='table table-bordered '>
                                   <thead>
                                   <tr>
-                                     <th class='col-xs-2'>Địa Chỉ </th>
-									 <th class='col-xs-0.5'>Quận</th>
-                                     <th class='col-xs-1'>Số Điện Thoại</th>
-                                     <th class='col-xs-0.5'>Thợ Làm</th>
-                                     <th class='col-xs-1'>Thời Gian</th>
-                                     <th class='col-xs-1'>Ghi Chú</th>
-                                     <th class='col-xs-1'>Trạng Thái</th>
-                                     <th class='col-xs-1'>Nhân Viên Phân</th>
-                                     <th class='col-xs-1'>Tổng Thu</th>
-                                     <th class='col-xs-1'>Tổng Chi</th>
-                                     <th class='col-xs-2'>Thao Tác</th>
-                                     <th class='col-xs-1'>Phản Hồi</th>
+                                  <th class='col-sm-1'>Nội Dung CV </th>
+                                  <th class='col-sm-1'>Thời Gian</th>
+                                  <th class='col-sm-1'>Địa Chỉ </th>
+                                  <th class='col-sm-1'>Số Điện Thoại</th>
+                                  <th class='col-sm-1'>Ghi Chú</th>
+                                  <th class='col-sm-1'>Thợ Làm</th>
+                                  <th class='col-sm-1'>Trạng Thái</th>
+                                  <th class='col-sm-1'>Nhân Viên Phân</th>
+                                  <th class='col-sm-1'>Tổng Thu</th>
+                                  <th class='col-sm-1'>Tổng Chi</th>
+                                  <th class='col-sm-1'>Phản Hồi</th>
+                                  <th class='col-sm-2' colspan='2'>Thao Tác</th>
                                  </tr>
                                   </thead>
                                   <tbody>";
                                       while ($row2 = $q2->fetch()):
-                                               echo "<tr>
-                                               <td>".htmlspecialchars($row2['add_cus'])."</td> 
-											   <td>".htmlspecialchars($row2['des_cus'])."</td> 
-                                               <td>".htmlspecialchars($row2['phone_cus'])."</td> 
-                                               <td>".htmlspecialchars($row2['name_worker'])."</td>
-                                               <td>".htmlspecialchars($row2['date_book'])."</td> 
-                                               <td>".htmlspecialchars($row2['note_book'])."</td> 
-                                               <td>".htmlspecialchars($row2['flag_status'])."</td>
-                                               <td>".htmlspecialchars($row2['nv_phan'])."</td>  
+                                        echo "
+                                            <tr>
+                                                <td>".htmlspecialchars($row2['yc_book'])."</td>
+                                                <td>".htmlspecialchars($row2['date_book'])." => ".$row2['operator_time']."</td>
+                                                <td>".htmlspecialchars($row2['add_cus']." , ".$row2['des_cus'])."</td>
+                                                <td>".htmlspecialchars($row2['phone_cus'])."</td> 
+                                                <td>".htmlspecialchars($row2['note_book'])."</td>
+                                                <td>".htmlspecialchars($row2['name_worker'])."</td>
+                                                <td>".htmlspecialchars($row2['thongtinthem'])."</td> 
+                                                <td>".htmlspecialchars($row2['nv_phan'])."</td>  
                                                 <td>".htmlspecialchars($row2['sum_thu'])."</td>
-                                                <td>". htmlspecialchars($row2['sum_chi'])."</td>
-                                                      <td>";
-                        
-                                                      echo "<a href ='".BASE_URL."includes/logic/thu_chi.php?id_work=".$row2['id_work']."&idq=1 'class='btn btn-sm btn-success'"; if($row2['flag_status'] == 'Hủy'|| $row2['flag_status']=='Khảo Sát'|| $row2['sum_thu']  > 0 ){
-                                                         echo "disabled";
-                                                     } echo" >Nhập</a>";
-                                                     echo "&nbsp";
-                                                     echo "<a href ='".BASE_URL."includes/logic/thu_chi.php?id_work=".$row2['id_work']."&idq=2'class='btn btn-sm btn-info'"; if($row2['flag_status']=='Khảo sát'||$row2['flag_status']=='Hủy' ){echo 'disabled';} echo ">Sửa</a>";
-                                                     echo "&nbsp";
-                                                     echo "<a href ='".BASE_URL."includes/logic/suaKH.php?id_cus=".$row2['id_cus']."&action=coppy&nv=".$ruser['real_name']." 'class='btn btn-sm btn-info'>x2</a>";
-                                                       echo "&nbsp";
-                                                       echo"<a href ='".BASE_URL."includes/logic/deleteKH.php?hd=ks&id_cus=".$row2['id_cus']."'class='btn btn-sm btn-primary' "; if($row2['flag_status']=='Hủy'|| $row2['flag_status']=='Khảo Sát'|| $row2['sum_thu']  > 0 ){echo 'disabled';} echo ">KS</a>";
-                                                       echo "&nbsp";
-                                                       echo"<button type='button' class='btn btn-sm btn-warning' data-toggle='modal' data-target='#my".$row2['id_cus']."'"; if($row2['flag_status']=='Hủy'||$row2['flag_status']=='Khảo Sát'|| $row2['sum_thu']  > 0 ){echo 'disabled';} echo ">Hủy</button>
-  
-                                                       <!-- Modal -->
-                                                       <div id='my".$row2['id_cus']."' class='modal fade' role='dialog'>
-                                                       <div class='modal-dialog'>
-                            
-                                                           <!-- Modal content-->
-                                                           <div class='modal-content'>
-                                                               <form action='includes/logic/deleteKH.php' method='GET'>
-                                                               <div class='modal-header'>
-                                                                   <button type='button' class='close' data-dismiss='modal'>&times;</button>
-                                                                   <h4 class='modal-title'>Nguyên Nhân Hủy</h4>
-                                                               </div>
-                            
-                                                               <div class='modal-body'>
-                                                                   <input type='hidden' name='hd' value='huy'>
-                                                                   <input type='hidden' name='id_cus' value='".$row2['id_cus']."'>
-                                                                  <textarea style = 'width:100%' name='nnHuy'></textarea>
-                                                               </div>
-                            
-                                                               <div class='modal-footer'>
-                                                                   <input type='submit' class='btn btn-default' value='Xác Nhận'/>
-                                                               </div>
-                                                           </form>
-                                                           </div>
-                            
-                                                       </div>
-                                                       </div>
-                                                 
-                          </td>
-                                                      <td>"; if($row2['note_work']==NULL) 
-                                                             {
-                                                                 echo "<a href ='".BASE_URL."includes/logic/thu_chi.php?id_work=".$row2['id_work']."&idq=3'class='btn btn-sm btn-danger'>Chăm Sóc</a>";
-                                                             
-                                                             }
-                                                             else{
-                                                                 echo $row2['note_work'];
-                                                             }
-                                                      echo "</td>   
-                                                  </tr>";
-                                              endwhile;
+                                                <td>".htmlspecialchars($row2['sum_chi'])."</td>
+                                                <td>";if($row2['note_work']==NULL) 
+                                                {
+                                                    echo "<a href ='".BASE_URL."includes/logic/thu_chi.php?id_work=".$row2['id_work']."&idq=3'class='btn btn-sm btn-danger'>Chăm Sóc</a>";
+                                                }
+                                            else{
+                                                    echo $row2['note_work'];
+                                                }
+                                            echo "</td><td style='text-align:center'>";
+                                            echo "<button type='button' data-toggle='modal' data-target='#my3".$row2['id_cus']."' class='btn btn-success tooltipButton cls_btn' data-tooltip='Nhập'"; if($row2['flag_status'] == 'Hủy'|| $row2['flag_status']=='Khảo Sát'|| $row2['sum_thu']  > 0 )
+                                            {
+                                                echo "disabled";
+                                            } 
+                                            echo" ><i class='glyphicon glyphicon-import'></i></button>";
+                                            echo"
+                                           <!-- Modal -->
+                                            <div id='my3".$row2['id_cus']."' class='modal fade' role='dialog'>
+                                                <!-- Modal content-->
+                                                <div class='modal-content' style='position: fixed;top: 20px;left: 35%;text-align: left;width: 30%;'>
+                                                    <div class='modal-header'>
+                                                        <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                                                        <h3 class='modal-title text-center'>Nhập Thông Tin Thu Chi</h3>
+                                                    </div>
+                                                    <div class='modal-body'>
+                                                        <form action='includes/logic/XL_thu_chi.php' id='frm_sua_KH' method='POST' class ='form-container'>
+                                                            <input type='hidden' name ='id_work' value=".$row2['id_work']." >
+                                                            <input type='hidden' name ='note_work' value=''>
+                                                            <input type='hidden'class='form-control' name ='nv' value='".$ruser['real_name']."'>
+                                                            <input type='hidden' name ='tentho' value='".$row2['name_worker']."'>
+                                                            <label for='telKH'><b>Địa Chỉ</b></label>
+                                                            <input type='text' name ='telKH' value='".$row2['add_cus']."  ".$row2['des_cus']."' readonly>
+                                                            <label for='telKH'><b>Số Điện Thoại Khách Hàng</b></label>
+                                                            <input type='text' name ='telKH' value=".$row2['phone_cus']." readonly>
+                                                            <label for='sumthu'><b>Tổng Thu  : </b></label>
+                                                            <input type='text' min='0.00' max='1000000000.00' step='0.01'  name='sumthu' value=".$row2['sum_thu']." id='sumthu'/>
+                                                            <label for='text'><b>Tổng Chi  : </b></label>
+                                                            <input type='text' min='0.00' max='1000000000.00' step='0.01'  name='sumchi' value=".$row2['sum_chi']." id='sumchi'>
+                                                            <label for='date_book'><b>Tình trạng thanh toán  : </b></label><br>
+                                                            <div class='row'>
+                                                                <div class='col-md-6 text-center'>
+                                                                    <label class='check-container1'>Chưa thanh toán<input type='radio'";if($row2['thanh_toan']=='1')
+                                                                                    {
+                                                                                        echo "checked='checked'";
+                                                                                    } echo "name='thanh_toan' value='1'>
+                                                                </div>
+                                                                <div class='col-md-6 text-center'>
+                                                                    <label class='check-container1'>Đã thanh toán
+                                                                    <input type='radio'";if($row2['thanh_toan']=='0'){
+                                                                                        echo "checked='checked'";
+                                                                                    } 
+                                                                                    echo" name='thanh_toan' value='0'>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    <div class='modal-footer'>
+                                                        <div class='row'>
+                                                            <div class='col-md-6 text-center'><button type='submit' value='submit' class='btn btn-sm btn-success' style='width:150px; font-size: 14px'>Thay Đổi Thông tin</button></div>
+                                                            <div class='col-md-6 text-center'><button type='button' class='btn btn-danger' style='width:150px;' data-dismiss='modal'>Hủy</button></div>
+                                                        </div>
+                                                    </div>
+                                                        </form>
+                                                </div>
+                                            </div>";
+                                            echo "<button class='btn btn-info cls_btn'"; if($row2['flag_status']=='Khảo sát'||$row2['flag_status']=='Hủy' ){echo 'disabled';} echo "><i class='fa fa-pencil' aria-hidden='true'></i></button>";
+                                            echo "<button class='btn btn-sm btn-info cls_btn'><i class='fa fa-copy'></i></button>";
+                                            echo"<button class='btn btn-sm btn-primary cls_btn' "; if($row2['flag_status']=='Hủy'|| $row2['flag_status']=='Khảo Sát'|| $row2['sum_thu']  > 0 ){echo 'disabled';} echo "><i class='fa fa-list-alt'></i></button>";
+                                             echo"<button type='button' class='btn btn-sm btn-warning cls_btn' data-toggle='modal' data-target='#my".$row2['id_cus']."'"; if($row2['flag_status']=='Hủy'||$row2['flag_status']=='Khảo Sát'|| $row2['sum_thu']  > 0 ){echo 'disabled';} echo "><i class='fa fa-trash' aria-hidden='true'></i></button>
+                                             <!-- Modal -->
+                                             <div id='my".$row2['id_cus']."' class='modal fade' role='dialog'>
+                                             <div class='modal-dialog'>
+                                                 <!-- Modal content-->
+                                                 <div class='modal-content'>
+                                                     <form action='includes/logic/deleteKH.php' method='GET'>
+                                                     <div class='modal-header'>
+                                                         <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                                                         <h4 class='modal-title'>Nguyên Nhân Hủy</h4>
+                                                     </div>
+                                                     <div class='modal-body'>
+                                                         <input type='hidden' name='hd' value='huy'>
+                                                         <input type='hidden' name='id_cus' value='".$row2['id_cus']."'>
+                                                        <textarea style = 'width:100%' name='nnHuy'></textarea>
+                                                     </div>
+                                                     <div class='modal-footer'>
+                                                         <input type='submit' class='btn btn-default' value='Xác Nhận'/>
+                                                     </div>
+                                                 </form>
+                                                 </div>
+                                             </div>
+                                             </div>                 
+                                           </td>      
+                                        </tr>";
+                                        endwhile;
                                       
                                   echo "</tbody>
                                   
@@ -227,87 +411,125 @@ echo "
  <table class='table table-bordered '>
      <thead>
      <tr>
-         <th class='col-xs-2'>Địa Chỉ </th>
-		 <th class='col-xs-0.5'>Quận</th>
-         <th class='col-xs-1'>Số Điện Thoại</th>
-         <th class='col-xs-0.5'>Thợ Làm</th>
-         <th class='col-xs-1'>Thời Gian</th>
-         <th class='col-xs-1'>Ghi Chú</th>
-         <th class='col-xs-1'>Trạng Thái</th>
-         <th class='col-xs-1'>Nhân Viên Phân</th>
-         <th class='col-xs-1'>Tổng Thu</th>
-         <th class='col-xs-1'>Tổng Chi</th>
-         <th class='col-xs-2'>Thao Tác</th>
-         <th class='col-xs-1'>Phản Hồi</th>
+     <th class='col-sm-1'>Nội Dung CV </th>
+     <th class='col-sm-1'>Thời Gian</th>
+     <th class='col-sm-1'>Địa Chỉ </th>
+     <th class='col-sm-1'>Số Điện Thoại</th>
+     <th class='col-sm-1'>Ghi Chú</th>
+     <th class='col-sm-1'>Thợ Làm</th>
+     <th class='col-sm-1'>Trạng Thái</th>
+     <th class='col-sm-1'>Nhân Viên Phân</th>
+     <th class='col-sm-1'>Tổng Thu</th>
+     <th class='col-sm-1'>Tổng Chi</th>
+     <th class='col-sm-1'>Phản Hồi</th>
+     <th class='col-sm-2' colspan='2'>Thao Tác</th>
      </tr>
      </thead>
      <tbody>";
           while ($row3 = $q3->fetch()):
                    echo "<tr>
-                   <td>".htmlspecialchars($row3['add_cus'])."</td> 
-				   <td>".htmlspecialchars($row3['des_cus'])."</td> 
-                   <td>".htmlspecialchars($row3['phone_cus'])."</td> 
-                   <td>".htmlspecialchars($row3['name_worker'])."</td>
-                   <td>".htmlspecialchars($row3['date_book'])."</td> 
-                   <td>".htmlspecialchars($row['note_book'])."</td> 
-                   <td>".htmlspecialchars($row3['flag_status'])."</td> 
-                   <td>".htmlspecialchars($row3['nv_phan'])."</td> 
-                   
-                          <td>".htmlspecialchars($row3['sum_thu'])."</td>
-                          <td>". htmlspecialchars($row3['sum_chi'])."</td>
-                          <td>";
-                        
-                          echo "<a href ='".BASE_URL."includes/logic/thu_chi.php?id_work=".$row3['id_work']."&idq=1 'class='btn btn-sm btn-success'"; if($row3['flag_status'] == 'Hủy'|| $row3['flag_status']=='Khảo Sát'|| $row3['sum_thu']  > 0 ){
-                             echo "disabled";
-                         } echo" >Nhập</a>";
-                         echo "&nbsp";
-                         echo "<a href ='".BASE_URL."includes/logic/thu_chi.php?id_work=".$row3['id_work']."&idq=2'class='btn btn-sm btn-info'"; if($row3['flag_status']=='Khảo sát'||$row3['flag_status']=='Hủy' ){echo 'disabled';} echo ">Sửa</a>";
-                         echo "&nbsp";
-                         echo "<a href ='".BASE_URL."includes/logic/suaKH.php?id_cus=".$row3['id_cus']."&action=coppy&nv=".$ruser['real_name']." 'class='btn btn-sm btn-info'>x2</a>";
-                           echo "&nbsp";
-                           echo"<a href ='".BASE_URL."includes/logic/deleteKH.php?hd=ks&id_cus=".$row3['id_cus']."'class='btn btn-sm btn-primary' "; if($row3['flag_status']=='Hủy'||$row3['flag_status']=='Khảo Sát'|| $row3['sum_thu']  > 0 ){echo 'disabled';} echo ">KS</a>";
-                           echo "&nbsp";
-                           echo"<button type='button' class='btn btn-sm btn-warning' data-toggle='modal' data-target='#my".$row3['id_cus']."'"; if($row3['flag_status']=='Hủy'||$row3['flag_status']=='Khảo Sát'|| $row3['sum_thu']  > 0 ){echo 'disabled';} echo ">Hủy</button>
-  
-                           <!-- Modal -->
-                           <div id='my".$row3['id_cus']."' class='modal fade' role='dialog'>
-                           <div class='modal-dialog'>
-
-                               <!-- Modal content-->
-                               <div class='modal-content'>
-                                   <form action='includes/logic/deleteKH.php' method='GET'>
-                                   <div class='modal-header'>
-                                       <button type='button' class='close' data-dismiss='modal'>&times;</button>
-                                       <h4 class='modal-title'>Nguyên Nhân Hủy</h4>
-                                   </div>
-
-                                   <div class='modal-body'>
-                                       <input type='hidden' name='hd' value='huy'>
-                                       <input type='hidden' name='id_cus' value='".$row3['id_cus']."'>
-                                      <textarea style = 'width:100%' name='nnHuy'></textarea>
-                                   </div>
-
-                                   <div class='modal-footer'>
-                                       <input type='submit' class='btn btn-default' value='Xác Nhận'/>
-                                   </div>
-                               </form>
-                               </div>
-
-                           </div>
-                           </div>
-                                                 
-                          </td>
-                          <td>"; if($row3['note_work']==NULL) 
-                                 {
-                                     echo "<a href ='".BASE_URL."includes/logic/thu_chi.php?id_work=".$row3['id_work']."&idq=3'class='btn btn-sm btn-danger'>Chăm Sóc</a>";
-                                 
-                                 }
-                                 else{
-                                     echo $row3['note_work'];
-                                 }
-                          echo "</td>   
-                      </tr>";
-                  endwhile;
+                   <td>".htmlspecialchars($row3['yc_book'])."</td>
+                    <td>".htmlspecialchars($row3['date_book'])." => ".$row3['operator_time']."</td>
+                    <td>".htmlspecialchars($row3['add_cus']." , ".$row3['des_cus'])."</td>
+                    <td>".htmlspecialchars($row3['phone_cus'])."</td> 
+                    <td>".htmlspecialchars($row3['note_book'])."</td>
+                    <td>".htmlspecialchars($row3['name_worker'])."</td>
+                    <td>".htmlspecialchars($row3['thongtinthem'])."</td> 
+                    <td>".htmlspecialchars($row3['nv_phan'])."</td>  
+                    <td>".htmlspecialchars($row3['sum_thu'])."</td>
+                    <td>".htmlspecialchars($row3['sum_chi'])."</td>
+                    <td>";
+                    if($row3['note_work']==NULL) 
+                    {
+                        echo "<a href ='".BASE_URL."includes/logic/thu_chi.php?id_work=".$row3['id_work']."&idq=3'class='btn btn-sm btn-danger'>Chăm Sóc</a>";
+                    }
+                else{
+                        echo $row3['note_work'];
+                    }
+                echo "</td><td style='text-align:center'>";
+                echo "<button type='button' data-toggle='modal' data-target='#my3".$row3['id_cus']."' class='btn btn-success tooltipButton cls_btn' data-tooltip='Nhập'"; if($row3['flag_status'] == 'Hủy'|| $row3['flag_status']=='Khảo Sát'|| $row3['sum_thu']  > 0 )
+                {
+                    echo "disabled";
+                } 
+                echo" ><i class='glyphicon glyphicon-import'></i></button>";
+                echo"
+               <!-- Modal -->
+                <div id='my3".$row3['id_cus']."' class='modal fade' role='dialog'>
+                    <!-- Modal content-->
+                    <div class='modal-content' style='position: fixed;top: 20px;left: 35%;text-align: left;width: 30%;'>
+                        <div class='modal-header'>
+                            <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                            <h3 class='modal-title text-center'>Nhập Thông Tin Thu Chi</h3>
+                        </div>
+                        <div class='modal-body'>
+                            <form action='includes/logic/XL_thu_chi.php' id='frm_sua_KH' method='POST' class ='form-container'>
+                                <input type='hidden' name ='id_work' value=".$row3['id_work']." >
+                                <input type='hidden' name ='note_work' value=''>
+                                <input type='hidden'class='form-control' name ='nv' value='".$ruser['real_name']."'>
+                                <input type='hidden' name ='tentho' value='".$row3['name_worker']."'>
+                                <label for='telKH'><b>Địa Chỉ</b></label>
+                                <input type='text' name ='telKH' value='".$row3['add_cus']."  ".$row3['des_cus']."' readonly>
+                                <label for='telKH'><b>Số Điện Thoại Khách Hàng</b></label>
+                                <input type='text' name ='telKH' value=".$row3['phone_cus']." readonly>
+                                <label for='sumthu'><b>Tổng Thu  : </b></label>
+                                <input type='text' min='0.00' max='1000000000.00' step='0.01'  name='sumthu' value=".$row3['sum_thu']." id='sumthu'/>
+                                <label for='text'><b>Tổng Chi  : </b></label>
+                                <input type='text' min='0.00' max='1000000000.00' step='0.01'  name='sumchi' value=".$row3['sum_chi']." id='sumchi'>
+                                <label for='date_book'><b>Tình trạng thanh toán  : </b></label><br>
+                                <div class='row'>
+                                    <div class='col-md-6 text-center'>
+                                        <label class='check-container1'>Chưa thanh toán<input type='radio'";if($row3['thanh_toan']=='1')
+                                                        {
+                                                            echo "checked='checked'";
+                                                        } echo "name='thanh_toan' value='1'>
+                                    </div>
+                                    <div class='col-md-6 text-center'>
+                                        <label class='check-container1'>Đã thanh toán
+                                        <input type='radio'";if($row3['thanh_toan']=='0'){
+                                                            echo "checked='checked'";
+                                                        } 
+                                                        echo" name='thanh_toan' value='0'>
+                                    </div>
+                                </div>
+                            </div>
+                        <div class='modal-footer'>
+                            <div class='row'>
+                                <div class='col-md-6 text-center'><button type='submit' value='submit' class='btn btn-sm btn-success' style='width:150px; font-size: 14px'>Thay Đổi Thông tin</button></div>
+                                <div class='col-md-6 text-center'><button type='button' class='btn btn-danger' style='width:150px;' data-dismiss='modal'>Hủy</button></div>
+                            </div>
+                        </div>
+                            </form>
+                    </div>
+                </div>";
+                echo "<button class='btn btn-info cls_btn'"; if($row3['flag_status']=='Khảo sát'||$row3['flag_status']=='Hủy' ){echo 'disabled';} echo "><i class='fa fa-pencil' aria-hidden='true'></i></button>";
+                echo "<button class='btn btn-sm btn-info cls_btn'><i class='fa fa-copy'></i></button>";
+                echo"<button class='btn btn-sm btn-primary cls_btn' "; if($row3['flag_status']=='Hủy'|| $row3['flag_status']=='Khảo Sát'|| $row3['sum_thu']  > 0 ){echo 'disabled';} echo "><i class='fa fa-list-alt'></i></button>";
+                 echo"<button type='button' class='btn btn-sm btn-warning cls_btn' data-toggle='modal' data-target='#my".$row3['id_cus']."'"; if($row3['flag_status']=='Hủy'||$row3['flag_status']=='Khảo Sát'|| $row3['sum_thu']  > 0 ){echo 'disabled';} echo "><i class='fa fa-trash' aria-hidden='true'></i></button>
+                 <!-- Modal -->
+                 <div id='my".$row3['id_cus']."' class='modal fade' role='dialog'>
+                 <div class='modal-dialog'>
+                     <!-- Modal content-->
+                     <div class='modal-content'>
+                         <form action='includes/logic/deleteKH.php' method='GET'>
+                         <div class='modal-header'>
+                             <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                             <h4 class='modal-title'>Nguyên Nhân Hủy</h4>
+                         </div>
+                         <div class='modal-body'>
+                             <input type='hidden' name='hd' value='huy'>
+                             <input type='hidden' name='id_cus' value='".$row3['id_cus']."'>
+                            <textarea style = 'width:100%' name='nnHuy'></textarea>
+                         </div>
+                         <div class='modal-footer'>
+                             <input type='submit' class='btn btn-default' value='Xác Nhận'/>
+                         </div>
+                     </form>
+                     </div>
+                 </div>
+                 </div>                 
+               </td>      
+            </tr>";
+            endwhile;
           
       echo "</tbody>
       

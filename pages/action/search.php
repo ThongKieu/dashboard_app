@@ -3,7 +3,7 @@
 	<div class="form-group">
 		<div class="input-group">
 			<span class="input-group-addon">Tìm Kiếm</span>
-			<input type="text" name="search_text" id="search_text" placeholder="Tìm địa chỉ hoặc số điện thoại" class="form-control" />
+			<input type="text" name="search_text" id="search_text" placeholder="Tìm địa chỉ hoặc số điện thoại" class="form-control " style="z-index: 0;" />
 		</div>
 	</div>
 	<br />

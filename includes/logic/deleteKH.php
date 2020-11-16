@@ -14,7 +14,7 @@ if($hd=='ks')
     $sql = " UPDATE `info_cus` SET flag_status='Khảo Sát',`flag_book`=1 where id_cus='$id'";
     $q = $pdo->query($sql);
     $q->setFetchMode(PDO::FETCH_ASSOC);
-    header("location: " . BASE_URL . "index.php?action=".$ki);
+    header("location: " . BASE_URL . "index.php");
   }
   catch (PDOException $e) {
     die("Could not connect to the database $dbname :" . $e->getMessage());

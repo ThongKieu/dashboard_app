@@ -29,6 +29,9 @@
   overflow: auto;
 
 }
+.content{
+  margin-top: 50px;
+}
 @media screen and (max-height: 768px){
         .modal-content{
             width: 100%;
