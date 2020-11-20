@@ -13,16 +13,17 @@
     public $numKS;
     public $numLC;
     
+    
  
     // constructor
     public function __construct($db){
         $this->pdo = $db;
     } 
-    function countLC($time_search){
+    function countLC($timelive){
           
           // query to select all user records
           $query = "SELECT id_cus FROM ". $this->table_name . "
-           WHERE  date_book like '%$time_search%' and flag_book ='0' and flag_status is NULL";
+           WHERE  date_book like '%$timelive%' and flag_book ='0' and flag_status is NULL";
      
           // prepare query statement
           $stmt = $this->pdo->prepare($query);
@@ -37,12 +38,12 @@
           return $numLC;
      } 
      
-     function countDL($time_search){
+     function countDL($timelive){
  
      // query to select all user records
-    // $time_search = date('d/m/Y');
+    // $timelive = date('d/m/Y');
      // query to select all user records
-     $query = "SELECT info_cus.id_cus FROM info_cus, work_do  WHERE  flag_book ='1' and flag_status is NULL and kind_book like '%Lanh%' and work_do.sum_thu = 0 and work_do.id_cus = info_cus.id_cus and date_book like '%$time_search%'";
+     $query = "SELECT info_cus.id_cus FROM info_cus, work_do  WHERE  flag_book ='1' and flag_status is NULL and kind_book like '%Lanh%' and work_do.sum_thu = 0 and work_do.id_cus = info_cus.id_cus and date_book like '%$timelive%'";
 
      // prepare query statement
      $stmt = $this->pdo->prepare($query);
@@ -56,13 +57,13 @@
      // return row count
      return $numLC;
      }
-     function countDN($time_search){
+     function countDN($timelive){
  
           // query to select all user records
           // query to select all user records
-     //$time_search = date('d/m/Y');
+     //$timelive = date('d/m/Y');
      // query to select all user records
-     $query = "SELECT info_cus.id_cus FROM info_cus, work_do  WHERE  flag_book ='1' and flag_status is NULL and kind_book like '%nuoc%' and work_do.sum_thu = 0 and work_do.id_cus = info_cus.id_cus and date_book like '%$time_search%'";
+     $query = "SELECT info_cus.id_cus FROM info_cus, work_do  WHERE  flag_book ='1' and flag_status is NULL and kind_book like '%nuoc%' and work_do.sum_thu = 0 and work_do.id_cus = info_cus.id_cus and date_book like '%$timelive%'";
 
      // prepare query statement
      $stmt = $this->pdo->prepare($query);
@@ -75,13 +76,13 @@
      
      return $numdn;
           }
-     function countDG($time_search){
+     function countDG($timelive){
  
                // query to select all user records
                // query to select all user records
-          //$time_search = date('d/m/Y');
+          //$timelive = date('d/m/Y');
           // query to select all user records
-          $query = "SELECT info_cus.id_cus FROM info_cus, work_do  WHERE  flag_book ='1' and flag_status is NULL and kind_book like '%go%' and work_do.sum_thu = 0 and work_do.id_cus = info_cus.id_cus and date_book like '%$time_search%' ";
+          $query = "SELECT info_cus.id_cus FROM info_cus, work_do  WHERE  flag_book ='1' and flag_status is NULL and kind_book like '%go%' and work_do.sum_thu = 0 and work_do.id_cus = info_cus.id_cus and date_book like '%$timelive%' ";
      
           // prepare query statement
           $stmt = $this->pdo->prepare($query);
@@ -94,11 +95,11 @@
           
           return $numLC;
                }
-     function countHuy($time_search){
+     function countHuy($timelive){
  
-         // $time_search = date('d/m/Y');
+         // $timelive = date('d/m/Y');
           // query to select all user records
-          $query = "SELECT id_cus FROM " . $this->table_name . " WHERE date_book like '%".$time_search."%' and flag_status like '%Huy%' ";
+          $query = "SELECT id_cus FROM " . $this->table_name . " WHERE date_book like '%".$timelive."%' and flag_status like '%Huy%' ";
      
           // prepare query statement
           $stmt = $this->pdo->prepare($query);
@@ -113,11 +114,11 @@
           return $numLC;
      }
 
-     function countKS($time_search){
+     function countKS($timelive){
  
-          //$time_search = date('d/m/Y');
+          //$timelive = date('d/m/Y');
           // query to select all user records
-          $query = "SELECT id_cus FROM " . $this->table_name . " WHERE date_book like '%".$time_search."%' and flag_status like '%sat%' ";
+          $query = "SELECT id_cus FROM " . $this->table_name . " WHERE date_book like '%".$timelive."%' and flag_status like '%sat%' ";
      
           // prepare query statement
           $stmt = $this->pdo->prepare($query);

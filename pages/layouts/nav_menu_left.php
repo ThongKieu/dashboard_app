@@ -20,6 +20,7 @@
         <li><a href="<?php echo BASE_URL.'index.php?action=add&do=1'?>"><i class='fa fa-users'></i> <span>Thông tin thợ</span></a> </li> 
         <li><a href="<?php echo BASE_URL.'index.php?action=newnoti';?>"><i class="fa fa-bell"></i> <span>Thêm Thông báo mới</span></a></li>   
         <li><a href='<?php echo BASE_URL.'index.php?action=chat';?>'><i class='fa fa-wechat'></i> <span>Chat</span></a> </li> 
+        <li><a href="<?php echo BASE_URL.'includes/class/mobile/import_data_mobile.php'?>"><i class='fa fa-user'></i> <span>App</span></a> </li> 
       </ul>
     </section>
     <!-- <li><a href='<?php echo BASE_URL.'index.php?action=exp';?>'><i class='fa fa-arrow-circle-o-left'></i> <span>Xuất Dữ Liệu</span></a></li>/.sidebar -->

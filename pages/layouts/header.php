@@ -70,6 +70,9 @@ catch (PDOException $e)
       position:absolute;
       top:0;
     }
+    .cls_a{
+        margin-right: 3px;
+    }
     
   </style>
 </head>

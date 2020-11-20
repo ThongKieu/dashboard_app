@@ -27,7 +27,7 @@ session_start();
 	define ('ROOT_PATH', realpath(dirname(__FILE__))); // path to the root folder
 	define ('INCLUDE_PATH', realpath(dirname(__FILE__) . '/includes' )); // Path to includes folder
   define('BASE_URL', 'http://localhost:8080/dashboard_app/'); // the home url of the website
- 
+          
   function fetch_user_last_activity($user_id, $conn)
   {
    $query = "

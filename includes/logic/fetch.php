@@ -6,9 +6,9 @@ if(isset($_POST["query"]))
 {
 	$search =$_POST["query"];
 	$result = $conn->prepare( "
-			SELECT id_cus,name_cus,phone_cus,add_cus, des_cus,yc_book, flag_status, date_book,operator_time , note_book 
-			FROM info_cus 
-            WHERE    
+			SELECT info_cus.id_cus, info_cus.name_cus,info_cus.add_cus, info_cus.des_cus, info_cus.yc_book, info_cus.flag_status, info_cus.date_book, info_cus.operator_time, info_cus.note_book, info_worker.name_worker, work_do.sum_chi, work_do.sum_thu
+			FROM info_cus, work_do, info_worker 
+			WHERE work_do.id_cus = info_cus.id_cus and work_do.id_worker = info_worker.id_worker
             info_cus.phone_cus like '%$search%'
             or info_cus.add_cus like '%$search%'
             ORDER BY id_cus ASC LIMIT 40
@@ -18,9 +18,9 @@ if(isset($_POST["query"]))
 else
 {
 	$result = $conn->prepare("
-		SELECT id_cus,name_cus,phone_cus,add_cus, des_cus,yc_book, flag_status, date_book ,note_book, operator_time
-		FROM info_cus 
-        WHERE  info_cus.id_cus 
+	SELECT info_cus.id_cus, info_cus.name_cus,info_cus.add_cus, info_cus.des_cus, info_cus.yc_book, info_cus.flag_status, info_cus.date_book, info_cus.operator_time, info_cus.note_book, info_worker.name_worker, info_cus.phone_cus, work_do.sum_chi, work_do.sum_thu
+	FROM info_cus, work_do, info_worker 
+	WHERE work_do.id_cus = info_cus.id_cus and work_do.id_worker = info_worker.id_worker
         LIMIT 20");
 	$result ->execute();
 }
@@ -42,7 +42,7 @@ if($num > 0)
 							<th>Thợ Làm</th>
 							<th>Tiền Chi</th>
 							<th>Tiền Thu</th>
-							<th>Sửa<th>
+							<th>Xử lý<th>
 						</tr>';
 	while($row = $result->fetch(PDO::FETCH_ASSOC))
 	{
@@ -56,9 +56,9 @@ if($num > 0)
 				<td>'.$row["des_cus"].'</td> 
 				<td>'.$row["phone_cus"].'</td> 
 				<td>'.$row["note_book"].'</td>  
-				<td>'.$row["flag_status"].'</td> 
-				<td>'.$row["flag_status"].'</td> 
-				<td>'.$row["flag_status"].'</td> 
+				<td>'.$row["name_worker"].'</td> 
+				<td>'.$row["sum_chi"].'</td> 
+				<td>'.$row["sum_thu"].'</td> 
 				<td> 
 					<button type="button" data-toggle="modal" data-target="#my1'.$row['id_cus'].'"class="btn btn-sm btn-success tooltipButton cls_btn" data-tooltip="Sửa"><i class="fa fa-pencil" aria-hidden="true"></i></button>
 					<div id="my1'.$row['id_cus'].'" class="modal fade" role="dialog">
@@ -88,11 +88,11 @@ if($num > 0)
                                     <label for="note_book"><b>Ghi Chú Công Việc </b></label>
 									<input class="form-control" type="text" name="note_book" value="'.$row['note_book'].'" ></input>
 									<label for="note_book"><b>Thợ Làm</b></label>
-									<input class="form-control" type="text" name="flag_status" value="'.$row['flag_status'].'" disabled></input>
+									<input class="form-control" type="text" name="flag_status" value="'.$row['name_worker'].'" disabled></input>
 									<label for="note_book"><b>Tiền Thu</b></label>
-									<input class="form-control" type="text" name="flag_status" value="'.$row['flag_status'].'" disabled></input>
+									<input class="form-control" type="text" name="flag_status" value="'.$row['sum_chi'].'" disabled></input>
 									<label for="note_book"><b>Tiền Chi</b></label>
-                                    <input class="form-control" type="text" name="flag_status" value="'.$row['flag_status'].'" disabled></input>
+                                    <input class="form-control" type="text" name="flag_status" value="'.$row['sum_thu'].'" disabled></input>
 								</div>
 							<div class="modal-footer">
 								<div class="row">

@@ -9,6 +9,7 @@
              
     $q = $pdo->query($sql);
     $q->setFetchMode(PDO::FETCH_ASSOC);
+
     if(empty($q))
     {
         $sql = "SELECT id_cus, name_cus, phone_cus, add_cus, des_cus, yc_book, note_book, date_book,flag_status FROM info_cus 
@@ -16,11 +17,13 @@
              
     $q = $pdo->query($sql);
     $q->setFetchMode(PDO::FETCH_ASSOC);
-	$tho= $conn->prepare("select * FROM info_worker where status_worker = 0 and today_off = 0  order by name_worker ASC ");
-    $tho->setFetchMode(PDO::FETCH_ASSOC); // set kiểu mảng cho giá trị trả về
-    $tho->execute();
-    $rs = $tho->fetchAll();	
     }
+    $tho= $conn->prepare("select * FROM info_worker where status_worker = 0 and today_off = 0  order by name_worker ASC ");
+     // set kiểu mảng cho giá trị trả về
+    $tho->execute();
+
+    $rs = $tho->fetchAll();	
+    $tho->setFetchMode(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     die("Could not connect to the database $dbname :" . $e->getMessage());
 }
@@ -46,15 +49,15 @@
         <tbody>
             <?php while ($row = $q->fetch()): ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($row['name_cus']); ?></td>
+                            <td><?php echo  ($row['name_cus']); ?></td>
                             
-                            <td><?php echo htmlspecialchars($row['add_cus']); ?></td>
-                            <td><?php echo htmlspecialchars($row['des_cus']); ?></td>
-                            <td><?php echo htmlspecialchars($row['phone_cus']); ?></td>
-                            <td><?php echo htmlspecialchars($row['yc_book']); ?></td>
-                            <td><?php echo htmlspecialchars($row['note_book']); ?></td>
-                            <td><?php echo htmlspecialchars($row['flag_status']); ?></td>
-                            <td><?php echo htmlspecialchars($row['date_book']); ?></td>
+                            <td><?php echo  ($row['add_cus']); ?></td>
+                            <td><?php echo  ($row['des_cus']); ?></td>
+                            <td><?php echo  ($row['phone_cus']); ?></td>
+                            <td><?php echo  ($row['yc_book']); ?></td>
+                            <td><?php echo  ($row['note_book']); ?></td>
+                            <td><?php echo  ($row['flag_status']); ?></td>
+                            <td><?php echo  ($row['date_book']); ?></td>
                             
                             <td><?php echo "<a href ='".BASE_URL."includes/logic/XL_thu_huy.php?id_cus=".$row['id_cus']." &do=0'class='btn btn-sm btn-danger'> Thu Hồi</a>";
 								            echo "<button type='button' class='btn btn-info btn-sm' data-toggle='modal' data-target='#phantho".$row['id_cus']."'>Phân</button>
@@ -74,19 +77,18 @@
                             <form action='includes/logic/XL_phan_lich.php' method='POST' class ='hop'>
                                 <label>Chọn Thợ cần Phân :</label>
                                 <input type ='hidden' name='ac' value ='phanthoKS' />
-                                <input type ='hidden' name='nv' value='".$ruser['real_name']."'/>
+                                <input type ='hidden' name='nv' value ='".$ruser['real_name']."' />
                                 <input type='hidden' name = 'id_cus' value='".$row['id_cus']."'/>
-                                <input type='hidden' name = 'note' value='".$row['note_book']."'/>
+                                
                                 <select name='name_worker'>";
-                                foreach ($rs as $row1) {
-                                    echo '<option>';
-                                    
-                                    echo $row1['name_worker'] . ' ';
-                                    echo $row1['add_worker'] . ' ';
-                                    echo $row1['id_worker']." ";
-                                    echo '</option>';
-                                   
-                                    }  
+                                                            foreach ($rs as $row1) {
+                                                                echo '<option>';  
+                                                                echo $row1['name_worker'].'  ' ;
+                                                                echo $row1['add_worker'].'  ';
+                                                                echo $row1['id_worker']." ";
+                                                                echo '</option>';
+                                                            }
+                                                       ;
                                 
                                 
                                 echo "</select>
@@ -101,6 +103,7 @@
                                     
                                     echo $rowt['name_worker'] . ' ';
                                     echo $rowt['add_worker'] . ' ';
+                                    echo $rowt['id_worker']." ";
                                     echo '</option>';
                                     }  
                                 

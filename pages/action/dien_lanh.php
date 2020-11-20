@@ -8,7 +8,7 @@
     $qc->setFetchMode(PDO::FETCH_ASSOC);
 
     // Dữ liệu thợ
-    $tho= $conn->prepare("select * FROM info_worker where status_worker = 0 and today_off = 0  order by name_worker ASC ");
+    $tho= $conn->prepare("select * FROM info_worker where status_worker = 0 and today_off = 0 and kind_worker like '%lanh%' order by name_worker ASC ");
     $tho->setFetchMode(PDO::FETCH_ASSOC); // set kiểu mảng cho giá trị trả về
     $tho->execute();
     $rs = $tho->fetchAll();
@@ -52,11 +52,11 @@ echo "
     </thead>
     <tbody>"; while ($row2 = $q2->fetch()): echo "
         <tr>
-            <th>".htmlspecialchars($row2['yc_book'])."</th>
-            <td>".htmlspecialchars($row2['name_cus'])."</td>
-            <td>".htmlspecialchars($row2['add_cus'])."</td>
-            <td>".htmlspecialchars($row2['des_cus'])."</td>
-            <td>".htmlspecialchars($row2['phone_cus'])."</td>
+            <th>".($row2['yc_book'])."</th>
+            <td>".($row2['name_cus'])."</td>
+            <td>".($row2['add_cus'])."</td>
+            <td>".($row2['des_cus'])."</td>
+            <td>".($row2['phone_cus'])."</td>
             <td>"; if($row2['note_book']==null){
                 // code 
             }else{
@@ -275,20 +275,20 @@ echo "
             <?php while ($row = $q->fetch()): ?>
             <tr>
                 <td>
-                    <?php echo htmlspecialchars($row['yc_book']); ?>
+                    <?php echo  ($row['yc_book']); ?>
                 </td>
                 <td>
-                    <?php echo htmlspecialchars($row['name_cus']); ?>
+                    <?php echo  ($row['name_cus']); ?>
                 </td>
 
                 <td>
-                    <?php echo htmlspecialchars($row['add_cus']); ?>
+                    <?php echo  ($row['add_cus']); ?>
                 </td>
                 <td>
-                    <?php echo htmlspecialchars($row['des_cus']) ;?>
+                    <?php echo  ($row['des_cus']) ;?>
                 </td>
                 <td>
-                    <?php echo htmlspecialchars($row['phone_cus']); ?>
+                    <?php echo  ($row['phone_cus']); ?>
                 </td>
 
                 <td>
@@ -299,10 +299,10 @@ echo "
                             } ?>
                 </td>
                 <td>
-                    <?php echo htmlspecialchars($row['name_worker']); ?>
+                    <?php echo  ($row['name_worker']); ?>
                 </td>
                 <td  >
-                    <?php echo htmlspecialchars($row['phu']); ?>
+                    <?php echo  ($row['phu']); ?>
                 </td>
 
                 <td class="text-center" style="padding-top:3px;">
