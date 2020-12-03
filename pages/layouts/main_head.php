@@ -1,17 +1,7 @@
 <?php 
-
-  include 'includes/class/db_co.php';
-  include 'includes/class/rownCus.php';
-
   $database = new Getdatabase();
   $db = $database->getConnection();
-  if(isset($_GET['time_search']))
-  {
-    $time_search= $_GET['time_search'];
-  }
-  else{
-    $time_search = date('Y-m-d');
-  }
+  
    try{
     $vsbn = $conn -> prepare('SELECT * FROM notication where status_ad = 0');
     $vsbn->execute();
@@ -21,79 +11,6 @@
     } 
  
 ?>
-<style>
-.my-custom-scrollbar {
-  position: relative;
-  width: 100%;
-  height: 90vh;
-  overflow: auto;
-
-}
-.content{
-  margin-top: 50px;
-}
-@media screen and (max-height: 768px){
-        .modal-content{
-            width: 100%;
-            height: 90vh;
-            overflow: auto;
-        }
-    }
-@media screen and (max-height:768px) {
-  .my-custom-scrollbar {height:85vh;}
-}
-.smooth_scroll{
-  position: fixed;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
-  margin: 0;
-  padding: 0;
-  z-index: 1;
-  
-}
-.smooth_scroll li{
-  list-style: none;
-  margin: 5px;
-  padding: 5px;
-  
-}
-.smooth_scroll li a{
-  text-decoration: none;
-  background-color: #3c8dbc;
-  text-align: center;
-  color: white;
-  padding:  5px;
-  margin: 10px;
-  border-radius: 50%;
-}
-.btnThemKH{
-        position: fixed;
-        top: 80%;
-        right: 25px;
-        transform: translateY(-50%);
-        border-radius: 50%;
-        width: 45px;
-        height: 45px;
-        margin: 0;
-        padding: 0;
-        z-index: 1;
-      }
-.modal-title{
-        text-align: center;
-}
-@media screen and (max-height:768px) {
-  .content{
-    margin-top: 50px;
-    
-  }
-  .content-wrapper{
-    min-height: 0px !important;
-    margin-bottom:0;
-  }
-}
-
-</style>
 <script>
   $(function () {
     $('[data-toggle="tooltip"]').tooltip()

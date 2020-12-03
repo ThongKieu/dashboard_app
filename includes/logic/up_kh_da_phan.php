@@ -1,6 +1,7 @@
 <?php
 include '../../config.php';
-
+$database = new Getdatabase();
+$conn = $database->getConnection();
         $id = $_POST["id_cus"];
         $n=$_POST['nameKH'];
         $a=$_POST['addKH'];

@@ -1,6 +1,6 @@
 <?php
-    
-
+    $database = new Getdatabase();
+    $conn = $database->getConnection();
     date_default_timezone_set("Asia/Ho_Chi_Minh");
     $timeupdate = mktime(00,00);
     $timeupdate1 = mktime(date('H'),date('i'));

@@ -82,7 +82,7 @@
                 <td>".$results->data[$i]['sum_chi']."</td>
                 <td>".$results->data[$i]['sum_thu']."</td>
                 <td>";
-                    echo "<a href ='".BASE_URL."includes/logic/thu_chi.php?id_work=".$results->data[$i]['id_work']."&idq=1&ki=thuchi&tentho=".$tentho." 'class='btn btn-sm btn-success'>Nhập</a>";
+                    echo "<a href ='".BASE_URL."includes/logic/thu_chi.php?id_work=".$results->data[$i]['id_work']."&idq=1&ki=thuchi&tentho=".$results->data[$i]['name_worker']." 'class='btn btn-sm btn-success'>Nhập</a>";
                     echo "&nbsp";
                     echo "<a href ='".BASE_URL."includes/logic/thu_chi.php?id_work=".$results->data[$i]['id_work']."&idq=2'class='btn btn-sm btn-info'>Sửa</a>";
                     echo "&nbsp";

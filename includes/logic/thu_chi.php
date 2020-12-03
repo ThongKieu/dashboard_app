@@ -6,8 +6,9 @@
 <head>
   <body>
 <?php
-include '../../config.php';
-
+include '../../config.php ';
+$database = new Getdatabase();
+$conn = $database->getConnection();
 
 
 /* 
@@ -23,9 +24,8 @@ try {
 	if(isset($_GET['tentho'])){$tentho = $_GET['tentho'];}
 	   else{$tentho= " ";}
 	if(isset($_GET['time_search'])){$time_search = $_GET['time_search'];}
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password,$options);
     $sql = "SELECT id_cus,id_work,sum_chi, sum_thu, note_work,thanh_toan, thongtinthem FROM work_do  WHERE id_work ='$id'";
-    $q = $pdo->query($sql);
+    $q = $conn->query($sql);
     $q->setFetchMode(PDO::FETCH_ASSOC);
     $rs = $q->fetch();
   if(isset($q))
@@ -34,7 +34,7 @@ try {
         $idc = $rs['id_cus'];
         
         $sql2 = "SELECT phone_cus, date_book, add_cus, des_cus FROM info_cus  WHERE id_cus ='$idc'";
-        $q2 = $pdo->query($sql2);
+        $q2 = $conn->query($sql2);
         $q2->setFetchMode(PDO::FETCH_ASSOC);
         // header("location: " . BASE_URL . "index.php");
         $row = $q2->fetch();
@@ -48,22 +48,7 @@ try {
     
  
 ?>
-<style>
-.hop input[type=currency]{
-  width: 100%;
-  padding: 5px;
-  margin: 5px 0 1px 0;
-  border: none;
-  background: #f1f1f1;
-}
-.hop input[type=currency1]{
-  width: 100%;
-  padding: 5px;
-  margin: 5px 0 1px 0;
-  border: none;
-  background: #f1f1f1;
-}
-</style>
+
 <form action="XL_thu_chi.php"  method="POST" class="hop">
     <?php 
     if($idq==1){
@@ -103,24 +88,6 @@ try {
         </form>";
       ?>
 
-<script>
-$('input').on('input', function(e){        
-    $(this).val(formatCurrency(this.value.replace(/[,VNĐ]/g,'')));
-}).on('keypress',function(e){
-    if(!$.isNumeric(String.fromCharCode(e.which))) e.preventDefault();
-}).on('paste', function(e){    
-    var cb = e.originalEvent.clipboardData || window.clipboardData;      
-    if(!$.isNumeric(cb.getData('text'))) e.preventDefault();
-});
-function formatCurrency(number){
-    var n = number.split('').reverse().join("");
-    var n2 = n.replace(/\d\d\d(?!$)/g, "$&,");    
-    return  n2.split('').reverse().join('') ;
-}
-
- 
-</script>
-    
 
 
 

@@ -1,6 +1,7 @@
 <?php
      include '../../config.php';
-    
+     $database = new Getdatabase();
+     $conn = $database->getConnection();
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if(isset($_POST["nameTho"])) { $nameTho= $_POST['nameTho']; }
     if(isset($_POST["addTho"])) { $addTho = $_POST['addTho']; }

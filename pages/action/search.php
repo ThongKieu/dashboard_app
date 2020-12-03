@@ -1,5 +1,5 @@
 <div class="container-fluid">
-<h2 align="center">Tìm kiếm Dữ Liệu Khách Hàng</h2><br />
+<h2 class="text-center">Tìm kiếm Dữ Liệu Khách Hàng</h2><br />
 	<div class="form-group">
 		<div class="input-group">
 			<span class="input-group-addon">Tìm Kiếm</span>

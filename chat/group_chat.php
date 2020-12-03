@@ -4,6 +4,8 @@
 
 include('../config.php');
 
+$database = new Getdatabase();
+$conn = $database->getConnection();
 
 
 

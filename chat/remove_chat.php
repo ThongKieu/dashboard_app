@@ -3,7 +3,8 @@
 //remove_chat.php
 
 include('../config.php');
-
+$database = new Getdatabase();
+$conn = $database->getConnection();
 if(isset($_POST["chat_message_id"]))
 {
  $query = "

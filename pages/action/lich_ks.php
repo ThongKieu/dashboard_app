@@ -1,13 +1,12 @@
 <?php 
-    
-    
+$database = new Getdatabase();
+$conn = $database->getConnection();
    try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password,$options);
-    
+   
     $sql = "SELECT id_cus,name_cus,phone_cus,add_cus,des_cus,yc_book, note_book,date_book,flag_status FROM info_cus 
              WHERE  date_book like '%$timelive%' and flag_book = '1'  and flag_status like '%Sat%' ";
              
-    $q = $pdo->query($sql);
+    $q = $conn->query($sql);
     $q->setFetchMode(PDO::FETCH_ASSOC);
 
     if(empty($q))
@@ -15,7 +14,7 @@
         $sql = "SELECT id_cus, name_cus, phone_cus, add_cus, des_cus, yc_book, note_book, date_book,flag_status FROM info_cus 
         WHERE    flag_book = '1'  and flag_status like '%Sat%' ";
              
-    $q = $pdo->query($sql);
+    $q = $conn->query($sql);
     $q->setFetchMode(PDO::FETCH_ASSOC);
     }
     $tho= $conn->prepare("select * FROM info_worker where status_worker = 0 and today_off = 0  order by name_worker ASC ");
@@ -35,7 +34,6 @@
             <tr>
                 
                 <th>Tên KH</th>
-                
                 <th>Địa Chỉ</th>
                 <th>Quận</th>
                 <th>Số Điện Thoại</th>

@@ -1,5 +1,12 @@
+<style>
+
+</style>
+
+
 <?php
 include '../../config.php';
+$database = new Getdatabase();
+$conn = $database->getConnection();
 $output = '';
 //mysqli_set_charset($connect,'UTF8');
 if(isset($_POST["query"]))
@@ -11,7 +18,7 @@ if(isset($_POST["query"]))
 			WHERE work_do.id_cus = info_cus.id_cus and work_do.id_worker = info_worker.id_worker
             info_cus.phone_cus like '%$search%'
             or info_cus.add_cus like '%$search%'
-            ORDER BY id_cus ASC LIMIT 40
+            ORDER BY id_cus ASC LIMIT 100
 	");
 	$result ->execute();
 }
@@ -21,16 +28,17 @@ else
 	SELECT info_cus.id_cus, info_cus.name_cus,info_cus.add_cus, info_cus.des_cus, info_cus.yc_book, info_cus.flag_status, info_cus.date_book, info_cus.operator_time, info_cus.note_book, info_worker.name_worker, info_cus.phone_cus, work_do.sum_chi, work_do.sum_thu
 	FROM info_cus, work_do, info_worker 
 	WHERE work_do.id_cus = info_cus.id_cus and work_do.id_worker = info_worker.id_worker
-        LIMIT 20");
+        LIMIT 100");
 	$result ->execute();
 }
 $num = $result->rowCount();
 
 if($num > 0)
 {
-	$output .= '<div class="table-responsive table-bordered">
-					<table class="table table bordered">
-						<tr>
+	$output .= '<div>
+					<table class="table table-bordered">
+						<thead>
+					<tr>
 							<th>Yêu Cầu Công Việc</th>
 							<th>Ngày Đặt Lịch</th>
 							<th>Thời Gian BH</th>
@@ -42,11 +50,12 @@ if($num > 0)
 							<th>Thợ Làm</th>
 							<th>Tiền Chi</th>
 							<th>Tiền Thu</th>
-							<th>Xử lý<th>
-						</tr>';
+							<th>Xử lý</th>
+						</tr></thead>';
 	while($row = $result->fetch(PDO::FETCH_ASSOC))
 	{
 		$output .= '
+		<tbody>
 			<tr>
 				<td>'.$row["yc_book"].'</td> 
 				<td>'.$row["date_book"].'</td> 
@@ -65,7 +74,7 @@ if($num > 0)
 						<div class="modal-content" style="position: fixed;top: 20px;left: 35%;text-align: left;width: 30%;">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title text-center">Sửa Thông Tin Lịch Khách Hàng</h4>
+                                <h4 class="modal-title text-center">Yêu Cầu Bảo Hành</h4>
 							</div>
 							<form action="includes/logic/up_tt_KH.php" id="frm_sua_KH" method="POST" class ="form-container">
                             	<div class="modal-body">
@@ -74,7 +83,7 @@ if($num > 0)
 									<label for="ycKH"><b>Yêu Cầu Công Việc</b></label>
 									<input type="text" class="form-control" name = "ycKH" value="'.$row['yc_book'].'">  
 									<label for="date_book"><b>Thời gian: </b></label>
-									<input type="date" class="form-control" name="date_book" value="'.$row['date_book'].'" disabled>
+									<input type="text" class="form-control" name="date_book" value="'.$row['date_book'].'" disabled>
 									<label for="ycKH"><b>TT bảo hành:</b></label>
 									<input type="text" class="form-control" name = "operator_time" value="'.$row['operator_time'].'">  
                                     <label for="nameKH"><b>Tên Khách Hàng</b></label>
@@ -105,8 +114,14 @@ if($num > 0)
                     </div>
 				</td> 
 			</tr>
+			
+
 		';
 	}
+	echo "</tbody>
+	</table>
+	</div>";
+
 	echo $output;
 }
 else

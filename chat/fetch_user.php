@@ -1,5 +1,7 @@
 <?php
     include('../config.php');
+    $database = new Getdatabase();
+    $conn = $database->getConnection();
     $query = "
         SELECT * FROM users 
         WHERE id != '".$_SESSION['user_id']."' 

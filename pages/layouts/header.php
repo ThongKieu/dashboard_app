@@ -1,22 +1,37 @@
-<?php $iduser = $_SESSION['username'];
+<?php 
+include 'includes/class/rownCus.php';
+$database = new Getdatabase();
+$conn = $database->getConnection();
+$iduser = $_SESSION['username'];
 
+if(isset($_GET['time_search']))
+  {
+    $time_search= $_GET['time_search'];
+  }
+  else{
+    $time_search = date('Y-m-d');
+  }
 try{
-    
+    // user get
     $sql = "SELECT * FROM users where username like '$iduser'";
     $q= $conn->query($sql);
     $q ->setFetchMode(PDO::FETCH_ASSOC);
     $ruser=$q->fetch();
     $us = $ruser['username'];
+
+    // notication get
     $sql2 = "SELECT * FROM notication where not nv_noti like '%$us%' ORDER BY id_noti DESC ";
     $q2= $conn->query($sql2);
     $q2 ->setFetchMode(PDO::FETCH_ASSOC);
     $q2->execute();
     $numboti = $q2 -> rowCount();
+    //Get tho nghi
+    
 
 }
 catch (PDOException $e)
 {
-    die("Could not connect to the database $dbname :" . $e->getMessage());
+    die("Could not connect to the database  :" . $e->getMessage());
 }
 
 ?>
@@ -49,32 +64,8 @@ catch (PDOException $e)
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <!-- link css tooltip  -->
   <link rel="stylesheet" href="css/tooltip_btn.css">
-  <style>
-    html{
-      height: 100%;  
-      
-    }
-    
-    *{font-family: 'Times New Roman', Times, serif;}
-    body{
-      min-height: 100vh; 
-      position: relative;
-    }
-    .main-footer1{
-      width: 97.5%;
-      position: absolute; 
-      bottom: 0;
-    }
-    .main-header{
-      width:100%;
-      position:absolute;
-      top:0;
-    }
-    .cls_a{
-        margin-right: 3px;
-    }
-    
-  </style>
+  <link rel="stylesheet" href="css/style.css">
+  
 </head>
 <body class="hold-transition skin-blue sidebar-mini sidebar-collapse" >
 <div class="wrapper">
@@ -89,10 +80,55 @@ catch (PDOException $e)
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
       <!-- Sidebar toggle button-->
+      
+      
       <a href="#" class="sidebar-toggle text-decoration-nones" data-toggle="push-menu" role="button">
         <span class="sr-only">Menu</span>
       </a>
+      <div class="btn btn-success btn_tho_nghi"> <b> &nbsp;&nbsp;Thợ nghỉ :&nbsp;&nbsp; <?php 
+              $a = new Count($conn);      
+              $numwoker = $a ->countWorkerOff($time_search);
+              echo $numwoker;  
+                        ?></b>
+        <div class="content1">
+          <p><?php 
+            if($numwoker > 0){
+              
+             include 'pages/action/get_tho_nghi.php';
+            
+            
+            }
+            else {
+              echo 'Không có thợ nghỉ hôm nay!';
+            }
+          ?></p>
+          
+        </div>
+      </div>
+      <div class="btn btn-warning btn_tho_nghi"> <b>
+
+        <?php 
+              $a = new Count($conn);      
+              $numVSBN = $a ->countNotiVSBN($time_search);
+              echo $numVSBN;  
+                        ?>  &nbsp;&nbsp;Bể</b>
+        <div class="content1"><p><?php 
+            if($numVSBN > 0){
+              
+             include 'pages/action/get_doi_vsbn.php';
+            
+            
+            }
+            else {
+              echo 'Không có bể nước hôm nay!';
+            }
+          ?></p></div>
+      </div>
+        
+      
+      
       <div class="navbar-custom-menu">
+      
         <ul class="nav navbar-nav">
           <!-- Messages: style can be found in dropdown.less
           Notifications: style can be found in dropdown.less -->

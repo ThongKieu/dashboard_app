@@ -1,4 +1,6 @@
-<?php include '../../config.php';?>
+<?php include '../../config.php';
+$database = new Getdatabase();
+$conn = $database->getConnection();?>
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href="<?php echo BASE_URL;?>css/min.css">
@@ -10,11 +12,9 @@
   $action=$_GET['action'];
   $nv = $_GET['nv'];
 try {
-        $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password,$options);
-
         $sql = "select * FROM info_cus WHERE id_cus = '$id'";
 
-        $q = $pdo->query($sql);
+        $q = $conn->query($sql);
         $q->setFetchMode(PDO::FETCH_ASSOC);
         if($q){
         //header("location: " . BASE_URL . "index.php");
@@ -27,7 +27,7 @@ try {
    
       if($action=='sua')
       {
-        echo "<form action='up_tt_KH.php?action=0' id='frm_sua_KH' method='POST' class='hop'>
+        echo "<form action='up_tt_KH.php?action=0'   method='POST' class='hop'>
         <h2>Sửa Thông tin lịch Khách Hàng</h2>";
          $rs =$q->fetch();
     
@@ -79,7 +79,7 @@ try {
       
       else
       {
-        echo "<form action='up_tt_KH.php' id='frm_sua_KH' method='POST' class='hop'>
+        echo "<form action='up_tt_KH.php'   method='POST' class='hop'>
         <h2>Sao chép lịch Khách hàng</h2>";
          $rs =$q->fetch();
     

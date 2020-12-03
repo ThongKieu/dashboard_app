@@ -14,8 +14,7 @@
     $rs = $tho->fetchAll();
     
     // đổ toàn bộ dự liệu thu về vào mảng
-    $sql = "SELECT info_cus.id_cus,info_cus.name_cus, info_cus.phone_cus,info_cus.add_cus, info_cus.des_cus,info_cus.yc_book, info_cus.note_book,info_worker.name_worker,info_cus.date_book, work_do.id_work, nv_phan, phu, sum_thu, sum_chi, thongtinthem, note_work, thanh_toan FROM work_do,info_worker,info_cus WHERE  info_cus.date_book like '%$timelive%'and work_do.id_worker = info_worker.id_worker and work_do.id_cus = info_cus.id_cus and info_cus.kind_book like '%lạnh%'
-    and info_cus.flag_book = '1' and  work_do.sum_thu = '0'and info_cus.flag_status is NULL ORDER BY info_worker.name_worker ASC ";
+    $sql = "SELECT info_cus.id_cus,info_cus.name_cus, info_cus.phone_cus,info_cus.add_cus, info_cus.des_cus,info_cus.yc_book, info_cus.note_book,info_worker.name_worker,info_cus.date_book, work_do.id_work, nv_phan, phu, sum_thu, sum_chi, thongtinthem, note_work, thanh_toan FROM work_do,info_worker,info_cus WHERE  info_cus.date_book like '%$timelive%'and work_do.id_worker = info_worker.id_worker and work_do.id_cus = info_cus.id_cus and info_cus.kind_book like '%lạnh%' and info_cus.flag_book = '1' and  work_do.sum_thu = '0'and info_cus.flag_status is NULL and date_book like '%$time_search%' ORDER BY info_worker.name_worker ASC ";
     $q = $conn->query($sql);
     $q->setFetchMode(PDO::FETCH_ASSOC);
     if(empty($q))
@@ -23,7 +22,7 @@
         $sql = "SELECT info_cus.id_cus,info_cus.name_cus, info_cus.phone_cus,info_cus.add_cus, info_cus.des_cus,info_cus.yc_book, info_cus.note_book,
             info_worker.name_worker,info_cus.date_book, work_do.id_work, nv_phan,phu FROM work_do,info_worker,info_cus 
             WHERE  work_do.sum_thu = 0 and work_do.id_worker = info_worker.id_worker and work_do.id_cus = info_cus.id_cus and info_cus.kind_book like '%lạnh%'
-            and info_cus.flag_book = '1' order by info_worker.name_worker ASC";
+            and info_cus.flag_book = '1' and date_book like '%$time_search%' order by info_worker.name_worker ASC";
             
         $q = $conn->query($sql);
         $q->setFetchMode(PDO::FETCH_ASSOC);
@@ -35,9 +34,9 @@
  
 echo "
 <div class='container-fluid'>
-    <div class='row'>
+    <div class='row col_left'>
         <div class='col-xl-6 col-lg-6 col-md-6 col-sm-12'  style='padding-right:7px;'>
-        <h3 id='lichDienLanh' style='color: #00c0ef; padding:5px 10px 5px 10px;font-weight: 600;text-align: center;border: 1px solid #d2d6de; border-radius:5px; margin-top:5px; box-shadow: 5px 5px #d2d6de;'>Lịch Điện Lạnh Chưa Xử Lý</h3>
+        <h3 id='lichDienLanh' class='lichXL'>Lịch Điện Lạnh Chưa Xử Lý</h3>
 <table class='table table-bordered table-hover '>
     <thead>
         <tr>
@@ -52,7 +51,7 @@ echo "
     </thead>
     <tbody>"; while ($row2 = $q2->fetch()): echo "
         <tr>
-            <th>".($row2['yc_book'])."</th>
+            <td>".($row2['yc_book'])."</td>
             <td>".($row2['name_cus'])."</td>
             <td>".($row2['add_cus'])."</td>
             <td>".($row2['des_cus'])."</td>
@@ -97,7 +96,8 @@ echo "
                                         <textarea style='width: 100%; hight:120px;' name='phu'></textarea>
                                 </div>
                                 <div class='modal-footer'>
-                                    <input type='submit' value='Xác Nhận' class='btn btn-success' /> <button type='button' class='btn btn-danger' data-dismiss='modal'>Close</button>
+                                    <input type='submit' value='Xác Nhận' class='btn btn-success' />
+                                    <button type='button' class='btn btn-danger' data-dismiss='modal'>Close</button>
                                 </div>
                                 </form>
                             </div>
@@ -110,13 +110,12 @@ echo "
                 <!-- Modal -->
                 <div id='my2".$row2['id_cus']."' class='modal fade' role='dialog'>
                     <!-- Modal content-->
-                    <div class='modal-content' style='position: fixed;top: 20px;left: 35%;text-align: left;width: 30%;'>
-                            <div class='modal-header'>
+                    <div class='modal-content modal_content1'>
                                 <button type='button' class='close' data-dismiss='modal'>&times;</button>
                                 <h4 class='modal-title text-center'>Nhân Đôi Lịch Khách Hàng</h4>
                             </div>
                             <div class='modal-body'>
-                            <form action='includes/logic/up_tt_KH.php' id='frm_sua_KH' method='POST' class ='form-container'>
+                            <form action='includes/logic/up_tt_KH.php'   method='POST' class ='form-container'>
                                 <input type='hidden' class='form-control' name ='id_cus' value='".$row2['id_cus']."'>
                                 <input type='hidden'class='form-control' name ='nv' value='".$ruser['real_name']."'>
                                 <input type='hidden'class='form-control' name ='action' value='1'>
@@ -153,10 +152,10 @@ echo "
                                     </div> 
                                 </div>
                             </div>
-                            <div class='modal-footer'>
+                            <div class='modal-footer modal_footer1'>
                                 <div class='row'>
-                                    <div class='col-md-6 text-center'><button type='submit' value='submit' class='btn btn-sm btn-success' style='width:150px; font-size: 14px'>Thay Đổi Thông tin</button></div>
-                                    <div class='col-md-6 text-center'><button type='button' class='btn btn-danger' style='width:150px;' data-dismiss='modal'>Hủy</button></div>
+                                    <div class='col-md-6 text-center'><button type='submit' value='submit' class='btn btn-sm btn-success'>Thay Đổi Thông tin</button></div>
+                                    <div class='col-md-6 text-center'><button type='button' class='btn btn-danger' data-dismiss='modal'>Hủy</button></div>
                                 </div>
                             </div>
                         </form>
@@ -170,13 +169,13 @@ echo "
                 <!-- Modal -->
                 <div id='my1".$row2['id_cus']."' class='modal fade' role='dialog'>
                     <!-- Modal content-->
-                    <div class='modal-content' style='position: fixed;top: 20px;left: 35%;text-align: left;width: 30%;'>
+                    <div class='modal-content modal_content1'>
                             <div class='modal-header'>
                                 <button type='button' class='close' data-dismiss='modal'>&times;</button>
                                 <h4 class='modal-title text-center'>Sửa Thông Tin Lịch Khách Hàng</h4>
-                            </div>
+                            </div>  
                             <div class='modal-body'>
-                            <form action='includes/logic/up_tt_KH.php' id='frm_sua_KH' method='POST' class ='form-container'>
+                            <form action='includes/logic/up_tt_KH.php'   method='POST' class ='form-container'>
                                 <input type='hidden' class='form-control' name ='id_cus' value='".$row2['id_cus']."'>
                                 <input type='hidden'class='form-control' name ='nv' value='".$ruser['real_name']."'>
                                 <input type='hidden'class='form-control' name ='action' value='0'>
@@ -213,10 +212,10 @@ echo "
                                     </div> 
                                 </div>
                             </div>
-                            <div class='modal-footer'>
+                            <div class='modal-footer modal_footer1'>
                                 <div class='row'>
-                                    <div class='col-md-6 text-center'><button type='submit' value='submit' class='btn btn-sm btn-success' style='width:150px; font-size: 14px'>Thay Đổi Thông tin</button></div>
-                                    <div class='col-md-6 text-center'><button type='button' class='btn btn-danger' style='width:150px;' data-dismiss='modal'>Hủy</button></div>
+                                    <div class='col-md-6 text-center'><button type='submit' value='submit' class='btn btn-sm btn-success'>Thay Đổi Thông tin</button></div>
+                                    <div class='col-md-6 text-center'><button type='button' class='btn btn-danger' data-dismiss='modal'>Hủy</button></div>
                                 </div>
                             </div>
                         </form>
@@ -240,7 +239,7 @@ echo "
                                     <input type='hidden' name='hd' value='huy'>
                                     <input type='hidden' name='ki' value='2'>
                                     <input type='hidden' name='id_cus' value='".$row2['id_cus']."'>
-                                    <textarea style='width:100%' name='nnHuy'></textarea>
+                                    <textarea style='width:100%' name='nnHuy' required></textarea>
                                 </div>
                                 <div class='modal-footer'>
                                     <input type='submit' class='btn btn-default' value='Xác Nhận' />
@@ -254,9 +253,16 @@ echo "
     </table>
 </div>";?>
  <!--ket thuc cot-->
-<div class='col-xl-6 col-lg-6 col-md-6 col-sm-12' style='padding-left:7px;'>
-<h3 style='color: #00c0ef; font-weight: 600; padding:5px 10px 5px 10px;text-align: center;border: 1px solid #d2d6de; border-radius:5px; margin-top:5px; box-shadow: 5px 5px #d2d6de;'>Lịch Điện Lạnh  Đã Xử Lý</h3>
-    <table class="table table-bordered table-hover ">
+<div class='col-xl-6 col-lg-6 col-md-6 col-sm-12 col_left'>
+    <div class="row">
+        <div class="col-sm-6"> 
+            <h3 class="lichXL">Lịch Điện Lạnh Đã Xử Lý</h3>                
+        </div>
+        <div class="col-sm-6"> 
+            <input type="text" class="form-control" id="dlInput" onkeyup="myFunctionLanh()" placeholder="Search for names.." title="Type in a name">
+        </div>
+    </div>
+    <table class="table table-bordered table-hover " id="dlTable">
         <thead>
             <tr>
                 <th class="col-md-1">Yêu Cầu</th>
@@ -312,13 +318,13 @@ echo "
                         <!-- Modal -->
                         <div id='my3".$row['id_cus']."' class='modal fade' role='dialog'>
                             <!-- Modal content-->
-                            <div class='modal-content' style='position: fixed;top: 20px;left: 35%;text-align: left;width: 30%;'>
+                            <div class='modal-content modal_content1'>
                                     <div class='modal-header'>
                                         <button type='button' class='close' data-dismiss='modal'>&times;</button>
                                         <h3 class='modal-title text-center'>Nhập Thông Tin Thu Chi</h3>
                                     </div>
                                     <div class='modal-body'>
-                                    <form action='includes/logic/XL_thu_chi.php' id='frm_sua_KH' method='POST' class ='form-container'>
+                                    <form action='includes/logic/XL_thu_chi.php'   method='POST' class ='form-container'>
                                     <input type='hidden' name ='id_work' value=".$row['id_work']." >
                                         <input type='hidden' name ='note_work' value=''>
                                         <input type='hidden'class='form-control' name ='nv' value='".$ruser['real_name']."'>
@@ -367,20 +373,20 @@ echo "
                             </div>
                         </div>";
                         // ket thuc nhap thu chi";
-                        echo " </td> <td style='padding-top:3px;padding-left: 1px; padding-right:1px; text-align:center;'>";
+                        echo " </td> <td class='td_thaydoi'>";
                         // sua thong tin lich da phan 
                         echo"
                         <button type='button' data-toggle='modal' data-target='#my1".$row['id_cus']."'class='btn btn-sm btn-warning tooltipButton cls_btn' data-tooltip='Sửa'><i class='fa fa-pencil' aria-hidden='true'></i></button>
                         <!-- Modal -->
                         <div id='my1".$row['id_cus']."' class='modal fade' role='dialog'>
                             <!-- Modal content-->
-                            <div class='modal-content' style='position: fixed;top: 20px;left: 35%;text-align: left;width: 30%;'>
+                            <div class='modal-content modal_content1' >
                                     <div class='modal-header'>
                                         <button type='button' class='close' data-dismiss='modal'>&times;</button>
                                         <h4 class='modal-title text-center'>Sửa Thông Tin Lịch Điện Lạnh Đã Phân</h4>
                                     </div>
                                     <div class='modal-body'>
-                                    <form action='includes/logic/up_kh_da_phan.php' id='frm_sua_KH' method='POST' class ='form-container'>
+                                    <form action='includes/logic/up_kh_da_phan.php'   method='POST' class ='form-container'>
                                         <input type='hidden' class='form-control' name ='id_cus' value='".$row['id_cus']."'>
                                         <input type='hidden'class='form-control' name ='nv' value='".$ruser['real_name']."'>
                                         <input type='hidden'class='form-control' name ='action' value='0'>
@@ -417,10 +423,10 @@ echo "
                                             </div> 
                                         </div>
                                     </div>
-                                    <div class='modal-footer'>
+                                    <div class='modal-footer modal_footer1'>
                                         <div class='row'>
-                                            <div class='col-md-6 text-center'><button type='submit' value='submit' class='btn btn-sm btn-success' style='width:150px; font-size: 14px'>Thay Đổi Thông tin</button></div>
-                                            <div class='col-md-6 text-center'><button type='button' class='btn btn-danger' style='width:150px;' data-dismiss='modal'>Hủy</button></div>
+                                            <div class='col-md-6 text-center'><button type='submit' value='submit' class='btn btn-sm btn-success' >Thay Đổi Thông tin</button></div>
+                                            <div class='col-md-6 text-center'><button type='button' class='btn btn-danger' data-dismiss='modal'>Hủy</button></div>
                                         </div>
                                     </div>
                                 </form>
@@ -445,7 +451,7 @@ echo "
                                         <input type='hidden' name='hd' value='huy'>
                                         <input type ='hidden' name='ki' value ='2' />
                                         <input type='hidden' name='id_cus' value='".$row['id_cus']."'>
-                                        <textarea style = 'width:100%' name='nnHuy'></textarea>
+                                        <textarea style = 'width:100%' name='nnHuy' required></textarea>
                                     </div>
                                     <div class='modal-footer'>
                                         <input type='submit' class='btn btn-default' value='Xác Nhận'/>
@@ -463,4 +469,4 @@ echo "
 </div><!--ket thuc cot-->
 </div><!-- ket thuc dong  -->
 </div><!-- ket thuc contaier fluid  -->
-	
+    

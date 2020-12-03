@@ -1,6 +1,7 @@
 <?php
 include '../../config.php';
-
+$database = new Getdatabase();
+$conn = $database->getConnection();
         $id = $_POST["id_cus"];
         $n=$_POST['nameKH'];
         $a=$_POST['addKH'];
@@ -16,9 +17,7 @@ include '../../config.php';
 
     if($action == 0){
     try {
-          $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password,$options);
           
-            
               $sql = "UPDATE info_cus SET 
                 name_cus='$n',
                 phone_cus='$t',
@@ -45,8 +44,7 @@ include '../../config.php';
   elseif($action == 1){
        
         try {
-          $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password,$options);
-           
+          
           $sql= "INSERT INTO `info_cus`( `name_cus`, `phone_cus`, `add_cus`, `des_cus`, `yc_book`, `note_book`, `kind_book`, `date_book`, `flag_book`,`flag_status`,`nv_add`) 
           VALUES ('$n','$t','$a','$d','$y','$no','$k','$da',0,NULL,'$nv')";
            $q = $conn->query($sql);

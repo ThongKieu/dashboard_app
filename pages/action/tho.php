@@ -22,10 +22,11 @@ if($do =='0'){
             <th class='col-md-1'>Tên </th>
             <th class='col-md-1'>Họ</th>
             <th class='col-md-2'>Địa Chỉ</th>
-            <th class='col-md-1'>Số Điện thoại Công Ty</th>
-            <th class='col-md-1'>Số cá nhân</th>
-            <th class='col-md-1'>Nay Nghỉ/Làm</th>
+            <th class='col-md-2'>Số Điện thoại Công Ty</th>
+            <th class='col-md-2'>Số cá nhân</th>
             <th class='col-md-1'>Cấp thợ</th>
+            <th class='col-md-1'>Nay Nghỉ/Làm</th>
+            
             <th class='col-md-1'>Thao tác</th> 
             </tr>
        
@@ -39,13 +40,57 @@ if($do =='0'){
                        <td>".$row['add_worker']." </td> 
                        <td>".$row['phone_cty']." </td> 
                        <td>".$row['phone_worker']." </td> 
-                       <td> <a href='".BASE_URL."includes/logic/XL_tho_nghi.php?id=".$row['id_worker']."&thonghi=1' class='btn btn-sm btn-danger'"; if($row['today_off']==1) {echo"disabled";} echo" >Nghỉ</a>
-					   <a href='".BASE_URL."includes/logic/XL_tho_nghi.php?id=".$row['id_worker']."&thonghi=2' class='btn btn-sm btn-success'"; if($row['today_off']==0) {echo"disabled";} echo" >Làm</a>
+                       <td>".$row['cap_tho']." </td> 
+                       <td> <button type='button' data-toggle='modal' data-target='#nhaphtdn".$row['id_worker']."' class='btn btn-sm btn-danger'";
+                       if($row['today_off'] == 1 ){echo "disabled";} 
+                      echo" >Nghỉ</button>
+                      <!-- Modal -->
+                      <div id='nhaphtdn".$row['id_worker']."' class='modal fade' role='dialog'>
+                          <!-- Modal content-->
+                          <div class='modal-content' style='position: fixed;top: 20px;left: 30%;text-align: left;width: 40%;'>
+                              <div class='modal-header'>
+                                  <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                                  <h3 class='modal-title text-center'>Chọn thời gian nghỉ</h3>
+                              </div>
+                              <div class='modal-body'>
+                                  <form action='includes/logic/XL_tho_nghi.php'   method='GET' class ='form-container'>
+                                     <input type='hidden' name ='id_tho' value='".$row['id_worker']."'>
+                                     <input type='hidden' name ='thonghi' value='1'>
+                                        <div class= 'row'>
+                                            <div class= 'col-md-3'>
+                                                <label for='sumthu'><b>Nghỉ sáng  : </b> </label> 
+                                                <input type='radio' checked='checked' name='time_off' value='1'>
+                                            </div> 
+                                            <div class= 'col-md-3'>
+                                                <label for='sumthu'><b>Nghỉ chiều : </b> </label> 
+                                                <input type='radio' name='time_off' value='2'>
+                                            </div>
+                                            <div class= 'col-md-3'>
+                                                <label for='sumthu'><b>Cả Ngày : </b> </label> 
+                                                <input type='radio' name='time_off' value='3'>
+                                            </div>
+                                            <div class= 'col-md-3'>
+                                                <label for='sumthu'><b>Nghỉ phép : </b> </label> 
+                                                <input type='radio' name='time_off' value='0'>
+                                            </div>
+                                        </div>
+                                      
+                              </div>
+                              <div class='modal-footer'>
+                                  <div class='row'>
+                                      <div class='col-md-6 text-center'><button type='submit' value='submit' class='btn btn-sm btn-success' style='width:150px; font-size: 14px'>Xác nhận nghỉ</button></div>
+                                      <div class='col-md-6 text-center'><button type='button' class='btn btn-danger' style='width:150px;' data-dismiss='modal'>Hủy</button></div>
+                                  </div>
+                              </div>
+                                  </form>
+                          </div>
+                      </div>
+                 <a href='".BASE_URL."includes/logic/XL_tho_nghi.php?id_tho=".$row['id_worker']."&thonghi=2' class='btn btn-sm btn-success'"; if($row['today_off']==0) {echo"disabled";} echo" >Làm</a>
 					   
 					   </td>  
-                       <td>".$row['cap_tho']." </td> 
+                       
                        <td><a href='".BASE_URL."index.php?action=wk&do=sua&id_tho=".$row['id_worker']."' class='btn btn-sm btn-info'"; if($ruser['level']==0){echo "disabled";}echo ">Sửa</a> 
-                       <a href='".BASE_URL."includes/logic/XL_tho_nghi.php?id=".$row['id_worker']."&thonghi=0' class='btn btn-sm btn-danger' "; if($ruser['level']==0){echo "disabled";}echo ">Nghỉ Làm</a> </td>
+                       <a href='".BASE_URL."includes/logic/XL_tho_nghi.php?id_tho=".$row['id_worker']."&thonghi=0' class='btn btn-sm btn-danger' "; if($ruser['level']==0){echo "disabled";}echo ">Nghỉ Luôn</a> </td>
                     </tr>";
                  endwhile; 
        echo " 

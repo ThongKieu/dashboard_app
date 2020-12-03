@@ -1,28 +1,41 @@
 <?php
 // start session
 session_start(); 
-	// conn to database
-      	$host = 'localhost';
-        $dbname = 'dulieu';
-        $username = 'root';
-        $password = '';
-        $options = array(
+  // conn to database
+  class Getdatabase{
+        private $host = 'localhost';
+        private $dbname = 'dulieu';
+        private $username = 'root';
+        private $password = '';  
+        public $conn;
+        public $options = array(
         PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
         );
+        
+        public function getConnection(){
+ 
+          $this->conn = null;
+   
+          try{
+              $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->dbname, $this->username, $this->password);
+              $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+              
+          }catch(PDOException $exception){
+              echo "Lỗi Kết Nối " . $exception->getMessage();
+          }
+   
+          return $this->conn;
+      }
+        
+        
+
+  }
+        date_default_timezone_set("Asia/Ho_Chi_Minh");
         $actionh='';
         $timelive = date('Y-m-d');
         $tomorrow  = mktime(0, 0, 0, date("m")  , date("d")+1, date("Y"));
         $time_t = date('Y-m-d',$tomorrow);
-        date_default_timezone_set("Asia/Ho_Chi_Minh");
-        try {
-          $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password,$options);
-          }
-          // Catch any errors
-          catch (PDOException $e) {
-          echo $e->getMessage();
-          exit();
-          }
   // define global constants
 	define ('ROOT_PATH', realpath(dirname(__FILE__))); // path to the root folder
 	define ('INCLUDE_PATH', realpath(dirname(__FILE__) . '/includes' )); // Path to includes folder
@@ -60,12 +73,12 @@ function get_real_name($user_id, $conn)
 function fetch_user_chat_history($from_user_id, $to_user_id, $conn)
 {
   $query = "
-  SELECT * FROM chat_message 
-  WHERE (from_user_id = '".$from_user_id."' 
-  AND to_user_id = '".$to_user_id."') 
-  OR (from_user_id = '".$to_user_id."' 
-  AND to_user_id = '".$from_user_id."') 
-  ORDER BY timestamp ASC
+      SELECT * FROM chat_message 
+      WHERE (from_user_id = '".$from_user_id."' 
+      AND to_user_id = '".$to_user_id."') 
+      OR (from_user_id = '".$to_user_id."' 
+      AND to_user_id = '".$from_user_id."') 
+      ORDER BY timestamp ASC
   ";
   $statement = $conn->prepare($query);
   $statement->execute();

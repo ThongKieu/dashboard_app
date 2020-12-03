@@ -1,6 +1,7 @@
 <?php
      include '../../config.php';
-   
+     $database = new Getdatabase();
+     $conn = $database->getConnection();
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if(isset($_POST["nameKH"])) { $namKH= $_POST['nameKH']; }
     if(isset($_POST["addKH"])) { $addKH = $_POST['addKH']; }
@@ -16,11 +17,10 @@
         {
             $date_book = date('Y-m-d H:i');
         }
-        $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password,$options);
-  
+       
         $sql = "INSERT INTO `info_cus`( `name_cus`, `phone_cus`, `add_cus`, `des_cus`, `yc_book`, `note_book`, `kind_book`, `date_book`, `flag_book`,`flag_status`,`nv_add`) 
             VALUES ('$namKH','$telKH','$addKH','$desKH','$yc_book','$note_book','$kind_book','$date_book',0,NULL,'$nv_add')";
-        $q = $pdo->query($sql);
+        $q = $conn->query($sql);
         $q->setFetchMode(PDO::FETCH_ASSOC);
         if($q){
             header("location: " . BASE_URL . "index.php");

@@ -1,4 +1,6 @@
 <?php include '../../config.php';
+$database = new Getdatabase();
+$conn = $database->getConnection();
 $nv= $_GET['user'];
 $id_noti = $_GET['id_noti'];
 

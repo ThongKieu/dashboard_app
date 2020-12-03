@@ -15,15 +15,7 @@
 <script src="dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
+<script src="dist/js/inputJS.js"></script>
 
-<script>
-      var myCustomScrollbar = document.querySelector('.my-custom-scrollbar');
-      var ps = new PerfectScrollbar(myCustomScrollbar);
-      var scrollbarY = myCustomScrollbar.querySelector('.ps__rail-y');
-      myCustomScrollbar.onscroll = function () {
-        scrollbarY.style.cssText = `top: ${this.scrollTop}px!important; height: 400px; right: ${-this.scrollLeft}px`;
-      }
-      
-    </script>
 </body>
 </html>

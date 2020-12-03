@@ -1,8 +1,7 @@
 <?php
-
-
-include '../../config.php';
-	
+$database = new Getdatabase();
+$conn = $database->getConnection();
+include '../../config.php';	
 $time_search = $timelive;
 $output = '';
 //mysqli_set_charset($connect,'UTF8');

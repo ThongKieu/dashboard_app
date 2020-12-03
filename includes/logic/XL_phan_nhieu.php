@@ -2,7 +2,8 @@
 
 <?php
 include('../../config.php');
-
+$database = new Getdatabase();
+$conn = $database->getConnection();
 $dump='';
 if(isset($_GET['nv'])){ $nv_add= $_GET['nv'];}
 if (isset($_GET['id'])) {

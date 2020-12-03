@@ -3,7 +3,8 @@
 //insert_chat.php
 
 include('../config.php');
-
+$database = new Getdatabase();
+$conn = $database->getConnection();
 
 
 $data = array(

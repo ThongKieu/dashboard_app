@@ -1,11 +1,13 @@
   <?php
 
     include '../../config.php';
+    $database = new Getdatabase();
+    $conn = $database->getConnection();
     $id = $_GET['id_cus'];
 	$do = $_GET['do'];
     $dateup= date('Y-m-d');
    try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password,$options);
+    
     if($do == '0'){
     $sql = "UPDATE info_cus 
              set   flag_book = '0'  , flag_status = NULL , date_book = '$dateup' where id_cus ='$id'";
@@ -14,7 +16,7 @@
 	   {
 	   	$sql="DELETE FROM info_cus where id_cus = '$id'";
 	   }
-    $q = $pdo->query($sql);
+    $q = $conn->query($sql);
     $q->setFetchMode(PDO::FETCH_ASSOC);
     if(isset($q))
     {

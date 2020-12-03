@@ -4,7 +4,8 @@
 
  
 include('../config.php');
-
+$database = new Getdatabase();
+$conn = $database->getConnection();
 $query = "
 UPDATE login_details 
 SET last_activity = now() 

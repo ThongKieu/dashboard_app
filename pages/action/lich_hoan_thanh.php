@@ -1,16 +1,6 @@
-<style>
-    .cls_btn{
-        margin-top:5px; padding:5px 10px;
-    }
-    th{
-        text-align: center;
-    }
-    a[disabled="disabled"] {
-        pointer-events: none;
-    }
-</style>
-
 <?php 
+$database = new Getdatabase();
+$conn = $database->getConnection();
     if(!isset($_GET['time_search'])){
         $time_search = date('Y-m-d');
     }
@@ -19,16 +9,14 @@
         $time_search= $_GET['time_search'];
     }
     try {
-     
-        $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password,$options);
         $sql = "SELECT work_do.id_cus, work_do.id_work,info_cus.add_cus,info_cus.des_cus,info_cus.date_book, info_cus.phone_cus,info_worker.name_worker,info_cus.note_book,work_do.sum_chi, work_do.sum_thu,work_do.note_work, info_cus.flag_status,nv_phan,thongtinthem, thanh_toan, info_cus.yc_book, operator_time,info_cus.kind_book, info_cus.phu, info_cus.name_cus FROM work_do , info_cus, info_worker WHERE  info_cus.flag_book = 1 and work_do.id_cus = info_cus.id_cus and work_do.id_worker = info_worker.id_worker and info_cus.date_book like '%$time_search%'  and info_cus.kind_book like '%nuoc%' ORDER BY flag_status ASC";
-        $q = $pdo->query($sql);
+        $q = $conn->query($sql);
         $q->setFetchMode(PDO::FETCH_ASSOC);
         $sql2 = "SELECT work_do.id_cus, work_do.id_work,info_cus.add_cus,info_cus.des_cus,info_cus.date_book, info_cus.phone_cus,info_worker.name_worker,info_cus.note_book, work_do.sum_chi, work_do.sum_thu,work_do.note_work, info_cus.flag_status,nv_phan,thongtinthem, thanh_toan, info_cus.yc_book, operator_time,info_cus.kind_book, info_cus.phu,info_cus.name_cus FROM work_do , info_cus, info_worker WHERE  info_cus.flag_book = 1 and work_do.id_cus = info_cus.id_cus and work_do.id_worker = info_worker.id_worker and info_cus.date_book like '%$time_search%'  and info_cus.kind_book like '%lanh%' ORDER BY name_worker ASC ";
-        $q2 = $pdo->query($sql2);
+        $q2 = $conn->query($sql2);
         $q2->setFetchMode(PDO::FETCH_ASSOC);
         $sql3 = "SELECT work_do.id_cus, work_do.id_work,info_cus.add_cus,info_cus.des_cus,info_cus.date_book, info_cus.phone_cus,info_worker.name_worker,info_cus.note_book,work_do.sum_chi, work_do.sum_thu,work_do.note_work, info_cus.flag_status,nv_phan,thongtinthem, thanh_toan, info_cus.yc_book, operator_time,info_cus.kind_book, info_cus.phu,info_cus.name_cus FROM work_do , info_cus, info_worker WHERE  info_cus.flag_book = 1 and work_do.id_cus = info_cus.id_cus and work_do.id_worker = info_worker.id_worker and info_cus.date_book like '%$time_search%'  and info_cus.kind_book like '%go%' ORDER BY name_worker ASC ";
-        $q3 = $pdo->query($sql3);
+        $q3 = $conn->query($sql3);
         $q3->setFetchMode(PDO::FETCH_ASSOC);
 
          // Dữ liệu thợ
@@ -85,7 +73,7 @@
                                         <!-- Modal -->
                                         <div id='my1".$row['id_cus']."' class='modal fade' role='dialog'>
                                             <!-- Modal content-->
-                                            <div class='modal-content' style='position: fixed;top: 20px;left: 35%;text-align: left;width: 30%;'>
+                                            <div class='modal-content modal_content1'>
                                                 <div class='modal-header'>
                                                     <button type='button' class='close' data-dismiss='modal'>&times;</button>
                                                     <h3 class='modal-title text-center'>Thông Tin Chăm Sóc Khách Hàng</h3>
@@ -124,10 +112,10 @@
                                                             </div>
                                                         </div>
                                                 </div>
-                                                <div class='modal-footer'>
+                                                <div class='modal-footer modal_footer1'>
                                                     <div class='row'>
-                                                        <div class='col-md-6 text-center'><button type='submit' value='submit' class='btn btn-sm btn-success' style='width:150px; font-size: 14px'>Thay Đổi Thông tin</button></div>
-                                                        <div class='col-md-6 text-center'><button type='button' class='btn btn-danger' style='width:150px;' data-dismiss='modal'>Hủy</button></div>
+                                                        <div class='col-md-6 text-center'><button type='submit' value='submit' class='btn btn-sm btn-success' >Thay Đổi Thông tin</button></div>
+                                                        <div class='col-md-6 text-center'><button type='button' class='btn btn-danger' data-dismiss='modal'>Hủy</button></div>
                                                     </div>
                                                 </div>
                                                     </form>
@@ -135,7 +123,7 @@
                                         </div>";
                                     }
                                     else{ echo $row['note_work'];}
-                                echo "</td><td style='text-align:center'>";
+                                echo "</td><td class='text-center'>";
                                     // btn nhap
                                     echo "<button type='button' data-toggle='modal' data-target='#nhaphtdn".$row['id_cus']."' class='btn btn-success tooltipButton cls_btn' data-tooltip='Nhập'";
                                      if($row['flag_status'] != NULL ){echo "disabled";} 
@@ -144,13 +132,13 @@
                                     <!-- Modal -->
                                     <div id='nhaphtdn".$row['id_cus']."' class='modal fade' role='dialog'>
                                         <!-- Modal content-->
-                                        <div class='modal-content' style='position: fixed;top: 20px;left: 30%;text-align: left;width: 40%;'>
+                                        <div class='modal-content modal_content1' >
                                             <div class='modal-header'>
                                                 <button type='button' class='close' data-dismiss='modal'>&times;</button>
                                                 <h3 class='modal-title text-center'>Nhập Thông Tin Thu Chi</h3>
                                             </div>
                                             <div class='modal-body'>
-                                                <form action='includes/logic/XL_thu_chi.php' id='frm_sua_KH' method='POST' class ='form-container'>
+                                                <form action='includes/logic/XL_thu_chi.php'   method='POST' class ='form-container'>
                                                     <input type='hidden' name ='id_work' value=".$row['id_work']." >
                                                     <input type='hidden' name ='ki' value='6' > 
                                                     <input type='hidden' name ='ac' value='1' >                                                    
@@ -193,10 +181,10 @@
                                                         </div>
                                                     </div>
                                             </div>
-                                            <div class='modal-footer'>
+                                            <div class='modal-footer modal_footer1'>
                                                 <div class='row'>
-                                                    <div class='col-md-6 text-center'><button type='submit' value='submit' class='btn btn-sm btn-success' style='width:150px; font-size: 14px'>Thay Đổi Thông tin</button></div>
-                                                    <div class='col-md-6 text-center'><button type='button' class='btn btn-danger' style='width:150px;' data-dismiss='modal'>Hủy</button></div>
+                                                    <div class='col-md-6 text-center'><button type='submit' value='submit' class='btn btn-sm btn-success'>Thay Đổi Thông tin</button></div>
+                                                    <div class='col-md-6 text-center'><button type='button' class='btn btn-danger' data-dismiss='modal'>Hủy</button></div>
                                                 </div>
                                             </div>
                                                 </form>
@@ -208,13 +196,13 @@
                                     echo "<!-- Modal -->
                                     <div id='suahtdn".$row['id_cus']."' class='modal fade' role='dialog'>
                                         <!-- Modal content-->
-                                        <div class='modal-content' style=' position: fixed;top: 30px;left: 30%;text-align: left;width: 40%;  overflow: auto;'>
+                                        <div class='modal-content modal_content1'>
                                             <div class='modal-header'>
                                                 <button type='button' class='close' data-dismiss='modal'>&times;</button>
                                                 <h3 class='modal-title text-center'>Sửa Thông Tin Lịch Điện Nước Đã Hoàn Thành</h3>
                                             </div>
                                             <div class='modal-body'>
-                                                <form action='includes/logic/XL_thu_chi.php' id='frm_sua_KH' method='POST' class ='form-container'>
+                                                <form action='includes/logic/XL_thu_chi.php'   method='POST' class ='form-container'>
                                                     <input type='hidden' name ='id_work' value=".$row['id_work']." >                                                   
                                                     <input type='hidden' name ='id_cus' value=".$row['id_cus']." > 
                                                     <input type='hidden' name ='ki' value='6'>
@@ -285,13 +273,13 @@
                                                         </div> 
                                                     </div>
                                             </div>
-                                            <div class='modal-footer'>
+                                            <div class='modal-footer modal_footer1'>
                                                 <div class='row'>
                                                     <div class='col-md-6 text-center'>
-                                                        <button type='submit' value='submit' class='btn btn-sm btn-success' style='width:150px; font-size: 14px'>Thay Đổi Thông tin</button>
+                                                        <button type='submit' value='submit' class='btn btn-sm btn-success'>Thay Đổi Thông tin</button>
                                                     </div>
                                                     <div class='col-md-6 text-center'>
-                                                        <button type='button' class='btn btn-danger' style='width:150px;' data-dismiss='modal'>Hủy</button>
+                                                        <button type='button' class='btn btn-danger' data-dismiss='modal'>Hủy</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -303,13 +291,13 @@
                                     <!-- Modal -->
                                     <div id='x2htdn".$row['id_cus']."' class='modal fade' role='dialog'>
                                         <!-- Modal content-->
-                                        <div class='modal-content' style='position: fixed;top: 20px;left: 35%;text-align: left;width: 30%;'>
+                                        <div class='modal-content modal_content1' >
                                             <div class='modal-header'>
                                                 <button type='button' class='close' data-dismiss='modal'>&times;</button>
                                                 <h4 class='modal-title text-center'>Nhân Đôi Lịch Khách Hàng</h4>
                                             </div>
                                             <div class='modal-body'>
-                                                <form action='includes/logic/up_tt_KH.php' id='frm_sua_KH' method='POST' class ='form-container'>
+                                                <form action='includes/logic/up_tt_KH.php'   method='POST' class ='form-container'>
                                                     <input type='hidden' name ='id_cus' value=".$row['id_cus']." >
                                                     <input type='hidden' name ='action' value='1' >
                                                     <input type='hidden'class='form-control' name ='nv' value='".$ruser['real_name']."'>
@@ -354,12 +342,12 @@
                                             </div>
                                             <div class='modal-footer'>
                                                 <div class='row'>
-                                                    <div class='col-md-6 text-center'>
-                                                        <button type='submit' value='submit' class='btn btn-sm btn-success' style='width:150px; font-size: 14px'>Thay Đổi Thông tin
+                                                    <div class='col-md-6 text-center modal_footer1'>
+                                                        <button type='submit' value='submit' class='btn btn-sm btn-success' >Thay Đổi Thông tin
                                                         </button>
                                                     </div>
                                                     <div class='col-md-6 text-center'>
-                                                        <button type='button' class='btn btn-danger' style='width:150px;' data-dismiss='modal'>Hủy</button>
+                                                        <button type='button' class='btn btn-danger' data-dismiss='modal'>Hủy</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -435,7 +423,7 @@
                                         <!-- Modal -->
                                         <div id='my1".$row2['id_cus']."' class='modal fade' role='dialog'>
                                             <!-- Modal content-->
-                                            <div class='modal-content' style='position: fixed;top: 20px;left: 35%;text-align: left;width: 30%;'>
+                                            <div class='modal-content modal_content1'>
                                                 <div class='modal-header'>
                                                     <button type='button' class='close' data-dismiss='modal'>&times;</button>
                                                     <h3 class='modal-title text-center'>Thông Tin Chăm Sóc Khách Hàng</h3>
@@ -474,10 +462,10 @@
                                                             </div>
                                                         </div>
                                                 </div>
-                                                <div class='modal-footer'>
+                                                <div class='modal-footer modal_footer1'>
                                                     <div class='row'>
-                                                        <div class='col-md-6 text-center'><button type='submit' value='submit' class='btn btn-sm btn-success' style='width:150px; font-size: 14px'>Thay Đổi Thông tin</button></div>
-                                                        <div class='col-md-6 text-center'><button type='button' class='btn btn-danger' style='width:150px;' data-dismiss='modal'>Hủy</button></div>
+                                                        <div class='col-md-6 text-center'><button type='submit' value='submit' class='btn btn-sm btn-success' >Thay Đổi Thông tin</button></div>
+                                                        <div class='col-md-6 text-center'><button type='button' class='btn btn-danger' data-dismiss='modal'>Hủy</button></div>
                                                     </div>
                                                 </div>
                                                     </form>
@@ -494,13 +482,13 @@
                                     <!-- Modal -->
                                     <div id='nhaphtdn".$row2['id_cus']."' class='modal fade' role='dialog'>
                                         <!-- Modal content-->
-                                        <div class='modal-content' style='position: fixed;top: 20px;left: 30%;text-align: left;width: 40%;'>
+                                        <div class='modal-content modal_content1'>
                                             <div class='modal-header'>
                                                 <button type='button' class='close' data-dismiss='modal'>&times;</button>
                                                 <h3 class='modal-title text-center'>Nhập Thông Tin Thu Chi</h3>
                                             </div>
                                             <div class='modal-body'>
-                                                <form action='includes/logic/XL_thu_chi.php' id='frm_sua_KH' method='POST' class ='form-container'>
+                                                <form action='includes/logic/XL_thu_chi.php'   method='POST' class ='form-container'>
                                                     <input type='hidden' name ='id_work' value=".$row2['id_work']." >
                                                     <input type='hidden' name ='ki' value='6' > 
                                                     <input type='hidden' name ='ac' value='1' >                                                    
@@ -543,10 +531,10 @@
                                                         </div>
                                                     </div>
                                             </div>
-                                            <div class='modal-footer'>
+                                            <div class='modal-footer modal_footer1'>
                                                 <div class='row'>
-                                                    <div class='col-md-6 text-center'><button type='submit' value='submit' class='btn btn-sm btn-success' style='width:150px; font-size: 14px'>Thay Đổi Thông tin</button></div>
-                                                    <div class='col-md-6 text-center'><button type='button' class='btn btn-danger' style='width:150px;' data-dismiss='modal'>Hủy</button></div>
+                                                    <div class='col-md-6 text-center'><button type='submit' value='submit' class='btn btn-sm btn-success'>Thay Đổi Thông tin</button></div>
+                                                    <div class='col-md-6 text-center'><button type='button' class='btn btn-danger' data-dismiss='modal'>Hủy</button></div>
                                                 </div>
                                             </div>
                                                 </form>
@@ -559,13 +547,13 @@
                                     echo "<!-- Modal -->
                                     <div id='suahtdn".$row2['id_cus']."' class='modal fade' role='dialog'>
                                         <!-- Modal content-->
-                                        <div class='modal-content' style=' position: fixed;top: 30px;left: 30%;text-align: left;width: 40%;  overflow: auto;'>
+                                        <div class='modal-content modal_footer1'>
                                             <div class='modal-header'>
                                                 <button type='button' class='close' data-dismiss='modal'>&times;</button>
                                                 <h3 class='modal-title text-center'>Sửa Thông Tin Lịch Điện Nước Đã Hoàn Thành</h3>
                                             </div>
                                             <div class='modal-body'>
-                                                <form action='includes/logic/XL_thu_chi.php' id='frm_sua_KH' method='POST' class ='form-container'>
+                                                <form action='includes/logic/XL_thu_chi.php'   method='POST' class ='form-container'>
                                                     <input type='hidden' name ='id_work' value=".$row2['id_work']." >                                                   
                                                     <input type='hidden' name ='id_cus' value=".$row2['id_cus']." > 
                                                     <input type='hidden' name ='ki' value='6'>
@@ -636,13 +624,13 @@
                                                         </div> 
                                                     </div>
                                             </div>
-                                            <div class='modal-footer'>
+                                            <div class='modal-footer modal_footer1'>
                                                 <div class='row'>
                                                     <div class='col-md-6 text-center'>
-                                                        <button type='submit' value='submit' class='btn btn-sm btn-success' style='width:150px; font-size: 14px'>Thay Đổi Thông tin</button>
+                                                        <button type='submit' value='submit' class='btn btn-sm btn-success'>Thay Đổi Thông tin</button>
                                                     </div>
                                                     <div class='col-md-6 text-center'>
-                                                        <button type='button' class='btn btn-danger' style='width:150px;' data-dismiss='modal'>Hủy</button>
+                                                        <button type='button' class='btn btn-danger'data-dismiss='modal'>Hủy</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -654,13 +642,13 @@
                                     <!-- Modal -->
                                     <div id='x2htdn".$row2['id_cus']."' class='modal fade' role='dialog'>
                                         <!-- Modal content-->
-                                        <div class='modal-content' style='position: fixed;top: 20px;left: 35%;text-align: left;width: 30%;'>
+                                        <div class='modal-content modal_footer1'>
                                             <div class='modal-header'>
                                                 <button type='button' class='close' data-dismiss='modal'>&times;</button>
                                                 <h4 class='modal-title text-center'>Nhân Đôi Lịch Khách Hàng</h4>
                                             </div>
                                             <div class='modal-body'>
-                                                <form action='includes/logic/up_tt_KH.php' id='frm_sua_KH' method='POST' class ='form-container'>
+                                                <form action='includes/logic/up_tt_KH.php'   method='POST' class ='form-container'>
                                                     <input type='hidden' name ='id_cus' value=".$row2['id_cus']." >
                                                     <input type='hidden' name ='action' value='1' >
                                                     <input type='hidden'class='form-control' name ='nv' value='".$ruser['real_name']."'>
@@ -703,14 +691,14 @@
                                                         </div> 
                                                     </div>
                                             </div>
-                                            <div class='modal-footer'>
+                                            <div class='modal-footer modal_footer1'>
                                                 <div class='row'>
                                                     <div class='col-md-6 text-center'>
-                                                        <button type='submit' value='submit' class='btn btn-sm btn-success' style='width:150px; font-size: 14px'>Thay Đổi Thông tin
+                                                        <button type='submit' value='submit' class='btn btn-sm btn-success'>Thay Đổi Thông tin
                                                         </button>
                                                     </div>
                                                     <div class='col-md-6 text-center'>
-                                                        <button type='button' class='btn btn-danger' style='width:150px;' data-dismiss='modal'>Hủy</button>
+                                                        <button type='button' class='btn btn-danger' data-dismiss='modal'>Hủy</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -786,7 +774,7 @@
                                         <!-- Modal -->
                                         <div id='my1".$row3['id_cus']."' class='modal fade' role='dialog'>
                                             <!-- Modal content-->
-                                            <div class='modal-content' style='position: fixed;top: 20px;left: 35%;text-align: left;width: 30%;'>
+                                            <div class='modal-content modal_content1' >
                                                 <div class='modal-header'>
                                                     <button type='button' class='close' data-dismiss='modal'>&times;</button>
                                                     <h3 class='modal-title text-center'>Thông Tin Chăm Sóc Khách Hàng</h3>
@@ -825,10 +813,10 @@
                                                             </div>
                                                         </div>
                                                 </div>
-                                                <div class='modal-footer'>
+                                                <div class='modal-footer modal_footer1'>
                                                     <div class='row'>
-                                                        <div class='col-md-6 text-center'><button type='submit' value='submit' class='btn btn-sm btn-success' style='width:150px; font-size: 14px'>Thay Đổi Thông tin</button></div>
-                                                        <div class='col-md-6 text-center'><button type='button' class='btn btn-danger' style='width:150px;' data-dismiss='modal'>Hủy</button></div>
+                                                        <div class='col-md-6 text-center'><button type='submit' value='submit' class='btn btn-sm btn-success'>Thay Đổi Thông tin</button></div>
+                                                        <div class='col-md-6 text-center'><button type='button' class='btn btn-danger' data-dismiss='modal'>Hủy</button></div>
                                                     </div>
                                                 </div>
                                                     </form>
@@ -845,13 +833,13 @@
                                     <!-- Modal -->
                                     <div id='nhaphtdn".$row3['id_cus']."' class='modal fade' role='dialog'>
                                         <!-- Modal content-->
-                                        <div class='modal-content' style='position: fixed;top: 20px;left: 30%;text-align: left;width: 40%;'>
+                                        <div class='modal-content modal_content1'>
                                             <div class='modal-header'>
                                                 <button type='button' class='close' data-dismiss='modal'>&times;</button>
                                                 <h3 class='modal-title text-center'>Nhập Thông Tin Thu Chi</h3>
                                             </div>
                                             <div class='modal-body'>
-                                                <form action='includes/logic/XL_thu_chi.php' id='frm_sua_KH' method='POST' class ='form-container'>
+                                                <form action='includes/logic/XL_thu_chi.php'   method='POST' class ='form-container'>
                                                     <input type='hidden' name ='id_work' value=".$row3['id_work']." >
                                                     <input type='hidden' name ='ki' value='6' > 
                                                     <input type='hidden' name ='ac' value='1' >                                                    
@@ -894,10 +882,10 @@
                                                         </div>
                                                     </div>
                                             </div>
-                                            <div class='modal-footer'>
+                                            <div class='modal-footer modal_footer1'>
                                                 <div class='row'>
-                                                    <div class='col-md-6 text-center'><button type='submit' value='submit' class='btn btn-sm btn-success' style='width:150px; font-size: 14px'>Thay Đổi Thông tin</button></div>
-                                                    <div class='col-md-6 text-center'><button type='button' class='btn btn-danger' style='width:150px;' data-dismiss='modal'>Hủy</button></div>
+                                                    <div class='col-md-6 text-center'><button type='submit' value='submit' class='btn btn-sm btn-success' >Thay Đổi Thông tin</button></div>
+                                                    <div class='col-md-6 text-center'><button type='button' class='btn btn-danger' data-dismiss='modal'>Hủy</button></div>
                                                 </div>
                                             </div>
                                                 </form>
@@ -910,13 +898,13 @@
                                     echo "<!-- Modal -->
                                     <div id='suahtdn".$row3['id_cus']."' class='modal fade' role='dialog'>
                                         <!-- Modal content-->
-                                        <div class='modal-content' style=' position: fixed;top: 30px;left: 30%;text-align: left;width: 40%;  overflow: auto;'>
+                                        <div class='modal-content modal_content1'>
                                             <div class='modal-header'>
                                                 <button type='button' class='close' data-dismiss='modal'>&times;</button>
                                                 <h3 class='modal-title text-center'>Sửa Thông Tin Lịch Điện Nước Đã Hoàn Thành</h3>
                                             </div>
                                             <div class='modal-body'>
-                                                <form action='includes/logic/XL_thu_chi.php' id='frm_sua_KH' method='POST' class ='form-container'>
+                                                <form action='includes/logic/XL_thu_chi.php'   method='POST' class ='form-container'>
                                                     <input type='hidden' name ='id_work' value=".$row3['id_work']." >                                                   
                                                     <input type='hidden' name ='id_cus' value=".$row3['id_cus']." > 
                                                     <input type='hidden' name ='ki' value='6'>
@@ -987,13 +975,13 @@
                                                         </div> 
                                                     </div>
                                             </div>
-                                            <div class='modal-footer'>
+                                            <div class='modal-footer modal_footer1'>
                                                 <div class='row'>
                                                     <div class='col-md-6 text-center'>
-                                                        <button type='submit' value='submit' class='btn btn-sm btn-success' style='width:150px; font-size: 14px'>Thay Đổi Thông tin</button>
+                                                        <button type='submit' value='submit' class='btn btn-sm btn-success'>Thay Đổi Thông tin</button>
                                                     </div>
                                                     <div class='col-md-6 text-center'>
-                                                        <button type='button' class='btn btn-danger' style='width:150px;' data-dismiss='modal'>Hủy</button>
+                                                        <button type='button' class='btn btn-danger' data-dismiss='modal'>Hủy</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1005,13 +993,13 @@
                                     <!-- Modal -->
                                     <div id='x2htdn".$row3['id_cus']."' class='modal fade' role='dialog'>
                                         <!-- Modal content-->
-                                        <div class='modal-content' style='position: fixed;top: 20px;left: 35%;text-align: left;width: 30%;'>
+                                        <div class='modal-content modal_content1'>
                                             <div class='modal-header'>
                                                 <button type='button' class='close' data-dismiss='modal'>&times;</button>
                                                 <h4 class='modal-title text-center'>Nhân Đôi Lịch Khách Hàng</h4>
                                             </div>
                                             <div class='modal-body'>
-                                                <form action='includes/logic/up_tt_KH.php' id='frm_sua_KH' method='POST' class ='form-container'>
+                                                <form action='includes/logic/up_tt_KH.php'   method='POST' class ='form-container'>
                                                     <input type='hidden' name ='id_cus' value=".$row3['id_cus']." >
                                                     <input type='hidden' name ='action' value='1' >
                                                     <input type='hidden'class='form-control' name ='nv' value='".$ruser['real_name']."'>
@@ -1054,14 +1042,14 @@
                                                         </div> 
                                                     </div>
                                             </div>
-                                            <div class='modal-footer'>
+                                            <div class='modal-footer modal_footer1'>
                                                 <div class='row'>
                                                     <div class='col-md-6 text-center'>
-                                                        <button type='submit' value='submit' class='btn btn-sm btn-success' style='width:150px; font-size: 14px'>Thay Đổi Thông tin
+                                                        <button type='submit' value='submit' class='btn btn-sm btn-success'>Thay Đổi Thông tin
                                                         </button>
                                                     </div>
                                                     <div class='col-md-6 text-center'>
-                                                        <button type='button' class='btn btn-danger' style='width:150px;' data-dismiss='modal'>Hủy</button>
+                                                        <button type='button' class='btn btn-danger'' data-dismiss='modal'>Hủy</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1100,23 +1088,3 @@
                     echo "</tbody>
                 </table>";
 }?>
-<script>
-  
-  function validate(evt) {
-  var theEvent = evt || window.event;
-
-  // Handle paste
-  if (theEvent.type === 'paste') {
-      key = event.clipboardData.getData('text/plain');
-  } else {
-  // Handle key press
-      var key = theEvent.keyCode || theEvent.which;
-      key = String.fromCharCode(key);
-  }
-  var regex = /[0-9]|\./;
-  if( !regex.test(key) ) {
-    theEvent.returnValue = false;
-    if(theEvent.preventDefault) theEvent.preventDefault();
-  }
-}
-</script>

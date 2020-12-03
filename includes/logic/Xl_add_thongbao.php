@@ -1,5 +1,7 @@
 <?php
 include('../../config.php');
+$database = new Getdatabase();
+$conn = $database->getConnection();
 $ac = $_POST['ac'] ;
 if($ac==NULL){$ac=$_GET['ac'];}
 if($ac == '1'){

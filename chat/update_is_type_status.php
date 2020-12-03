@@ -3,7 +3,8 @@
 //update_is_type_status.php
 
 include('../config.php');
-
+$database = new Getdatabase();
+$conn = $database->getConnection();
 
 
 $query = "

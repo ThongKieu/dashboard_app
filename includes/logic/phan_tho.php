@@ -1,5 +1,7 @@
 <?php 
 include('../../config.php');
+$database = new Getdatabase();
+$conn = $database->getConnection();
 if(isset($_GET['man']))
 {   $nv_add1 = $_GET['nv1'];
     $man =$_GET['man'];  

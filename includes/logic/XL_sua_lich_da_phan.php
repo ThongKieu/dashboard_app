@@ -1,5 +1,7 @@
 
-<?php include('../../config.php');?>
+<?php include('../../config.php');
+$database = new Getdatabase();
+$conn = $database->getConnection();?>
   <html>
     <head>
       <link rel="stylesheet" type="text/css" href="<?php echo BASE_URL;?>css/min.css">
@@ -26,7 +28,7 @@ try {
 } catch (PDOException $e) {die("Could not connect to the database $dbname :" . $e->getMessage());}
    
      
-        echo "<form action='up_kh_da_phan.php' id='frm_sua_KH' method='POST' class='hop'>
+        echo "<form action='up_kh_da_phan.php'   method='POST' class='hop'>
         <h2>Câp Nhật Thông Tin Khách hàng</h2>";
          $rs =$q->fetch();
     

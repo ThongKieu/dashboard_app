@@ -1,5 +1,7 @@
 <?php 
  include_once '../../config.php';
+ $database = new Getdatabase();
+$conn = $database->getConnection();
 $noti = $_POST['info_noti'];
 $nv_add = $_POST['nv'];
 

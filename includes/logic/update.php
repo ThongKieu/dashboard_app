@@ -1,5 +1,7 @@
 <?php
    include "../../config.php";
+   $database = new Getdatabase();
+   $conn = $database->getConnection();
    $field = $_POST['field'];
    $value = $_POST['value'];
    $editid = $_POST['id'];

@@ -1,17 +1,16 @@
 <?php
-
-
 include '../../config.php';
-
+$database = new Getdatabase();
+$conn = $database->getConnection();
 $hd = $_GET['hd'];
 
 if($hd=='ks')
 {
-  $id = $_GET['id'];
+  $id = $_GET['id_cus'];
     try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password,$options);
+    
     $sql = " UPDATE `info_cus` SET flag_status='Khảo Sát',`flag_book`=1 where id_cus='$id'";
-    $q = $pdo->query($sql);
+    $q = $conn->query($sql);
     $q->setFetchMode(PDO::FETCH_ASSOC);
     header("location: " . BASE_URL . "index.php");
   }
@@ -25,9 +24,9 @@ elseif($hd=='huy')
   $nhuy = $_GET['nnHuy'];
   
   try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password,$options);
+    
     $sql = " UPDATE `info_cus` SET flag_status='Hủy' ,`flag_book`= 1, `note_book` ='$nhuy' where id_cus='$id'";
-    $q = $pdo->query($sql);
+    $q = $conn->query($sql);
     $q->setFetchMode(PDO::FETCH_ASSOC);
     header("location: " . BASE_URL . "index.php");
   }
@@ -41,9 +40,9 @@ elseif($hd=='cho')
   $id = $_GET['id_cus'];
   $nhuy = $_GET['nnHuy'];
   try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password,$options);
+    
     $sql = " UPDATE `info_cus` SET flag_status='Chờ',`flag_book`=1 where id_cus='$id'";
-    $q = $pdo->query($sql);
+    $q = $conn->query($sql);
     $q->setFetchMode(PDO::FETCH_ASSOC);
     header("location: " . BASE_URL . "index.php");
   }

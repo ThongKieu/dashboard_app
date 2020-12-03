@@ -97,7 +97,7 @@
                                <h3 class='modal-title text-center'>Nhập Thông Tin Thu Chi</h3>
                            </div>
                            <div class='modal-body'>
-                               <form action='includes/logic/XL_thu_chi.php' id='frm_sua_KH' method='POST' class ='form-container'>
+                               <form action='includes/logic/XL_thu_chi.php'   method='POST' class ='form-container'>
                                    <input type='hidden' name ='id_work' value=".$row['id_work']." >
                                    <input type='hidden' name ='ki' value='6' > 
                                    <input type='hidden' name ='ac' value='1' >                                                    
@@ -162,7 +162,7 @@
                                <h3 class='modal-title text-center'>Sửa Thông Tin Lịch Điện Nước Đã Hoàn Thành</h3>
                            </div>
                            <div class='modal-body'>
-                               <form action='includes/logic/XL_thu_chi.php' id='frm_sua_KH' method='POST' class ='form-container'>
+                               <form action='includes/logic/XL_thu_chi.php'   method='POST' class ='form-container'>
                                    <input type='hidden' name ='id_work' value=".$row['id_work']." >                                                   
                                    <input type='hidden' name ='id_cus' value=".$row['id_cus']." > 
                                    <input type='hidden' name ='ki' value='6'>
@@ -257,7 +257,7 @@
                                <h4 class='modal-title text-center'>Nhân Đôi Lịch Khách Hàng</h4>
                            </div>
                            <div class='modal-body'>
-                               <form action='includes/logic/up_tt_KH.php' id='frm_sua_KH' method='POST' class ='form-container'>
+                               <form action='includes/logic/up_tt_KH.php'   method='POST' class ='form-container'>
                                    <input type='hidden' name ='id_cus' value=".$row['id_cus']." >
                                    <input type='hidden' name ='action' value='1' >
                                    <input type='hidden'class='form-control' name ='nv' value='".$ruser['real_name']."'>
@@ -446,7 +446,7 @@
                                <h3 class='modal-title text-center'>Nhập Thông Tin Thu Chi</h3>
                            </div>
                            <div class='modal-body'>
-                               <form action='includes/logic/XL_thu_chi.php' id='frm_sua_KH' method='POST' class ='form-container'>
+                               <form action='includes/logic/XL_thu_chi.php'   method='POST' class ='form-container'>
                                    <input type='hidden' name ='id_work' value=".$row2['id_work']." >
                                    <input type='hidden' name ='ki' value='6' > 
                                    <input type='hidden' name ='ac' value='1' >                                                    
@@ -511,7 +511,7 @@
                                <h3 class='modal-title text-center'>Sửa Thông Tin Lịch Điện Nước Đã Hoàn Thành</h3>
                            </div>
                            <div class='modal-body'>
-                               <form action='includes/logic/XL_thu_chi.php' id='frm_sua_KH' method='POST' class ='form-container'>
+                               <form action='includes/logic/XL_thu_chi.php'   method='POST' class ='form-container'>
                                    <input type='hidden' name ='id_work' value=".$row2['id_work']." >                                                   
                                    <input type='hidden' name ='id_cus' value=".$row2['id_cus']." > 
                                    <input type='hidden' name ='ki' value='6'>
@@ -606,7 +606,7 @@
                                <h4 class='modal-title text-center'>Nhân Đôi Lịch Khách Hàng</h4>
                            </div>
                            <div class='modal-body'>
-                               <form action='includes/logic/up_tt_KH.php' id='frm_sua_KH' method='POST' class ='form-container'>
+                               <form action='includes/logic/up_tt_KH.php'   method='POST' class ='form-container'>
                                    <input type='hidden' name ='id_work' value=".$row2['id_work']." >
                                    
                                    <input type='hidden'class='form-control' name ='nv' value='".$ruser['real_name']."'>
@@ -789,7 +789,7 @@
                             <h3 class='modal-title text-center'>Nhập Thông Tin Thu Chi</h3>
                         </div>
                         <div class='modal-body'>
-                            <form action='includes/logic/XL_thu_chi.php' id='frm_sua_KH' method='POST' class ='form-container'>
+                            <form action='includes/logic/XL_thu_chi.php'   method='POST' class ='form-container'>
                                 <input type='hidden' name ='id_work' value=".$row3['id_work']." >
                                 <input type='hidden' name ='ki' value='6' > 
                                 <input type='hidden' name ='ac' value='1' >                                                    
@@ -854,7 +854,7 @@
                             <h3 class='modal-title text-center'>Sửa Thông Tin Lịch Điện Nước Đã Hoàn Thành</h3>
                         </div>
                         <div class='modal-body'>
-                            <form action='includes/logic/XL_thu_chi.php' id='frm_sua_KH' method='POST' class ='form-container'>
+                            <form action='includes/logic/XL_thu_chi.php'   method='POST' class ='form-container'>
                                 <input type='hidden' name ='id_work' value=".$row3['id_work']." >                                                   
                                 <input type='hidden' name ='id_cus' value=".$row3['id_cus']." > 
                                 <input type='hidden' name ='ki' value='6'>
@@ -949,7 +949,7 @@
                             <h4 class='modal-title text-center'>Nhân Đôi Lịch Khách Hàng</h4>
                         </div>
                         <div class='modal-body'>
-                            <form action='includes/logic/up_tt_KH.php' id='frm_sua_KH' method='POST' class ='form-container'>
+                            <form action='includes/logic/up_tt_KH.php'   method='POST' class ='form-container'>
                                 <input type='hidden' name ='id_work' value=".$row3['id_work']." >
                                 <input type='hidden' name ='note_work' value=''>
                                 <input type='hidden'class='form-control' name ='nv' value='".$ruser['real_name']."'>

@@ -1,6 +1,7 @@
 
 <?php
-
+$database = new Getdatabase();
+$conn = $database->getConnection();
 
 $id = $_GET["id_cus"];
 
@@ -38,7 +39,7 @@ try {
         
         //lịch chờ
         echo "
-            <form action='".BASE_URL."includes/logic/XL_phan_lich.php' id='frm_sua_KH' method='POST' class='hop'>
+            <form action='".BASE_URL."includes/logic/XL_phan_lich.php'   method='POST' class='hop'>
               <h2 algin='center'>THÔNG TIN LỊCH CHỜ CỦA KHÁCH HÀNG</h2>
               <input type='hidden' name ='ac' value='phantho'>   
               <input type='hidden' name ='id_cus' value='".$rs['id_cus']."'>

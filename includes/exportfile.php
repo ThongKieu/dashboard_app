@@ -2,7 +2,8 @@
 require '../config.php';
 include_once 'class/pagination.php';
 require 'class/PHPExcel.php';
-
+$database = new Getdatabase();
+$conn = $database->getConnection();
 
 
 $sql="SELECT 

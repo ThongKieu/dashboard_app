@@ -1,6 +1,7 @@
 <?php 
 require 'includes/class/PHPExcel.php';
-
+$database = new Getdatabase();
+$conn = $database->getConnection();
 if(isset($_POST['btnGui']))
 {
      

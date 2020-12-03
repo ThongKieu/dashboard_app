@@ -1,6 +1,7 @@
 <?php
 include '../../config.php';
-
+$database = new Getdatabase();
+$conn = $database->getConnection();
 $id = $_GET['id_cus'];
 $tho = $_GET['tho'];
 $nv = $_GET['nv'];
