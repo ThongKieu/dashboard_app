@@ -36,7 +36,11 @@
         }
     
     else
-        {   
+        {   echo "<ul class='smooth_scroll'>
+            <li><a data-toggle='tooltip' data-placement='top' title='Lịch Điện Nước' href='#lichDienNuoc'><i class='fa fa-gg' style='width:15px; height:15px; color: white'></i></a></li>
+            <li><a data-toggle='tooltip' data-placement='top' title='Lịch Điện Lạnh' href='#lichDienLanh'><i class='fa fa-gg' style='width:15px; height:15px; color: white'></i></a></li>
+            <li><a data-toggle='tooltip' data-placement='top' title='Lịch Đồ Gỗ' href='#lichDoGo'><i class='fa fa-gg' style='width:15px; height:15px; color: white'></i></a></li>
+          </ul>";
             echo "<div class='container-fluid'>";
                 echo"<div class='row'>";
                         include 'dien_nuoc.php';

@@ -1,7 +1,8 @@
 <?php
-    include '../../../config.php';
+include '../../config.php';
     $database = new Getdatabase();
     $conn = $database->getConnection();
+
     $tenApp =$_POST['tenCont'];
 	$sdtApp =$_POST['sdtCont'];
 	$diachiApp =$_POST['diaChiCont'];

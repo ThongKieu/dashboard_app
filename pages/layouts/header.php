@@ -26,6 +26,13 @@ try{
     $q2->execute();
     $numboti = $q2 -> rowCount();
     //Get tho nghi
+    // dem thong bao tu app
+    $sql3 = "SELECT * FROM mobile_data where status_app = 0 ORDER BY id_kh DESC ";
+    $q3= $conn->query($sql3);
+    $q3 ->setFetchMode(PDO::FETCH_ASSOC);
+    $q3->execute();
+    $appnoti = $q3 -> rowCount();
+    // dem thong bao tu app
     
 
 }
@@ -130,6 +137,32 @@ catch (PDOException $e)
       <div class="navbar-custom-menu">
       
         <ul class="nav navbar-nav">
+        <!-- thong bao app  -->
+        <li class="dropdown notifications-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               <?php echo " <img src='".BASE_URL."pages/mobile/img/phone_ring.png 'alt='icon_phone_ring' style='width:18px;'>";?>
+              <span class="label label-warning"><?php echo $appnoti; ?></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="header">Bạn có <?php echo $appnoti; ?> Thông báo mới!</li>
+              <li>
+                <!-- inner menu: contains the actual data -->
+                <ul class="menu">
+                  <?php 
+                  while ($rno1 = $q3->fetch()):
+                  echo "<li>
+                    <a href='includes/logic/setnoti_app.php?id_kh=".$rno1['id_kh']."&user=".$ruser['id'].$ruser['username']."'>
+                      <i class='fa fa-user text-red'></i> ".$rno1['tenkh']." | ".$rno1['sdt']."
+                    </a>
+                  </li>";
+                  endwhile;
+                  ?>
+                </ul>
+              </li>
+              <li class="footer"><a href="<?php echo BASE_URL.'index.php?action=app';?>">View all</a></li>
+            </ul>
+          </li>
+          <!-- ket thuc thong bao app -->
           <!-- Messages: style can be found in dropdown.less
           Notifications: style can be found in dropdown.less -->
           <li class="dropdown notifications-menu">

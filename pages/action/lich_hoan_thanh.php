@@ -36,7 +36,7 @@ $conn = $database->getConnection();
     else{
         //echo  $time_search . "hôm nay là" ;
         // lich dien nuoc    
-        echo "<h3> Lịch Điện Nước</h3> 
+        echo "<h3 id='lichDienNuoc'> Lịch Điện Nước</h3> 
             <table class='table table-bordered table-hover'>
                 <thead>
                 <tr>
@@ -386,7 +386,7 @@ $conn = $database->getConnection();
                     echo "</tbody>
                 </table>";
         //lich dien lanh
-        echo "<h3> Lịch Điện Lạnh</h3>
+        echo "<h3 id='lichDienLanh'> Lịch Điện Lạnh</h3>
             <table class='table table-bordered table-hover'>
             <thead>
             <tr>
@@ -737,7 +737,7 @@ $conn = $database->getConnection();
                     echo "</tbody>
                 </table>";
         // lich tho moc
-        echo "<h3> Lịch Thợ Mộc </h3>
+        echo "<h3 id='lichDoGo'> Lịch Thợ Mộc </h3>
                 <table class='table table-bordered table-hover'>
                     <thead>
                         <tr>

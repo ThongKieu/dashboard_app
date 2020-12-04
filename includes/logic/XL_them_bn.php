@@ -16,6 +16,7 @@ $conn = $database->getConnection();
                 header("location:".BASE_URL."index.php");
             }
         }
+        
         catch(PDOException $e)
         {
             echo $e->getMessage();

@@ -33,7 +33,11 @@
         {
           echo "
             <section >
-              <!-- /.content -->
+              <!-- /.content --><ul class='smooth_scroll'>
+              <li><a data-toggle='tooltip' data-placement='top' title='Lịch Điện Nước' href='#lichDienNuoc'><i class='fa fa-gg' style='width:15px; height:15px; color: white'></i></a></li>
+              <li><a data-toggle='tooltip' data-placement='top' title='Lịch Điện Lạnh' href='#lichDienLanh'><i class='fa fa-gg' style='width:15px; height:15px; color: white'></i></a></li>
+              <li><a data-toggle='tooltip' data-placement='top' title='Lịch Đồ Gỗ' href='#lichDoGo'><i class='fa fa-gg' style='width:15px; height:15px; color: white'></i></a></li>
+            </ul>
               <div class='col-xs-12'>
                 <form action='' method='get'>
                   <div class='box'>
@@ -272,7 +276,11 @@ elseif($a=='mai')
 {
   
   echo "
-    <section >
+    <section ><ul class='smooth_scroll'>
+    <li><a data-toggle='tooltip' data-placement='top' title='Lịch Điện Nước' href='#lichDienNuoc'><i class='fa fa-gg' style='width:15px; height:15px; color: white'></i></a></li>
+    <li><a data-toggle='tooltip' data-placement='top' title='Lịch Điện Lạnh' href='#lichDienLanh'><i class='fa fa-gg' style='width:15px; height:15px; color: white'></i></a></li>
+    <li><a data-toggle='tooltip' data-placement='top' title='Lịch Đồ Gỗ' href='#lichDoGo'><i class='fa fa-gg' style='width:15px; height:15px; color: white'></i></a></li>
+  </ul>
       <div class='container-fluid'>
         <div class='box'>
           <form action='index.php' method='GET'>

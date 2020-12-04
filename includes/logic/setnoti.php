@@ -9,7 +9,6 @@ $sql = "SELECT nv_noti from notication where id_noti = '$id_noti'";
 $q= $conn->query($sql);
 $r=$q->fetch();
 
-
 $nvr = $r['nv_noti'] ."  ".$nv;
 
 $upq = "UPDATE notication SET nv_noti ='$nvr' where id_noti ='$id_noti'";

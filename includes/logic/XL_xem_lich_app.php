@@ -2,7 +2,7 @@
 	 include '../../config.php';
 	 $database = new Getdatabase();
 $conn = $database->getConnection();
-        $id = $_GET['id_tho'];
+        $id = $_GET['id_kh'];
 		$thonghi = $_GET['thonghi'];
 		if($thonghi == 0)
 		{

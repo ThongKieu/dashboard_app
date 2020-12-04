@@ -7,7 +7,7 @@
     private $table2_name = "work_do";
     private $table3_name = "vsbn";
     private $table4_name = "info_worker";
-     
+
     // object properties
     public $numDL;
     public $numDN;
@@ -159,4 +159,4 @@
           
 }
 
- ?>
+ ?> 

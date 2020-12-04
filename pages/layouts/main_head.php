@@ -40,11 +40,7 @@
     <section class="content my-custom-scrollbar" style="background-color: white">
       <!-- Small boxes (Stat box) -->
       <div class="row " >
-        <ul class="smooth_scroll">
-          <li><a data-toggle="tooltip" data-placement="top" title="Lịch Điện Nước" href="#lichDienNuoc"><i class="fa fa-gg" style="width:15px; height:15px; color: white"></i></a></li>
-          <li><a data-toggle="tooltip" data-placement="top" title="Lịch Điện Lạnh" href="#lichDienLanh"><i class="fa fa-gg" style="width:15px; height:15px; color: white"></i></a></li>
-          <li><a data-toggle="tooltip" data-placement="top" title="Lịch Đồ Gỗ" href="#lichDoGo"><i class="fa fa-gg" style="width:15px; height:15px; color: white"></i></a></li>
-        </ul>
+        
         
         <div id ="lichDienNuoc" class="col-lg-2 col-xs-6">
           <!-- small box -->

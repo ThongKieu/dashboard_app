@@ -1,19 +1,16 @@
-
 <?php
-    $database = new Getdatabase();
-    $conn = $database->getConnection();
 
-    $sqlc = "SELECT `id_kh`, `tenkh`, `sdt`, `diachi`, `yccv`, `quan_huyen` FROM `mobile_data` WHERE 1";  
+
+    $sqlc = "SELECT `id_kh`, `tenkh`, `sdt`, `diachi`, `yccv`, `quan_huyen`,`status_app` FROM `mobile_data` WHERE 1";  
     $qc = $conn->query($sqlc);
     $qc->setFetchMode(PDO::FETCH_ASSOC);
     $qc ->execute();
-    $row = $qc->fetch();
    
 ?>
-<div class='col-xl-6 col-lg-6 col-md-6 col-sm-12 col_left'>
+<div class='col-xl-12 col-lg-12 col-md-12 col-sm-12 col_left'>
     <div class="row">
         <div class="col-sm-6"> 
-            <h3 class="lichXL">Lịch Điện Lạnh Đã Xử Lý</h3>                
+            <h3 class="lichXL">Lịch App Đang Chờ Xử Lý</h3>                
         </div>
         <div class="col-sm-6"> 
             <input type="text" class="form-control" id="dlInput" onkeyup="myFunctionLanh()" placeholder="Search for names.." title="Type in a name">
@@ -28,9 +25,8 @@
                 <th class="col-md-1">Quận</th>
                 <th class="col-md-1">SĐT</th>
                 <th class="col-md-1">Trạng Thái</th>
-                <th class="col-md-1">Nhân Viên</th>
-                
-                
+                <th class="col-md-1">Nhân Viên</th>   
+                <th class="col-md-1">Trang Thái</th>              
             </tr>
         </thead>
         <tbody>
@@ -52,25 +48,20 @@
                 <td>
                     <?php echo  ($row['sdt']); ?>
                 </td>
-                <td>
-                    <?php echo  ($row['yccv']); ?>
+                <td style="text-align: center;">
+                    <?php echo  "<button type='button' data-toggle='modal' data-target='#my3".$row['sdt']."'class='btn btn-sm btn-warning tooltipButton cls_btn' data-tooltip='Xem' style='margin-right:5px'><i class='fa fa-eye'></i></button>";
+                    echo  "<button type='button' data-toggle='modal' data-target='#my3".$row['sdt']."'class='btn btn-sm btn-info tooltipButton cls_btn' data-tooltip='Phân Lịch'><i class='fa fa-plus'></i></button>";
+                    ?>
                 </td>
                 <td>
-                    <?php echo  ($row['yccv']); ?>
+                    <?php echo  $ruser['real_name'] ?>
                 </td>
-
-                <!-- <td>
-                    <php if($row['note_book']==null){
-                                // code 
-                            }else{
-                                echo "<p class='tooltipButton text-center' data-width='ghi_Chu' data-tooltip='".$row['note_book']."'>Xem Thêm</p>";
-                            } >
-                </td> -->
-                
-                 
-              
-            </tr>
+                <td>
+                    <?php echo  $row['status_app'] ?>
+                </td>
+            
             <?php endwhile; ?>
+            </tr>
         </tbody>
     </table>
 </div><!--ket thuc cot-->

@@ -48,7 +48,7 @@
  
  else{   
  echo "
-    <h3> Lịch Điện Nước</h3>
+    <h3 id='lichDienNuoc'> Lịch Điện Nước</h3>
     <table class='table table-bordered '>
         <thead>
             <tr>
@@ -274,7 +274,7 @@
             echo "</tbody>
         </table>";
                                 echo "
-                                <h3> Lịch Điện Lạnh</h3>
+                                <h3 id='lichDienLanh'> Lịch Điện Lạnh</h3>
                                 <table class='table table-bordered '>
                                      <thead>
                                      <tr><th class='col-xs-1'>Yêu Cầu CV</th>
@@ -414,7 +414,7 @@
                                                             ";
                                                             
  echo "
-    <h3> Lịch Thợ Mộc </h3>
+    <h3 id='lichDoGo'> Lịch Thợ Mộc </h3>
     <table class='table table-bordered '>
         <thead>
         <tr><th class='col-xs-1'>Yêu Cầu CV</th>
