@@ -1,21 +1,47 @@
-<?php include '../../config.php';
-$database = new Getdatabase();
-$conn = $database->getConnection();
-$nv= $_GET['user'];
-$id= $_GET['id_kh'];
+<?php 
+include '../../config.php';
+  $database = new Getdatabase();
+  $conn = $database->getConnection();
+  
+  $output = '';
+  if(isset ($_POST['view'])){
+    if($_POST['view']=''){
+      $sql1 = "UPDATE `mobile_data` SET status_app = '1' where status_app=0";
+      $q = $conn->query($sql1);
+    }
+    $query ="SELECT * FROM mobile_data where status_app = 0 ORDER BY id_kh DESC limit 5";
+    $result = $conn->query($query);
+    $numApp = $result->rowCount();
+    $output = '';
+    if($numApp > 0){
 
-$sql = "SELECT nv_xem_noti from mobile_data where id_kh = '$id'";
-$q= $conn->query($sql);
-$r=$q->fetch();
+      while($row = $result->fetch(PDO::FETCH_ASSOC)){
+ 
+        $output.='
+          <li>
+            <a href="includes/logic/update_app.php?id_kh='.$row["id_kh"].'">
+              <strong>'.$row["tenkh"].'</strong><br />
+              <small><em>'.$row["sdt"].'</em></small>
+            </a>
+          </li>
+        ';
 
 
-$nvr = $r['nv_xem_noti'] ."  ".$nv;
+      }
+    }else{
+      $output .= '<li><a href="#" class="text-bold text-italic">Không có thông báo mới!</a></li>';
+    }
+    // // ket thuc else  
+   
+    $data = array(
+      'notification' => $output,
+      'unseen_notification'  => $numApp
+   );
+   echo json_encode($data,JSON_UNESCAPED_UNICODE);
+  
+  }
+  // ket thuc if isset view 
+    
+  
 
-$upq = "UPDATE mobile_data SET nv_xem_noti ='$nvr' where id_kh ='$id'";
-$ql = $conn -> query($upq);
-$sql1 = "UPDATE `mobile_data` SET status_app = '1' where id_kh = '$id'";
-$q = $conn->query($sql1);
-if($q && $ql )
-{
-    header("location:".BASE_URL."index.php");
-}
+?>

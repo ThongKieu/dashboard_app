@@ -7,7 +7,8 @@
     private $table2_name = "work_do";
     private $table3_name = "vsbn";
     private $table4_name = "info_worker";
-
+    private $table5_name = "notication";
+    private $table6_name = "mobile_data";
     // object properties
     public $numDL;
     public $numDN;
@@ -15,6 +16,8 @@
     public $numKS;
     public $numLC;
     public $numVSBN;
+    public $numNoti;
+    public $numApp;
     
     
  
@@ -81,8 +84,8 @@
           }
      function countDG($timelive){
  
-               // query to select all user records
-               // query to select all user records
+          // query to select all user records
+          // query to select all user records
           //$timelive = date('d/m/Y');
           // query to select all user records
           $query = "SELECT info_cus.id_cus FROM info_cus, work_do  WHERE  flag_book ='1' and flag_status is NULL and kind_book like '%go%' and work_do.sum_thu = 0 and work_do.id_cus = info_cus.id_cus and date_book like '%$timelive%' ";
@@ -153,6 +156,24 @@
           $stmt->execute();
           $numWorker = $stmt->rowCount();
           return $numWorker;
+
+     }
+     function countNoti($timelive)
+     {
+          $query = "SELECT id_noti FROM " . $this->table5_name . " WHERE status_ad = 0 ";
+          $stmt = $this->pdo->prepare($query);
+          $stmt->execute();
+          $numNoti = $stmt->rowCount();
+          return $numNoti;
+
+     }
+     function countNotiApp($timelive)
+     {
+          $query = "SELECT id_kh FROM " . $this->table6_name . " WHERE status_app = 0 ";
+          $stmt = $this->pdo->prepare($query);
+          $stmt->execute();
+          $numApp = $stmt->rowCount();
+          return $numApp;
 
      }
      

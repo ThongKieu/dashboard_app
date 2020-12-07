@@ -1,7 +1,7 @@
 <?php
 
 
-    $sqlc = "SELECT `id_kh`, `tenkh`, `sdt`, `diachi`, `yccv`, `quan_huyen`,`status_app` FROM `mobile_data` WHERE 1";  
+    $sqlc = "SELECT `id_kh`, `tenkh`, `sdt`, `diachi`, `yccv`, `quan_huyen`,`status_app`,`nv_xem_noti` FROM `mobile_data` WHERE 1";  
     $qc = $conn->query($sqlc);
     $qc->setFetchMode(PDO::FETCH_ASSOC);
     $qc ->execute();
@@ -54,10 +54,15 @@
                     ?>
                 </td>
                 <td>
-                    <?php echo  $ruser['real_name'] ?>
+                    <?php echo  $row['nv_xem_noti'] ?>
                 </td>
                 <td>
-                    <?php echo  $row['status_app'] ?>
+                    <?php if($row['status_app']!=0){
+                        echo "đã xem";
+                        }else{
+                            echo "Chưa xem";
+                        }
+                    ?>
                 </td>
             
             <?php endwhile; ?>

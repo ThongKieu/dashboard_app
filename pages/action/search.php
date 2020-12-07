@@ -14,7 +14,7 @@
 <script>
 $(document).ready(function(){
 	load_data();
-	function load_data(query)
+	function load_data(query)   
 	{
 		$.ajax({
 			url:"includes/logic/fetch.php",

@@ -261,10 +261,10 @@ echo "
         </div>";?>
         <div class = 'col-xl-6 col-lg-6 col-md-6 col-sm-12' >
             <div class="row">
-                <div class="col-sm-6"> 
+                <div class="col-sm-8"> 
                     <h3 class="lichXL">Lịch Điện Nước Đã Xử Lý</h3>                
                 </div>
-                <div class="col-sm-6"> <input type="text" class="form-control" id="dnInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name"></div>
+                <div class="col-sm-4"> <input type="text" class="form-control" id="dnInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name"></div>
             </div>
           
             <table class="table table-bordered table-hover" id="dnTable">

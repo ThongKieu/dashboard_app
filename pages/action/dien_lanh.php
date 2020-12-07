@@ -255,10 +255,10 @@ echo "
  <!--ket thuc cot-->
 <div class='col-xl-6 col-lg-6 col-md-6 col-sm-12 col_left'>
     <div class="row">
-        <div class="col-sm-6"> 
+        <div class="col-sm-8"> 
             <h3 class="lichXL">Lịch Điện Lạnh Đã Xử Lý</h3>                
         </div>
-        <div class="col-sm-6"> 
+        <div class="col-sm-4"> 
             <input type="text" class="form-control" id="dlInput" onkeyup="myFunctionLanh()" placeholder="Search for names.." title="Type in a name">
         </div>
     </div>

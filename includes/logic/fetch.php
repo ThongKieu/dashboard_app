@@ -1,8 +1,3 @@
-<style>
-
-</style>
-
-
 <?php
 include '../../config.php';
 $database = new Getdatabase();
@@ -13,13 +8,12 @@ if(isset($_POST["query"]))
 {
 	$search =$_POST["query"];
 	$result = $conn->prepare( "
-			SELECT info_cus.id_cus, info_cus.name_cus,info_cus.add_cus, info_cus.des_cus, info_cus.yc_book, info_cus.flag_status, info_cus.date_book, info_cus.operator_time, info_cus.note_book, info_worker.name_worker, work_do.sum_chi, work_do.sum_thu
+			SELECT info_cus.id_cus, info_cus.name_cus,info_cus.add_cus, info_cus.des_cus, info_cus.yc_book, info_cus.flag_status, info_cus.date_book, info_cus.operator_time, info_cus.note_book, info_worker.name_worker, work_do.sum_chi, work_do.sum_thu, info_cus.phone_cus
 			FROM info_cus, work_do, info_worker 
-			WHERE work_do.id_cus = info_cus.id_cus and work_do.id_worker = info_worker.id_worker
+			WHERE work_do.id_cus = info_cus.id_cus and work_do.id_worker = info_worker.id_worker and
             info_cus.phone_cus like '%$search%'
             or info_cus.add_cus like '%$search%'
-            ORDER BY id_cus ASC LIMIT 100
-	");
+            ORDER BY id_cus ASC LIMIT 100 ");
 	$result ->execute();
 }
 else
