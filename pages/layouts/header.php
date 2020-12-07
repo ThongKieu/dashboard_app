@@ -78,8 +78,6 @@ function load_unseen_notification(view = '')
   dataType:"json",
   success:function(data)
   {
-    console.log(data.notification);
-    console.log(data.unseen_notification);
     $('.menu').html(data.notification);
    if(data.unseen_notification > 0)
    {
